@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns="http://www.datlin.com/datlin/configuration"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.datlin.com/datlin/configuration"
+        elementFormDefault="qualified"
+>
+    <xs:element name="datlin-configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="output-directory" type="xs:string"/>
+                <xs:element name="package-name" type="xs:string"/>
+                <xs:element name="connection" type="ConnectionType"/>
+                <xs:element name="table" type="TableType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="query" type="QueryType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="procedure" type="ProcedureType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="ConnectionType">
+        <xs:sequence>
+            <xs:element name="driver" type="xs:string"/>
+            <xs:element name="connection-string" type="xs:string"/>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="schema" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TableType">
+        <xs:sequence>
+            <xs:element name="column" type="ColumnType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="table" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ColumnType">
+        <xs:attribute name="column" type="xs:string" use="required"/>
+        <xs:attribute name="primary-key" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="QueryType">
+        <xs:sequence>
+            <xs:element name="parameter" type="ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="sql" type="SqlContentType"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ParameterType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="type" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="string"/>
+                    <xs:enumeration value="int"/>
+                    <xs:enumeration value="list"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="SqlContentType" mixed="true">
+        <xs:complexContent mixed="true">
+            <xs:restriction base="xs:anyType">
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ProcedureType">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jxb:bindings version="3.0"
+              xmlns:jxb="https://jakarta.ee/xml/ns/jaxb"
+              xmlns:xjc="https://jakarta.ee/xml/ns/jaxb/xjc"
+              jxb:extensionBindingPrefixes="xjc">
+
+    <jxb:bindings
+            node="//xs:schema"
+            schemaLocation="/home/inspipi/desktop/datlin/datlin/src/main/resources/schema/datlin/configuration/datlin-configuration.xsd"
+    >
+        <jxb:schemaBindings>
+            <jxb:package name="dev.datlin.configuration"/>
+        </jxb:schemaBindings>
+        <jxb:globalBindings>
+            <xjc:simple/>
+            <xjc:serializable/>
+        </jxb:globalBindings>
+    </jxb:bindings>
+</jxb:bindings>
