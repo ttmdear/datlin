@@ -12,21 +12,41 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
+
+/**
+ * <p>Java class for ColumnType complex type</p>.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.</p>
+ * 
+ * <pre>{@code
+ * <complexType name="ColumnType">
+ *   <complexContent>
+ *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       <attribute name="column" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       <attribute name="primary-key" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *     </restriction>
+ *   </complexContent>
+ * </complexType>
+ * }</pre>
+ * 
+ * 
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ColumnType")
 public class ColumnType {
 
     @XmlAttribute(name = "column", required = true)
     protected String column;
-
     @XmlAttribute(name = "primary-key")
     protected Boolean primaryKey;
 
     /**
      * Gets the value of the column property.
-     *
-     * @return possible object is
-     * {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getColumn() {
         return column;
@@ -34,9 +54,11 @@ public class ColumnType {
 
     /**
      * Sets the value of the column property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setColumn(String value) {
         this.column = value;
@@ -44,9 +66,11 @@ public class ColumnType {
 
     /**
      * Gets the value of the primaryKey property.
-     *
-     * @return possible object is
-     * {@link Boolean }
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
     public Boolean isPrimaryKey() {
         return primaryKey;
@@ -54,9 +78,11 @@ public class ColumnType {
 
     /**
      * Sets the value of the primaryKey property.
-     *
-     * @param value allowed object is
-     *              {@link Boolean }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
     public void setPrimaryKey(Boolean value) {
         this.primaryKey = value;

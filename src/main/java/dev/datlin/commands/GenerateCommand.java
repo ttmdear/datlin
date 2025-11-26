@@ -1,6 +1,11 @@
 package dev.datlin.commands;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import picocli.CommandLine.Command;
+
+import java.io.File;
 
 @Command(
     name = "generate",
@@ -9,6 +14,15 @@ import picocli.CommandLine.Command;
 final class GenerateCommand extends BaseCommand {
     @Override
     void handleCommand() {
-        System.out.printf("test");
+        try {
+            final JAXBContext context = JAXBContext.newInstance("dev.datlin.configuration");
+            final Unmarshaller unmarshaller = context.createUnmarshaller();
+            final Object obj = unmarshaller.unmarshal(new File("/home/workstati/desktop/traisit/traisit-core/src/main/resources/traisit-db-datlin.xml"));
+
+            System.out.println("test");
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
+        // System.out.printf("test");
     }
 }

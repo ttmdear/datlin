@@ -45,9 +45,9 @@ import jakarta.xml.bind.annotation.XmlType;
     "outputDirectory",
     "packageName",
     "connection",
-    "table",
-    "query",
-    "procedure"
+    "tables",
+    "queries",
+    "procedures"
 })
 @XmlRootElement(name = "datlin-configuration")
 public class DatlinConfiguration {
@@ -58,9 +58,12 @@ public class DatlinConfiguration {
     protected String packageName;
     @XmlElement(required = true)
     protected ConnectionType connection;
-    protected List<TableType> table;
-    protected List<QueryType> query;
-    protected List<ProcedureType> procedure;
+    @XmlElement(name = "table")
+    protected List<TableType> tables;
+    @XmlElement(name = "query")
+    protected List<QueryType> queries;
+    @XmlElement(name = "procedure")
+    protected List<ProcedureType> procedures;
 
     /**
      * Gets the value of the outputDirectory property.
@@ -135,18 +138,18 @@ public class DatlinConfiguration {
     }
 
     /**
-     * Gets the value of the table property.
+     * Gets the value of the tables property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the table property.</p>
+     * This is why there is not a <CODE>set</CODE> method for the tables property.</p>
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * </p>
      * <pre>
-     * getTable().add(newItem);
+     * getTables().add(newItem);
      * </pre>
      * 
      * 
@@ -157,28 +160,28 @@ public class DatlinConfiguration {
      * 
      * 
      * @return
-     *     The value of the table property.
+     *     The value of the tables property.
      */
-    public List<TableType> getTable() {
-        if (table == null) {
-            table = new ArrayList<>();
+    public List<TableType> getTables() {
+        if (tables == null) {
+            tables = new ArrayList<>();
         }
-        return this.table;
+        return this.tables;
     }
 
     /**
-     * Gets the value of the query property.
+     * Gets the value of the queries property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the query property.</p>
+     * This is why there is not a <CODE>set</CODE> method for the queries property.</p>
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * </p>
      * <pre>
-     * getQuery().add(newItem);
+     * getQueries().add(newItem);
      * </pre>
      * 
      * 
@@ -189,28 +192,28 @@ public class DatlinConfiguration {
      * 
      * 
      * @return
-     *     The value of the query property.
+     *     The value of the queries property.
      */
-    public List<QueryType> getQuery() {
-        if (query == null) {
-            query = new ArrayList<>();
+    public List<QueryType> getQueries() {
+        if (queries == null) {
+            queries = new ArrayList<>();
         }
-        return this.query;
+        return this.queries;
     }
 
     /**
-     * Gets the value of the procedure property.
+     * Gets the value of the procedures property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the procedure property.</p>
+     * This is why there is not a <CODE>set</CODE> method for the procedures property.</p>
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * </p>
      * <pre>
-     * getProcedure().add(newItem);
+     * getProcedures().add(newItem);
      * </pre>
      * 
      * 
@@ -221,13 +224,13 @@ public class DatlinConfiguration {
      * 
      * 
      * @return
-     *     The value of the procedure property.
+     *     The value of the procedures property.
      */
-    public List<ProcedureType> getProcedure() {
-        if (procedure == null) {
-            procedure = new ArrayList<>();
+    public List<ProcedureType> getProcedures() {
+        if (procedures == null) {
+            procedures = new ArrayList<>();
         }
-        return this.procedure;
+        return this.procedures;
     }
 
 }
