@@ -1,4 +1,4 @@
-package dev.datlin.repository;
+package dev.datlin.dbr;
 
 public class RepositoryFactory
 {

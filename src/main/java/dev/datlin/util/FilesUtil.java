@@ -1,4 +1,4 @@
-package dev.datlin;
+package dev.datlin.util;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -34,13 +34,6 @@ public class FilesUtil {
         return inputStream;
     }
 
-    // repository configuration
-    // repository model
-
-    // RepositoryModel
-    // RepositoryConfiguration
-
-    // datlin-repository-config
     public @Nonnull InputStream getInputStream(final @Nonnull Path path) {
         try {
             if (!Files.exists(path)) {
@@ -78,6 +71,10 @@ public class FilesUtil {
         final @Nonnull LinkOption... options
     ) {
         return Files.exists(path, options);
+    }
+
+    public boolean isReadable(final @Nonnull Path path) {
+        return Files.isReadable(path);
     }
 
     public void copy(

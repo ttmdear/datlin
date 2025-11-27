@@ -1,19 +1,18 @@
-package dev.datlin.commands;
+package dev.datlin.cmd;
 
 import dev.datlin.Services;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import picocli.CommandLine.Option;
 
 public abstract class BaseCommand implements Runnable {
-    @Option(names = {"-v", "--verbose"})
-    private @Nonnull Integer verbose = 0;
+    @Option(names = {"-v", "--verbose"}, defaultValue = "0")
+    private @Nullable Integer verbose;
 
     @Option(names = {"-wd", "--working-directory"})
     private @Nullable String workingDirectory;
 
-    @Option(names = {"-c", "--config"}, defaultValue = "datlin-config.xml")
-    private @Nonnull String config = "datlin-config.xml";
+    @Option(names = {"-rc", "--repository-configuration"}, defaultValue = "datlin-repository-configuration.xml")
+    private @Nullable String repositoryConfiguration;
 
     protected Services services;
 
@@ -21,9 +20,11 @@ public abstract class BaseCommand implements Runnable {
 
     @Override
     public void run() {
-        // services = new Services(
-        //     workingDirectory != null ? workingDirectory : System.getProperty("user.dir")
-        // );
+        services = new Services(
+            verbose == null ? 0 : verbose,
+            workingDirectory != null ? workingDirectory : System.getProperty("user.dir"),
+            repositoryConfiguration != null ? repositoryConfiguration : "datlin-repository-configuration.xml"
+        );
 
         try {
             handleCommand();

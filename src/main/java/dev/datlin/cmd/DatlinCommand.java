@@ -1,4 +1,4 @@
-package dev.datlin.commands;
+package dev.datlin.cmd;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
