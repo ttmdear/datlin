@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-        xmlns="http://www.datlin.com/datlin/configuration"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        targetNamespace="http://www.datlin.com/datlin/configuration"
-        elementFormDefault="qualified"
+    xmlns="http://www.datlin.com/datlin"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.datlin.com/datlin"
+    elementFormDefault="qualified"
 >
-    <xs:element name="datlin-configuration">
+    <xs:element name="repository-configuration">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="output-directory" type="xs:string"/>
-                <xs:element name="package-name" type="xs:string"/>
+                <xs:element name="output" type="xs:string"/>
+                <xs:element name="package" type="xs:string"/>
                 <xs:element name="connection" type="ConnectionType"/>
                 <xs:element name="table" type="TableType" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="query" type="QueryType" minOccurs="0" maxOccurs="unbounded"/>
@@ -19,26 +19,42 @@
     </xs:element>
 
     <xs:complexType name="ConnectionType">
-        <xs:sequence>
-            <xs:element name="driver" type="xs:string"/>
-            <xs:element name="connection-string" type="xs:string"/>
-            <xs:element name="username" type="xs:string"/>
-            <xs:element name="password" type="xs:string"/>
-            <xs:element name="schema" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
+        <xs:attribute name="driver" type="ConnectionDriverType" use="required"/>
+        <xs:attribute name="url" type="xs:string" use="required"/>
+        <xs:attribute name="username" type="xs:string" use="required"/>
+        <xs:attribute name="password" type="xs:string" use="required"/>
+        <xs:attribute name="schema" type="xs:string"/>
     </xs:complexType>
+
+    <xs:simpleType name="ConnectionDriverType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="postgres"/>
+            <xs:enumeration value="mysql"/>
+            <xs:enumeration value="oracle"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="TableType">
         <xs:sequence>
             <xs:element name="column" type="ColumnType" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="table" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="ColumnType">
-        <xs:attribute name="column" type="xs:string" use="required"/>
-        <xs:attribute name="primary-key" type="xs:boolean" use="optional"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="identity" type="xs:boolean"/>
+        <xs:attribute name="data-type" type="ColumnDataType" use="required"/>
+        <xs:attribute name="nullable" type="xs:boolean" default="false"/>
     </xs:complexType>
+
+    <xs:simpleType name="ColumnDataType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="string"/>
+            <xs:enumeration value="integer"/>
+            <xs:enumeration value="uuid"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="QueryType">
         <xs:sequence>

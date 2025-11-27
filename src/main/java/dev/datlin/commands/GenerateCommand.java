@@ -15,11 +15,14 @@ final class GenerateCommand extends BaseCommand {
     @Override
     void handleCommand() {
         try {
-            final JAXBContext context = JAXBContext.newInstance("dev.datlin.configuration");
-            final Unmarshaller unmarshaller = context.createUnmarshaller();
-            final Object obj = unmarshaller.unmarshal(new File("/home/workstati/desktop/traisit/traisit-core/src/main/resources/traisit-db-datlin.xml"));
+            // final JAXBContext context = JAXBContext.newInstance("dev.datlin.configuration");
+            // final Unmarshaller unmarshaller = context.createUnmarshaller();
+            // final Object obj = unmarshaller.unmarshal(new File("/home/inspipi/desktop/traisit/traisit-core/src/main/resources/traisit-db-datlin.xml"));
 
-            System.out.println("test");
+            // datlin-repository.plsPlans().find()
+            // traisit.get
+            //
+            // System.out.println("test");
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
