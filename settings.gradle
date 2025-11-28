@@ -1,1 +1,5 @@
 rootProject.name = 'datlin'
+
+include 'core'
+include 'sql'
+include 'tools'
