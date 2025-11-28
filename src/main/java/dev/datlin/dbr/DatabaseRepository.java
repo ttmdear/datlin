@@ -1,6 +1,6 @@
 package dev.datlin.dbr;
 
-public class Repository
+public class DatabaseRepository
 {
 }
 

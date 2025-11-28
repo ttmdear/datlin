@@ -2,14 +2,17 @@
 <jxb:bindings version="3.0"
               xmlns:jxb="https://jakarta.ee/xml/ns/jaxb"
               xmlns:xs="http://www.w3.org/2001/XMLSchema"
-              schemaLocation="schema/datlin/repository-configuration.xsd"
+              schemaLocation="xml-schemas/datlin/repository-configuration.xsd"
 >
     <jxb:bindings node="//xs:schema">
         <jxb:schemaBindings>
-            <jxb:package name="dev.datlin.repository.configuration.generated"/>
+            <jxb:package name="dev.datlin.xrc.generated"/>
         </jxb:schemaBindings>
     </jxb:bindings>
 
+    <jxb:bindings node="//xs:element[@name='repository-configuration']">
+        <jxb:class name="XmlRepositoryConfiguration"/>
+    </jxb:bindings>
     <jxb:bindings node="//xs:element[@name='repository-configuration']//xs:element[@name='table']">
         <jxb:property name="tables"/>
     </jxb:bindings>

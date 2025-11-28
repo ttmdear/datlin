@@ -1,5 +1,5 @@
 #!/bin/bash
 
-xjc schema/datlin/repository-configuration.xsd \
+xjc xml-schemas/datlin/repository-configuration.xsd \
 	-d ../java \
 	-b bindings.xjb

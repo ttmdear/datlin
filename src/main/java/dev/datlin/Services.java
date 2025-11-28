@@ -1,10 +1,12 @@
 package dev.datlin;
 
 import dev.datlin.gen.GenerateService;
+import dev.datlin.rcm.RepositoryCodeModel;
+import dev.datlin.rcm.RepositoryCodeModelFactory;
 import dev.datlin.util.FilesUtil;
 import dev.datlin.util.PathUtil;
-import dev.datlin.xrc.RepositoryConfiguration;
-import dev.datlin.xrc.RepositoryConfigurationFactory;
+import dev.datlin.xrc.XmlRepositoryConfigurationFactory;
+import dev.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -18,7 +20,8 @@ public class Services {
     private @Nullable PathUtil pathUtil;
     private @Nullable FilesUtil filesUtil = null;
     private @Nullable GenerateService generateService = null;
-    private @Nullable RepositoryConfiguration repositoryConfiguration = null;
+    private @Nullable XmlRepositoryConfiguration xmlRepositoryConfiguration = null;
+    private @Nullable RepositoryCodeModel repositoryCodeModel = null;
 
     public Services(
         final @Nonnull Integer verbose,
@@ -75,13 +78,20 @@ public class Services {
         return generateService;
     }
 
-    public synchronized @Nonnull RepositoryConfiguration repositoryConfiguration() {
-        if (repositoryConfiguration == null) {
-            final RepositoryConfigurationFactory factory = new RepositoryConfigurationFactory(filesUtil());
-
-            repositoryConfiguration = factory.create(repositoryConfigurationPath);
+    public synchronized @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration() {
+        if (xmlRepositoryConfiguration == null) {
+            xmlRepositoryConfiguration = new XmlRepositoryConfigurationFactory(filesUtil())
+                .create(repositoryConfigurationPath);
         }
 
-        return repositoryConfiguration;
+        return xmlRepositoryConfiguration;
+    }
+
+    public synchronized @Nonnull RepositoryCodeModel repositoryCodeModel() {
+        if (repositoryCodeModel == null) {
+             repositoryCodeModel = new RepositoryCodeModelFactory()
+        }
+
+        return repositoryCodeModel;
     }
 }

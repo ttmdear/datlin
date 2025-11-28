@@ -1,6 +1,8 @@
 package dev.datlin.cmd;
 
-import dev.datlin.xrc.RepositoryConfiguration;
+import dev.datlin.rcm.RepositoryCodeModel;
+import dev.datlin.xrc.XmlRepositoryConfiguration;
+import dev.datlin.xrc.generated.XmlRepositoryConfiguration;
 import picocli.CommandLine.Command;
 
 @Command(
@@ -10,8 +12,9 @@ import picocli.CommandLine.Command;
 final class GenerateCommand extends BaseCommand {
     @Override
     void handleCommand() {
-        final RepositoryConfiguration repositoryConfiguration = services.repositoryConfiguration();
+        final RepositoryCodeModel repositoryCodeModel = services.repositoryCodeModel();
 
+        System.out.printf("test");
         // try {
         //     // final JAXBContext context = JAXBContext.newInstance("dev.datlin.configuration");
         //     // final Unmarshaller unmarshaller = context.createUnmarshaller();
