@@ -1,8 +1,5 @@
 package io.datlin.sql.sql;
 
-import com.clever4j.lang.AllNonnullByDefault;
-
-@AllNonnullByDefault
 public class RelationExpression implements Expression {
 
     private final Expression left;

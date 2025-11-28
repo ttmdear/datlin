@@ -1,12 +1,7 @@
 package io.datlin.sql.sql;
 
-import com.clever4j.lang.AllNonnullByDefault;
-import com.clever4j.rdb.sql.OrderBy.OrderRule;
-import com.clever4j.rdb.sql.Where.Condition;
-
 import static java.util.Objects.requireNonNull;
 
-@AllNonnullByDefault
 public final class PostgreSqlBuilder implements SqlBuilder {
 
     public String build(Expression expression, BuildContext context) {
@@ -195,7 +190,7 @@ public final class PostgreSqlBuilder implements SqlBuilder {
 
     private void buildWhere(Where where, StringBuilder query, BuildContext context) {
         for (int i = 0; i < where.conditions.size(); i++) {
-            Condition condition = where.conditions.get(i);
+            Where.Condition condition = where.conditions.get(i);
 
             if (isWherePartBrackets(condition.left())) {
                 query.append(" (");
@@ -235,7 +230,7 @@ public final class PostgreSqlBuilder implements SqlBuilder {
 
     private void buildOrderBy(OrderBy orderBy, StringBuilder sql, BuildContext context) {
         for (int i = 0; i < orderBy.orderRules.size(); i++) {
-            OrderRule rule = orderBy.orderRules.get(i);
+            OrderBy.OrderRule rule = orderBy.orderRules.get(i);
 
             build(rule.expression(), sql, context);
             sql.append(" ").append(rule.direction().name());

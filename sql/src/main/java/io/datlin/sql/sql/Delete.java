@@ -1,9 +1,7 @@
 package io.datlin.sql.sql;
 
-import com.clever4j.lang.AllNonnullByDefault;
 import jakarta.annotation.Nullable;
 
-@AllNonnullByDefault
 public final class Delete implements Expression {
 
     @Nullable

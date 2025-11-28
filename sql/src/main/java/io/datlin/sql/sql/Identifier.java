@@ -4,9 +4,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.clever4j.lang.AllNonnullByDefault;
-
-@AllNonnullByDefault
 public final class Identifier implements Expression {
 
     private static final Map<String, Identifier> INSTANCES = new ConcurrentHashMap<>();

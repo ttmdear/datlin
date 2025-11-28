@@ -1,13 +1,10 @@
 package io.datlin.sql.sql;
 
-import com.clever4j.lang.AllNonnullByDefault;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllNonnullByDefault
 public class BuildContext {
 
     private final List<Object> statementObjects = new ArrayList<>();

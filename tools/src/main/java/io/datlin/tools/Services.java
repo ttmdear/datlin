@@ -1,12 +1,13 @@
 package io.datlin.tools;
 
-import io.datlin.tools.gen.GenerateService;
-import io.datlin.tools.rcm.RepositoryCodeModel;
-import io.datlin.tools.rcm.RepositoryCodeModelFactory;
-import io.datlin.tools.util.FilesUtil;
-import io.datlin.tools.util.PathUtil;
-import io.datlin.tools.xrc.XmlRepositoryConfigurationFactory;
-import io.datlin.tools.xrc.generated.XmlRepositoryConfiguration;
+import io.datlin.gec.RepositoryCodeGenerator;
+import io.datlin.rcm.RepositoryCodeModel;
+import io.datlin.rpm.RepositoryModel;
+import io.datlin.sql.metadata.DatabaseMetadataFactory;
+import io.datlin.util.FilesUtil;
+import io.datlin.util.PathUtil;
+import io.datlin.xrc.XmlRepositoryConfigurationFactory;
+import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -19,9 +20,12 @@ public class Services {
 
     private @Nullable PathUtil pathUtil;
     private @Nullable FilesUtil filesUtil = null;
-    private @Nullable GenerateService generateService = null;
+
     private @Nullable XmlRepositoryConfiguration xmlRepositoryConfiguration = null;
+    private @Nullable DatabaseMetadataFactory databaseMetadataFactory = null;
+    private @Nullable RepositoryCodeGenerator repositoryCodeGenerator = null;
     private @Nullable RepositoryCodeModel repositoryCodeModel = null;
+    private @Nullable RepositoryModel repositoryModel = null;
 
     public Services(
         final @Nonnull Integer verbose,
@@ -70,12 +74,12 @@ public class Services {
         return filesUtil;
     }
 
-    public synchronized @Nonnull GenerateService generateService() {
-        if (generateService == null) {
-            generateService = new GenerateService();
+    public synchronized @Nonnull RepositoryCodeGenerator repositoryCodeGenerator() {
+        if (repositoryCodeGenerator == null) {
+            repositoryCodeGenerator = new RepositoryCodeGenerator(xmlRepositoryConfiguration());
         }
 
-        return generateService;
+        return repositoryCodeGenerator;
     }
 
     public synchronized @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration() {
@@ -88,10 +92,18 @@ public class Services {
     }
 
     public synchronized @Nonnull RepositoryCodeModel repositoryCodeModel() {
-        if (repositoryCodeModel == null) {
-             repositoryCodeModel = new RepositoryCodeModelFactory()
-        }
+        // if (repositoryCodeModel == null) {
+        //     // repositoryCodeModel = new RepositoryCodeModelFactory().c
+        // }
 
         return repositoryCodeModel;
+    }
+
+    public synchronized @Nonnull RepositoryModel repositoryModel() {
+        // if (repositoryModel == null) {
+        //     repositoryModel = new RepositoryModelFactory().create(repositoryConfigurationPath);
+        // }
+
+        return null;
     }
 }

@@ -1,7 +1,5 @@
 package io.datlin.tools.cmd;
 
-import io.datlin.tools.rcm.RepositoryCodeModel;
-import io.datlin.tools.xrc.XmlRepositoryConfiguration;
 import picocli.CommandLine.Command;
 
 @Command(
@@ -9,11 +7,14 @@ import picocli.CommandLine.Command;
     description = "Generate classes to connect with database."
 )
 final class GenerateCommand extends BaseCommand {
+
     @Override
     void handleCommand() {
-        final RepositoryCodeModel repositoryCodeModel = services.repositoryCodeModel();
+        services.repositoryCodeGenerator()
+            .generate();
 
-        System.out.printf("test");
+        // final RepositoryCodeModel repositoryCodeModel = services.repositoryCodeModel();
+        // System.out.printf("test");
         // try {
         //     // final JAXBContext context = JAXBContext.newInstance("dev.datlin.configuration");
         //     // final Unmarshaller unmarshaller = context.createUnmarshaller();

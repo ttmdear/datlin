@@ -1,8 +1,5 @@
 package io.datlin.sql.sql;
 
-import com.clever4j.lang.AllNonnullByDefault;
-
-@AllNonnullByDefault
 public final class Column {
 
     final Expression value;

@@ -1,12 +1,10 @@
 package io.datlin.sql.sql;
 
-import com.clever4j.lang.AllNonnullByDefault;
 import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllNonnullByDefault
 public final class Select implements Expression {
 
     List<Column> columns = new ArrayList<>();

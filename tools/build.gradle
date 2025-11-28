@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation project(":core")
+    implementation project(":sql")
 
     // Picocli
     implementation 'info.picocli:picocli:4.7.7'

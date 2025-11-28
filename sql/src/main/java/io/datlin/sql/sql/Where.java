@@ -1,11 +1,8 @@
 package io.datlin.sql.sql;
 
-import com.clever4j.lang.AllNonnullByDefault;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@AllNonnullByDefault
 public final class Where implements Expression {
 
     final LogicOperator operator;
