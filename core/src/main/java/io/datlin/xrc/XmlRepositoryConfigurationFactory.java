@@ -36,7 +36,7 @@ public class XmlRepositoryConfigurationFactory {
         final @Nonnull String repositoryConfigurationPath
     ) {
         try {
-            final JAXBContext context = JAXBContext.newInstance("io.datlin.tools.xrc.generated");
+            final JAXBContext context = JAXBContext.newInstance("io.datlin.xrc.generated");
             final Unmarshaller unmarshaller = context.createUnmarshaller();
             final Object object = unmarshaller.unmarshal(new File(repositoryConfigurationPath));
 

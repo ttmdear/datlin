@@ -1,5 +1,7 @@
 package io.datlin.gec;
 
+import io.datlin.rcm.RepositoryCodeModel;
+import io.datlin.rcm.RepositoryCodeModelFactory;
 import io.datlin.sql.metadata.DatabaseMetadata;
 import io.datlin.sql.metadata.DatabaseMetadataFactory;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
@@ -20,7 +22,8 @@ public class RepositoryCodeGenerator {
 
     public void generate() {
         final DatabaseMetadata databaseMetadata = createDatabaseMetadata();
-        System.out.printf("test");
+        final RepositoryCodeModel repositoryCodeModel = new RepositoryCodeModelFactory()
+            .create(xmlRepositoryConfiguration, databaseMetadata);
     }
 
     private @Nonnull DatabaseMetadata createDatabaseMetadata() {
@@ -29,7 +32,7 @@ public class RepositoryCodeGenerator {
             xmlRepositoryConfiguration.getConnection().getUsername(),
             xmlRepositoryConfiguration.getConnection().getPassword()
         )) {
-            return new DatabaseMetadataFactory(connection).create();
+            return new DatabaseMetadataFactory().create(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
