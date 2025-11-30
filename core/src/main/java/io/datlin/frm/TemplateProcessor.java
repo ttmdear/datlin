@@ -1,14 +1,9 @@
 package io.datlin.frm;
 
 import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import jakarta.annotation.Nonnull;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -18,7 +13,7 @@ public class TemplateProcessor {
     public TemplateProcessor() {
         configuration = new Configuration(Configuration.VERSION_2_3_34);
 
-        configuration.setClassForTemplateLoading(this.getClass(), "/templates/");
+        configuration.setClassForTemplateLoading(this.getClass(), "/templates-v1/");
         configuration.setDefaultEncoding("UTF-8");
         // configuration.setOutputFormat(PlainTextOutputFormat.INSTANCE);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

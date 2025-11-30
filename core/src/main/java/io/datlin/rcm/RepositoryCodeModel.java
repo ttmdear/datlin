@@ -2,15 +2,16 @@ package io.datlin.rcm;
 
 import jakarta.annotation.Nonnull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RepositoryCodeModel {
-    private final @Nonnull List<RecordCodeModel> records = new ArrayList<>();
+    private final @Nonnull List<RecordCodeModel> records;
 
-    public void addRecord(final @Nonnull RecordCodeModel record) {
-        this.records.add(record);
+    public RepositoryCodeModel(
+        final @Nonnull List<RecordCodeModel> records
+    ) {
+        this.records = records;
     }
 
     public @Nonnull List<RecordCodeModel> getRecords() {

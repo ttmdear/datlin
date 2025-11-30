@@ -24,6 +24,8 @@ public class RepositoryCodeGenerator {
         final DatabaseMetadata databaseMetadata = createDatabaseMetadata();
         final RepositoryCodeModel repositoryCodeModel = new RepositoryCodeModelFactory()
             .create(xmlRepositoryConfiguration, databaseMetadata);
+
+        System.out.printf("test");
     }
 
     private @Nonnull DatabaseMetadata createDatabaseMetadata() {
