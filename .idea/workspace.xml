@@ -6,15 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="02ed3601-d0bc-4cf8-80e0-aab46b6fa358" name="Changes" comment="increase">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/frm/TemplateProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/frm/TemplateProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RecordCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RecordCodeModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RecordFieldCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RecordFieldCodeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/util/FilesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/util/FilesUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/record.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/record.ftlh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/Services.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +124,7 @@
       <workItem from="1764332819126" duration="2352000" />
       <workItem from="1764444354805" duration="6627000" />
       <workItem from="1764503212060" duration="5018000" />
-      <workItem from="1764524865086" duration="4327000" />
+      <workItem from="1764524865086" duration="5186000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
@@ -146,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764503518383</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="increase">
+      <option name="closed" value="true" />
+      <created>1764531272184</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1764531272184</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

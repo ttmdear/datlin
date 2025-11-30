@@ -12,6 +12,7 @@ public record RecordCodeModel(
     @Nonnull String simpleName,
     @Nonnull String canonicalName,
     @Nonnull String packageName,
+    @Nonnull List<RecordFieldCodeModel<?>> primaryKeys,
     @Nonnull List<RecordFieldCodeModel<?>> fields
 ) {
     public RecordCodeModel(
@@ -19,12 +20,14 @@ public record RecordCodeModel(
         @Nonnull String simpleName,
         @Nonnull String canonicalName,
         @Nonnull String packageName,
+        @Nonnull List<RecordFieldCodeModel<?>> primaryKeys,
         @Nonnull List<RecordFieldCodeModel<?>> fields
     ) {
         this.table = table;
         this.simpleName = simpleName;
         this.canonicalName = canonicalName;
         this.packageName = packageName;
+        this.primaryKeys = unmodifiableList(primaryKeys);
         this.fields = unmodifiableList(fields);
     }
 }

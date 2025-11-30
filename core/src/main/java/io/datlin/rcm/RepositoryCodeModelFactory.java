@@ -5,8 +5,12 @@ import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.unmodifiableCollection;
+import static java.util.Collections.unmodifiableList;
 
 public class RepositoryCodeModelFactory {
     public RepositoryCodeModel create(
@@ -37,7 +41,12 @@ public class RepositoryCodeModelFactory {
         final @Nonnull DatabaseMetadata.Table table,
         final @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration
     ) {
-        final ArrayList<RecordFieldCodeModel<?>> fields = table.columns().stream()
+        final List<RecordFieldCodeModel<?>> primaryKeys = table.columns().stream()
+            .filter(DatabaseMetadata.Column::primaryKey)
+            .map(this::createRecordFieldCodeModel)
+            .collect(Collectors.toCollection(ArrayList::new));
+
+        final List<RecordFieldCodeModel<?>> fields = table.columns().stream()
             .map(this::createRecordFieldCodeModel)
             .collect(Collectors.toCollection(ArrayList::new));
 
@@ -49,7 +58,8 @@ public class RepositoryCodeModelFactory {
             simpleName,
             canonicalName,
             recordsPackageName,
-            fields
+            unmodifiableList(primaryKeys),
+            unmodifiableList(fields)
         );
     }
 
@@ -181,6 +191,12 @@ public class RepositoryCodeModelFactory {
     ) {
         final @Nonnull String name = toCamelCase(column.name());
         final Class<?> javaType = getJavaType(column.type());
-        return new RecordFieldCodeModel<>(name, javaType, column.nullable());
+        return new RecordFieldCodeModel<>(
+            name,
+            column.name(),
+            javaType,
+            column.nullable(),
+            column.primaryKey()
+        );
     }
 }
