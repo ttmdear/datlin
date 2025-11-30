@@ -4,20 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02ed3601-d0bc-4cf8-80e0-aab46b6fa358" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="02ed3601-d0bc-4cf8-80e0-aab46b6fa358" name="Changes" comment="increase">
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/frm/TemplateProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RecordCodeModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/resources/templates/dao-template.ftlh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/resources/templates/dao.ftlh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/resources/templates/implementation-dao-template.ftlh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/resources/templates/implementation-dao.ftlh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/resources/templates/record.ftlh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/XmlRepositoryConfigurationFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/XmlRepositoryConfigurationFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/ColumnMetadata.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/DataType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/DatabaseMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/DatabaseMetadata.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/DatabaseMetadataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/DatabaseMetadataFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/Engine.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/Schema.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/TableMetadata.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/tools/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rpm/RepositoryModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rpm/RepositoryModelFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rpm/package-info.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +34,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -63,25 +65,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.datlin:tools [:tools:io.datlin.tools.cmd.DatlinCommand.main()].executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.25287357",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.datlin:tools [:tools:io.datlin.tools.cmd.DatlinCommand.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/workstati/desktop/datlin/core/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.25287357&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/core/src/main/resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="io.datlin.rcm" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="datlin generate" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.datlin.tools.cmd.DatlinCommand" />
@@ -115,12 +126,25 @@
       <option name="presentableId" value="Default" />
       <updated>1764332816999</updated>
       <workItem from="1764332819126" duration="2352000" />
-      <workItem from="1764444354805" duration="4729000" />
+      <workItem from="1764444354805" duration="6627000" />
     </task>
+    <task id="LOCAL-00001" summary="increase">
+      <option name="closed" value="true" />
+      <created>1764449185383</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1764449185383</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="increase" />
+    <option name="LAST_COMMIT_MESSAGE" value="increase" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -129,11 +153,6 @@
           <url>file://$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/XmlRepositoryConfigurationFactory.java</url>
           <line>48</line>
           <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

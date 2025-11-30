@@ -19,6 +19,9 @@ dependencies {
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.4'
     runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:4.0.5'
 
+    // Freemarker
+    implementation 'org.freemarker:freemarker:2.3.34'
+
     // Junit
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
