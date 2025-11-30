@@ -1,19 +1,29 @@
 package io.datlin.frm;
 
 import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import io.datlin.util.FilesUtil;
 import jakarta.annotation.Nonnull;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.TimeZone;
 
 public class TemplateProcessor {
+    private final @Nonnull FilesUtil fileUtils;
     private final @Nonnull Configuration configuration;
 
-    public TemplateProcessor() {
-        configuration = new Configuration(Configuration.VERSION_2_3_34);
+    public TemplateProcessor(
+        final @Nonnull FilesUtil fileUtils
+    ) {
+        this.fileUtils = fileUtils;
 
-        configuration.setClassForTemplateLoading(this.getClass(), "/templates-v1/");
+        configuration = new Configuration(Configuration.VERSION_2_3_34);
+        configuration.setClassForTemplateLoading(this.getClass(), "/templates/");
         configuration.setDefaultEncoding("UTF-8");
         // configuration.setOutputFormat(PlainTextOutputFormat.INSTANCE);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -28,25 +38,18 @@ public class TemplateProcessor {
         final @Nonnull String template,
         final @Nonnull String target
     ) {
-        // try {
-        //     final Path targetPath = Path.of(target);
-        //     final Path parent = targetPath.getParent();
+        try {
+            fileUtils.createDirectories(Path.of(target).getParent());
 
-        //     if (parent == null) {
-        //         throw new IllegalArgumentException("target path %s needs to have parent directory.".formatted(target));
-        //     }
+            final Template template1 = configuration.getTemplate(template);
 
-        //     // FsUtil.createDirectory(parent);
-
-        //     // Template template1 = configuration.getTemplate(template);
-
-        //     // try (FileWriter fileWriter = new FileWriter(target)) {
-        //     //     template1.process(model, fileWriter);
-        //     // } catch (IOException | TemplateException e) {
-        //     //     throw new RuntimeException(e);
-        //     // }
-        // } catch (IOException e) {
-        //     throw new RuntimeException(e);
-        // }
+            try (final FileWriter fileWriter = new FileWriter(target)) {
+                template1.process(model, fileWriter);
+            } catch (IOException | TemplateException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -2,26 +2,29 @@ package io.datlin.rcm;
 
 import jakarta.annotation.Nonnull;
 
+import java.util.Collections;
 import java.util.List;
 
-public class RecordCodeModel {
-    private final @Nonnull String table;
-    private final @Nonnull String simpleName;
-    private final @Nonnull String canonicalName;
-    private final @Nonnull String packageName;
-    private final @Nonnull List<RecordFieldCodeModel<?>> fields;
+import static java.util.Collections.unmodifiableList;
 
+public record RecordCodeModel(
+    @Nonnull String table,
+    @Nonnull String simpleName,
+    @Nonnull String canonicalName,
+    @Nonnull String packageName,
+    @Nonnull List<RecordFieldCodeModel<?>> fields
+) {
     public RecordCodeModel(
-        final @Nonnull String table,
-        final @Nonnull String simpleName,
-        final @Nonnull String canonicalName,
-        final @Nonnull String packageName,
-        final @Nonnull List<RecordFieldCodeModel<?>> fields
+        @Nonnull String table,
+        @Nonnull String simpleName,
+        @Nonnull String canonicalName,
+        @Nonnull String packageName,
+        @Nonnull List<RecordFieldCodeModel<?>> fields
     ) {
         this.table = table;
         this.simpleName = simpleName;
         this.canonicalName = canonicalName;
         this.packageName = packageName;
-        this.fields = fields;
+        this.fields = unmodifiableList(fields);
     }
 }

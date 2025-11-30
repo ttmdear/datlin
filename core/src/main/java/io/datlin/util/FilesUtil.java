@@ -23,7 +23,6 @@ import java.util.zip.CheckedInputStream;
 import jakarta.annotation.Nonnull;
 
 public class FilesUtil {
-
     public @Nonnull InputStream getInputStreamFromResource(final @Nonnull String path) {
         final InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
 

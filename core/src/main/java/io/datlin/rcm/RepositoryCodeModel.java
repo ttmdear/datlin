@@ -5,16 +5,20 @@ import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
-public class RepositoryCodeModel {
-    private final @Nonnull List<RecordCodeModel> records;
+import static java.util.Collections.unmodifiableList;
 
+public record RepositoryCodeModel(
+    @Nonnull String packageName,
+    @Nonnull String recordsPackageName,
+    @Nonnull List<RecordCodeModel> records
+) {
     public RepositoryCodeModel(
+        final @Nonnull String packageName,
+        final @Nonnull String recordsPackageName,
         final @Nonnull List<RecordCodeModel> records
     ) {
-        this.records = records;
-    }
-
-    public @Nonnull List<RecordCodeModel> getRecords() {
-        return Collections.unmodifiableList(records);
+        this.packageName = packageName;
+        this.recordsPackageName = recordsPackageName;
+        this.records = unmodifiableList(records);
     }
 }

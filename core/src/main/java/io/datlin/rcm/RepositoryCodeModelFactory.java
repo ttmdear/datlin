@@ -13,18 +13,27 @@ public class RepositoryCodeModelFactory {
         final @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration,
         final @Nonnull DatabaseMetadata databaseMetadata
     ) {
+        final @Nonnull String repositoryPackageName = xmlRepositoryConfiguration.getPackage();
+        final @Nonnull String recordsPackageName = repositoryPackageName + ".records";
         final @Nonnull List<RecordCodeModel> records = new ArrayList<>();
 
         for (final DatabaseMetadata.Table table : databaseMetadata.tables()) {
-            records.add(createRecordCodeModel(table, xmlRepositoryConfiguration));
+            records.add(createRecordCodeModel(
+                recordsPackageName,
+                table,
+                xmlRepositoryConfiguration)
+            );
         }
 
         return new RepositoryCodeModel(
+            repositoryPackageName,
+            recordsPackageName,
             records
         );
     }
 
     private @Nonnull RecordCodeModel createRecordCodeModel(
+        final @Nonnull String recordsPackageName,
         final @Nonnull DatabaseMetadata.Table table,
         final @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration
     ) {
@@ -33,10 +42,15 @@ public class RepositoryCodeModelFactory {
             .collect(Collectors.toCollection(ArrayList::new));
 
         final String simpleName = toPascalCase(table.name());
-        final String canonicalName = xmlRepositoryConfiguration.getPackage() + "." + simpleName;
-        final String packageName = xmlRepositoryConfiguration.getPackage();
+        final String canonicalName = recordsPackageName + "." + simpleName;
 
-        return new RecordCodeModel(table.name(), simpleName, canonicalName, packageName, fields);
+        return new RecordCodeModel(
+            table.name(),
+            simpleName,
+            canonicalName,
+            recordsPackageName,
+            fields
+        );
     }
 
     /**
@@ -167,6 +181,6 @@ public class RepositoryCodeModelFactory {
     ) {
         final @Nonnull String name = toCamelCase(column.name());
         final Class<?> javaType = getJavaType(column.type());
-        return new RecordFieldCodeModel<>(name, javaType);
+        return new RecordFieldCodeModel<>(name, javaType, column.nullable());
     }
 }

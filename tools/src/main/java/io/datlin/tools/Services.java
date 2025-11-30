@@ -16,7 +16,7 @@ import java.nio.file.Path;
 public class Services {
     private final @Nonnull Integer verbose;
     private final @Nonnull String workingDirectoryPath;
-    private final @Nonnull String repositoryConfigurationPath;
+    private final @Nonnull String xmlRepositoryConfigurationPath;
 
     private @Nullable PathUtil pathUtil;
     private @Nullable FilesUtil filesUtil = null;
@@ -30,20 +30,20 @@ public class Services {
     public Services(
         final @Nonnull Integer verbose,
         final @Nonnull String workingDirectoryPath,
-        final @Nonnull String repositoryConfigurationPath
+        final @Nonnull String xmlRepositoryConfigurationPath
     ) {
         this.pathUtil = new PathUtil();
         this.verbose = verbose;
         this.workingDirectoryPath = pathUtil.expand(Path.of(workingDirectoryPath)).toString();
 
         // preparing repository configuration path ---------------------------------------------------------------------
-        Path workingDirectoryPath1 = pathUtil.expand(Path.of(repositoryConfigurationPath));
+        Path workingDirectoryPath1 = pathUtil.expand(Path.of(xmlRepositoryConfigurationPath));
 
         if (!workingDirectoryPath1.isAbsolute()) {
             workingDirectoryPath1 = workingDirectoryPath1.resolve(workingDirectoryPath1);
         }
 
-        this.repositoryConfigurationPath = workingDirectoryPath1.toString();
+        this.xmlRepositoryConfigurationPath = workingDirectoryPath1.toString();
     }
 
     public @Nonnull Integer verbose() {
@@ -55,7 +55,7 @@ public class Services {
     }
 
     public @Nonnull String repositoryConfigurationPath() {
-        return this.repositoryConfigurationPath;
+        return this.xmlRepositoryConfigurationPath;
     }
 
     public synchronized @Nonnull PathUtil pathUtil() {
@@ -76,7 +76,11 @@ public class Services {
 
     public synchronized @Nonnull RepositoryCodeGenerator repositoryCodeGenerator() {
         if (repositoryCodeGenerator == null) {
-            repositoryCodeGenerator = new RepositoryCodeGenerator(xmlRepositoryConfiguration());
+            repositoryCodeGenerator = new RepositoryCodeGenerator(
+                xmlRepositoryConfigurationPath,
+                xmlRepositoryConfiguration(),
+                templateProcessor()
+            );
         }
 
         return repositoryCodeGenerator;
@@ -85,7 +89,7 @@ public class Services {
     public synchronized @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration() {
         if (xmlRepositoryConfiguration == null) {
             xmlRepositoryConfiguration = new XmlRepositoryConfigurationFactory(filesUtil())
-                .create(repositoryConfigurationPath);
+                .create(xmlRepositoryConfigurationPath);
         }
 
         return xmlRepositoryConfiguration;
@@ -101,7 +105,7 @@ public class Services {
 
     public synchronized @Nonnull TemplateProcessor templateProcessor() {
         if (templateProcessor == null) {
-            templateProcessor = new TemplateProcessor();
+            templateProcessor = new TemplateProcessor(filesUtil());
         }
 
         return templateProcessor;
