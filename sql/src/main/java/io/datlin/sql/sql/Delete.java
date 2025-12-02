@@ -20,7 +20,7 @@ public final class Delete implements Expression {
 
     // table ------------------------------------------------------------------------------------------------------------
     public Delete table(String table) {
-        this.table = Identifier.of(table);
+        // this.table = Identifier.of(table);
         return this;
     }
 

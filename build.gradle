@@ -1,14 +1,24 @@
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
-group = 'io.datlin'
-version = '1.0.0'
+allprojects {
+    group = 'io.datlin'
+    version = '1.0.1'
 
-// Domyślna konfiguracja toolchain dla wszystkich submodułów
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    // Set Java 8 as release -------------------------------------------------------------------------------------------
+    tasks.withType(JavaCompile).configureEach {
+        options.release = 17
     }
 }

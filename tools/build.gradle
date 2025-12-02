@@ -2,13 +2,6 @@ plugins {
     id 'java'
 }
 
-group = 'io.datlin.tools'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation project(":core")
     implementation project(":sql")

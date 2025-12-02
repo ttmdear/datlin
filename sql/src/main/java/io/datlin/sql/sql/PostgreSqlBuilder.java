@@ -33,46 +33,46 @@ public final class PostgreSqlBuilder implements SqlBuilder {
     }
 
     private void buildSelect(Select select, StringBuilder sql, BuildContext context) {
-        // columns -----------------------------------------------------------------------------------------------------
-        sql.append("SELECT ");
-
-        for (int i = 0; i < select.columns.size(); i++) {
-            if (i > 0) sql.append(", ");
-
-            Column column = select.columns.get(i);
-
-            build(column.value, sql, context);
-
-            if (!column.alias.isEmpty()) {
-                sql.append(" AS ").append(column.alias);
-            }
-        }
-
-        // from --------------------------------------------------------------------------------------------------------
-        if (select.from == null) {
-            throw new BuildSqlException("From is not set");
-        }
-
-        sql.append(" FROM ");
-        build(select.from.value, sql, context);
-
-        if (!select.from.alias.isEmpty()) {
-            sql.append(" AS ").append(select.from.alias);
-        }
-
-        // where -------------------------------------------------------------------------------------------------------
-        if (select.where != null) {
-            sql.append(" WHERE ");
-
-            build(select.where, sql, context);
-        }
-
-        // order by ----------------------------------------------------------------------------------------------------
-        if (select.orderBy != null) {
-            sql.append(" ORDER BY ");
-
-            buildOrderBy(select.orderBy, sql, context);
-        }
+//        // columns -----------------------------------------------------------------------------------------------------
+//        sql.append("SELECT ");
+//
+//        for (int i = 0; i < select.columns.size(); i++) {
+//            if (i > 0) sql.append(", ");
+//
+//            Column column = select.columns.get(i);
+//
+//            build(column.value, sql, context);
+//
+//            if (!column.alias.isEmpty()) {
+//                sql.append(" AS ").append(column.alias);
+//            }
+//        }
+//
+//        // from --------------------------------------------------------------------------------------------------------
+//        if (select.from == null) {
+//            throw new BuildSqlException("From is not set");
+//        }
+//
+//        sql.append(" FROM ");
+//        build(select.from.value, sql, context);
+//
+//        if (!select.from.alias.isEmpty()) {
+//            sql.append(" AS ").append(select.from.alias);
+//        }
+//
+//        // where -------------------------------------------------------------------------------------------------------
+//        if (select.where != null) {
+//            sql.append(" WHERE ");
+//
+//            build(select.where, sql, context);
+//        }
+//
+//        // order by ----------------------------------------------------------------------------------------------------
+//        if (select.orderBy != null) {
+//            sql.append(" ORDER BY ");
+//
+//            buildOrderBy(select.orderBy, sql, context);
+//        }
     }
 
     private void buildInsert(Insert insert, StringBuilder sql, BuildContext context) {

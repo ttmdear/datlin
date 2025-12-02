@@ -1,5 +1,5 @@
-rootProject.name = 'datlin'
+rootProject.name = "datlin"
 
-include 'core'
-include 'sql'
-include 'tools'
+include "core"
+include "sql"
+include "tools"

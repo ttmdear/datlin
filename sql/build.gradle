@@ -3,13 +3,6 @@ plugins {
     id "maven-publish"
 }
 
-group = "io.datlin"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     // Jakarta Annotation Api
     api "jakarta.annotation:jakarta.annotation-api:3.0.0"
@@ -28,7 +21,7 @@ publishing {
             from components.java
             groupId = 'io.datlin'
             artifactId = 'datlin-sql'
-            version = '1.0.0'
+            version = '1.0.1'
         }
     }
     repositories {
