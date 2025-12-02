@@ -1,26 +1,14 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'io.datlin'
-version = '1.0-SNAPSHOT'
+version = '1.0.0'
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'info.picocli:picocli:4.7.7'
-    implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
-
-    // JAXB and XML support
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.4'
-    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:4.0.5'
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
+// Domyślna konfiguracja toolchain dla wszystkich submodułów
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }

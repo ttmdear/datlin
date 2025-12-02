@@ -1,9 +1,10 @@
 plugins {
-    id 'java-library'
+    id "java-library"
+    id "maven-publish"
 }
 
-group = 'io.datlin'
-version = '1.0-SNAPSHOT'
+group = "io.datlin"
+version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -11,12 +12,26 @@ repositories {
 
 dependencies {
     // Jakarta Annotation Api
-    api 'jakarta.annotation:jakarta.annotation-api:3.0.0'
+    api "jakarta.annotation:jakarta.annotation-api:3.0.0"
 
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation platform("org.junit:junit-bom:5.10.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
 }
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = 'io.datlin'
+            artifactId = 'datlin-sql'
+            version = '1.0.0'
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
 }
