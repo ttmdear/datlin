@@ -1,4 +1,7 @@
-package io.datlin.sql.sql;
+package io.datlin.sql.clause;
+
+import io.datlin.sql.sql.Expression;
+import io.datlin.sql.sql.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,38 +1,54 @@
 package io.datlin.sql.sql;
 
-import static java.util.Objects.requireNonNull;
+import io.datlin.sql.clause.OrderBy;
+import io.datlin.sql.clause.Where;
+import io.datlin.sql.query.Delete;
+import io.datlin.sql.query.Insert;
+import io.datlin.sql.query.Select;
+import io.datlin.sql.query.Update;
+import jakarta.annotation.Nonnull;
 
-public final class PostgreSqlBuilder implements SqlBuilder {
-
-    public String build(Expression expression, BuildContext context) {
-        StringBuilder sql = new StringBuilder();
-        build(expression, sql, context);
-        return sql.toString();
+public class PostgreSqlBuilder implements SqlBuilder {
+    public @Nonnull String build(
+        final @Nonnull Expression expression,
+        final @Nonnull BuildContext context
+    ) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        build(expression, stringBuilder, context);
+        return stringBuilder.toString();
     }
 
-    private void build(Expression expression, StringBuilder sql, BuildContext context) {
+    private void build(
+        final @Nonnull Expression expression,
+        final @Nonnull StringBuilder stringBuilder,
+        final @Nonnull BuildContext context
+    ) {
         if (expression instanceof Select select) {
-            buildSelect(select, sql, context);
+            buildSelect(select, stringBuilder, context);
         } else if (expression instanceof Identifier identifier) {
-            buildIdentifier(identifier, sql, context);
+            buildIdentifier(identifier, stringBuilder, context);
         } else if (expression instanceof Where where) {
-            buildWhere(where, sql, context);
+            buildWhere(where, stringBuilder, context);
         } else if (expression instanceof ValueExpression valueExpression) {
-            buildValueExpression(valueExpression, sql, context);
+            buildValueExpression(valueExpression, stringBuilder, context);
         } else if (expression instanceof ValuesExpression valuesExpression) {
-            buildValueExpression(valuesExpression, sql, context);
+            buildValueExpression(valuesExpression, stringBuilder, context);
         } else if (expression instanceof Insert insert) {
-            buildInsert(insert, sql, context);
+            buildInsert(insert, stringBuilder, context);
         } else if (expression instanceof Update update) {
-            buildUpdate(update, sql, context);
+            buildUpdate(update, stringBuilder, context);
         } else if (expression instanceof Delete delete) {
-            buildDelete(delete, sql, context);
+            buildDelete(delete, stringBuilder, context);
         } else if (expression instanceof OrderBy orderBy) {
-            buildOrderBy(orderBy, sql, context);
+            buildOrderBy(orderBy, stringBuilder, context);
         }
     }
 
-    private void buildSelect(Select select, StringBuilder sql, BuildContext context) {
+    private void buildSelect(
+        final @Nonnull Select select,
+        final @Nonnull StringBuilder sql,
+        final @Nonnull BuildContext context
+    ) {
 //        // columns -----------------------------------------------------------------------------------------------------
 //        sql.append("SELECT ");
 //
@@ -75,81 +91,87 @@ public final class PostgreSqlBuilder implements SqlBuilder {
 //        }
     }
 
-    private void buildInsert(Insert insert, StringBuilder sql, BuildContext context) {
-        requireNonNull(insert.into, "INTO set not in INSERT.");
-
-        sql.append("INSERT INTO ");
-        buildIdentifier(insert.into, sql, context);
+    private void buildInsert(
+        final @Nonnull Insert insert,
+        final @Nonnull StringBuilder stringBuilder,
+        final @Nonnull BuildContext context
+    ) {
+        stringBuilder.append("INSERT INTO ");
+        buildIdentifier(insert.into, stringBuilder, context);
 
         // columns -----------------------------------------------------------------------------------------------------
         if (insert.columns.isEmpty()) {
             throw new BuildSqlException("INSERT columns are empty.");
         }
 
-        sql.append(" (");
+        stringBuilder.append(" (");
 
         for (int i = 0; i < insert.columns.size(); i++) {
-            sql.append("\"").append(insert.columns.get(i)).append("\"");
+            stringBuilder.append("\"").append(insert.columns.get(i)).append("\"");
 
             if (i < insert.columns.size() - 1) {
-                sql.append(", ");
+                stringBuilder.append(", ");
             }
         }
 
-        sql.append(")");
+        stringBuilder.append(")");
 
         // values -----------------------------------------------------------------------------------------------------
         if (insert.values.isEmpty()) {
             throw new BuildSqlException("INSERT values are empty.");
         }
 
-        sql.append(" VALUES (");
+        stringBuilder.append(" VALUES (");
 
         for (int i = 0; i < insert.values.size(); i++) {
-            sql.append("?");
+            stringBuilder.append("?");
             context.addStatementObjects(insert.values.get(i));
 
             if (i < insert.values.size() - 1) {
-                sql.append(", ");
+                stringBuilder.append(", ");
             }
         }
 
-        sql.append(")");
+        stringBuilder.append(")");
     }
 
-    private void buildUpdate(Update update, StringBuilder sql, BuildContext context) {
-        requireNonNull(update.table, "UPDATE table is not set.");
-
-        sql.append("UPDATE ");
-        buildIdentifier(update.table, sql, context);
+    private void buildUpdate(
+        final @Nonnull Update update,
+        final @Nonnull StringBuilder stringBuilder,
+        final @Nonnull BuildContext context
+    ) {
+        stringBuilder.append("UPDATE ");
+        buildIdentifier(update.table, stringBuilder, context);
 
         // columns -----------------------------------------------------------------------------------------------------
         if (update.columns.isEmpty()) {
             throw new BuildSqlException("INSERT set is empty.");
         }
 
-        sql.append(" SET ");
+        stringBuilder.append(" SET ");
 
         for (int i = 0; i < update.columns.size(); i++) {
-            sql.append("\"").append(update.columns.get(i)).append("\"").append(" = ?");
+            stringBuilder.append("\"").append(update.columns.get(i)).append("\"").append(" = ?");
 
             context.addStatementObjects(update.values.get(i));
 
             if (i < update.columns.size() - 1) {
-                sql.append(", ");
+                stringBuilder.append(", ");
             }
         }
 
         // where -------------------------------------------------------------------------------------------------------
         if (update.where != null) {
-            sql.append(" WHERE ");
-            build(update.where, sql, context);
+            stringBuilder.append(" WHERE ");
+            build(update.where, stringBuilder, context);
         }
     }
 
-    private void buildDelete(Delete delete, StringBuilder sql, BuildContext context) {
-        requireNonNull(delete.table, "DELETE table is not set.");
-
+    private void buildDelete(
+        final @Nonnull Delete delete,
+        final @Nonnull StringBuilder sql,
+        final @Nonnull BuildContext context
+    ) {
         sql.append("DELETE FROM ");
         buildIdentifier(delete.table, sql, context);
 
@@ -160,7 +182,11 @@ public final class PostgreSqlBuilder implements SqlBuilder {
         }
     }
 
-    private void buildIdentifier(Identifier identifier, StringBuilder query, BuildContext context) {
+    private void buildIdentifier(
+        final @Nonnull Identifier identifier,
+        final @Nonnull StringBuilder query,
+        final @Nonnull BuildContext context
+    ) {
         if (!identifier.qualifier.isEmpty() && !identifier.identifier.isEmpty()) {
             query.append("\"%s\".\"%s\"".formatted(identifier.qualifier, identifier.identifier));
         } else if (!identifier.identifier.isEmpty()) {
@@ -170,12 +196,20 @@ public final class PostgreSqlBuilder implements SqlBuilder {
         }
     }
 
-    private void buildValueExpression(ValueExpression valueExpression, StringBuilder query, BuildContext context) {
+    private void buildValueExpression(
+        final @Nonnull ValueExpression valueExpression,
+        final @Nonnull StringBuilder query,
+        final @Nonnull BuildContext context
+    ) {
         query.append("?");
         context.addStatementObjects(valueExpression.value);
     }
 
-    private void buildValueExpression(ValuesExpression valuesExpression, StringBuilder query, BuildContext context) {
+    private void buildValueExpression(
+        final @Nonnull ValuesExpression valuesExpression,
+        final @Nonnull StringBuilder query,
+        final @Nonnull BuildContext context
+    ) {
         for (int i = 0; i < valuesExpression.values.size(); i++) {
             Object value = valuesExpression.values.get(i);
 
@@ -188,7 +222,11 @@ public final class PostgreSqlBuilder implements SqlBuilder {
         }
     }
 
-    private void buildWhere(Where where, StringBuilder query, BuildContext context) {
+    private void buildWhere(
+        final @Nonnull Where where,
+        final @Nonnull StringBuilder query,
+        final @Nonnull BuildContext context
+    ) {
         for (int i = 0; i < where.conditions.size(); i++) {
             Where.Condition condition = where.conditions.get(i);
 
@@ -228,7 +266,11 @@ public final class PostgreSqlBuilder implements SqlBuilder {
         }
     }
 
-    private void buildOrderBy(OrderBy orderBy, StringBuilder sql, BuildContext context) {
+    private void buildOrderBy(
+        final @Nonnull OrderBy orderBy,
+        final @Nonnull StringBuilder sql,
+        final @Nonnull BuildContext context
+    ) {
         for (int i = 0; i < orderBy.orderRules.size(); i++) {
             OrderBy.OrderRule rule = orderBy.orderRules.get(i);
 
@@ -241,7 +283,9 @@ public final class PostgreSqlBuilder implements SqlBuilder {
         }
     }
 
-    private boolean isWherePartBrackets(Expression expression) {
+    private boolean isWherePartBrackets(
+        final @Nonnull Expression expression
+    ) {
         return expression instanceof Where ||
             expression instanceof Select ||
             expression instanceof ValuesExpression;

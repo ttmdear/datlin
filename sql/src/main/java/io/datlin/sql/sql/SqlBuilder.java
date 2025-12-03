@@ -1,5 +1,10 @@
 package io.datlin.sql.sql;
 
+import jakarta.annotation.Nonnull;
+
 public interface SqlBuilder {
-    String build(Expression expression, BuildContext context);
+    @Nonnull String build(
+        final @Nonnull Expression expression,
+        final @Nonnull BuildContext context
+    );
 }

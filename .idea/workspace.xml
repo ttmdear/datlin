@@ -5,20 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02ed3601-d0bc-4cf8-80e0-aab46b6fa358" name="Changes" comment="increase">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Fetch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/GroupBy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Having.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/InnerJoin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/LeftJoin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Limit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Offset.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Window.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Select.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sql/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/connection/ConnectionProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/connection/ConnectionProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Delete.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Delete.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/From.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/From.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/BuildContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/BuildContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/BuildSqlException.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/BuildSqlException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Column.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Delete.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Delete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/From.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/From.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Insert.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Insert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/OrderBy.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/OrderBy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/PostgreSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/PostgreSqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Select.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Select.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/tools/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Select.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/SqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Update.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Where.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Where.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,8 +73,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="package-info" />
         <option value="Class" />
+        <option value="package-info" />
       </list>
     </option>
   </component>
@@ -221,6 +230,7 @@
       <workItem from="1764681747380" duration="4997000" />
       <workItem from="1764701842538" duration="164000" />
       <workItem from="1764702017481" duration="8053000" />
+      <workItem from="1764787269920" duration="4768000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />

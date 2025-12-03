@@ -1,5 +1,6 @@
-package io.datlin.sql.sql;
+package io.datlin.sql.clause;
 
+import io.datlin.sql.sql.Expression;
 import jakarta.annotation.Nonnull;
 
 public class From {
