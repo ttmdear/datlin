@@ -4,9 +4,8 @@ import io.datlin.sql.query.Select;
 import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
 
-public class PostgreSqlBuilder implements SqlBuilder {
+public class PostgreSqlBuilder {
 
-    @Override
     public void build(
         @Nonnull final Select select,
         @Nonnull final BuildContext context
