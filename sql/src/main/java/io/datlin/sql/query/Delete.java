@@ -30,16 +30,16 @@ public final class Delete implements Expression {
 
     // where -----------------------------------------------------------------------------------------------------------
     public Where where() {
-        this.where = new Where(LogicOperator.AND);
+        // this.where = new Where(LogicOperator.AND);
         return this.where;
     }
 
     public Delete where(Where.WhereConfigurer configurer) {
-        if (where == null) {
-            where = new Where(LogicOperator.AND);
-        }
+        // if (where == null) {
+        //     where = new Where(LogicOperator.AND);
+        // }
 
-        configurer.configure(where);
+        // configurer.configure(where);
 
         return this;
     }

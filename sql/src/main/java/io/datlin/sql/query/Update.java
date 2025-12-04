@@ -43,18 +43,21 @@ public final class Update implements Expression {
 
     // where -----------------------------------------------------------------------------------------------------------
     public Where where() {
-        this.where = new Where(LogicOperator.AND);
-        return this.where;
+//        this.where = new Where(LogicOperator.AND);
+//        return this.where;
+
+        return null;
     }
 
     public Update where(Where.WhereConfigurer configurer) {
-        if (where == null) {
-            where = new Where(LogicOperator.AND);
-        }
-
-        configurer.configure(where);
-
-        return this;
+//        if (where == null) {
+//            where = new Where(LogicOperator.AND);
+//        }
+//
+//        configurer.configure(where);
+//
+//        return this;
+        return null;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
