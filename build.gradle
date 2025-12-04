@@ -17,8 +17,36 @@ allprojects {
         }
     }
 
-    // Set Java 17 as release ------------------------------------------------------------------------------------------
     tasks.withType(JavaCompile).configureEach {
         options.release = 17
     }
 }
+
+// subprojects {
+//     apply plugin: 'java'
+//
+//     // 2. BLOK DEPENDENCIES MUSI BYĆ W TYM MIEJSCU
+//     dependencies {
+//         // Zarządzanie wersjami
+//         testImplementation platform("org.junit:junit-bom:5.10.0")
+//
+//         // API i Params
+//         testImplementation "org.junit.jupiter:junit-jupiter"
+//
+//         // Silnik wykonawczy (KLUCZOWE)
+//         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+//     }
+//
+//     // 3. Konfiguracja Zadania Testowego (odpowiednik Twojego 'test { ... }')
+//     // Użyj tej formy dla nowszych wersji Gradle
+//     tasks.named('test', Test) {
+//         useJUnitPlatform()
+//     }
+//
+//     // Twoja konfiguracja release
+//
+//     // Set Java 17 as release ------------------------------------------------------------------------------------------
+//     tasks.withType(JavaCompile).configureEach {
+//         options.release = 17
+//     }
+// }
