@@ -28,7 +28,7 @@ public final class Update implements Expression {
         return new Update();
     }
 
-    // table ------------------------------------------------------------------------------------------------------------
+    // value ------------------------------------------------------------------------------------------------------------
     public Update table(String table) {
         this.table = Identifier.of(table);
         return this;

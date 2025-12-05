@@ -21,9 +21,9 @@ public final class Delete implements Expression {
         return new Delete();
     }
 
-    // table ------------------------------------------------------------------------------------------------------------
+    // value ------------------------------------------------------------------------------------------------------------
     public Delete table(String table) {
-        // this.table = Identifier.of(table);
+        // this.value = Identifier.of(value);
         return this;
     }
 

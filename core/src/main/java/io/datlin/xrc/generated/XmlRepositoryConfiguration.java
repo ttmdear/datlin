@@ -30,7 +30,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="package" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="connection" type="{http://www.datlin.com/datlin}ConnectionType"/>
- *           <element name="table" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
+ *           <element name="value" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="query" type="{http://www.datlin.com/datlin}QueryType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="procedure" type="{http://www.datlin.com/datlin}ProcedureType" maxOccurs="unbounded" minOccurs="0"/>
  *         </sequence>
@@ -60,7 +60,7 @@ public class XmlRepositoryConfiguration {
     protected String _package;
     @XmlElement(required = true)
     protected ConnectionType connection;
-    @XmlElement(name = "table")
+    @XmlElement(name = "value")
     protected List<TableType> tables;
     @XmlElement(name = "query")
     protected List<QueryType> queries;

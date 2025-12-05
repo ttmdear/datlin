@@ -1,6 +1,6 @@
 package io.datlin.sql.clause;
 
-import io.datlin.sql.query.Select;
+import io.datlin.sql.expression.SelectExpression;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -61,9 +61,9 @@ public class From {
     public static class SelectSource {
 
         @Nonnull
-        private final Select select;
+        private final SelectExpression select;
 
-        public SelectSource(@Nonnull final Select select) {
+        public SelectSource(@Nonnull final SelectExpression select) {
             this.select = select;
         }
     }
