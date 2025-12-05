@@ -4,13 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="763ee997-8d7d-4bb5-a1db-e9b178c09fa5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="40988a6b-83b0-41d0-98a0-bdcd5995ae65" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/TableExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sql/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/PostgreSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/PostgreSqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/OrderBy.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/OrderBy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Where.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Where.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Delete.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Delete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Insert.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Insert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Select.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Select.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Update.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/RelationExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/RelationExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValueExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValueExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValuesExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValuesExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/PostgreSqlBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/PostgreSqlBuilderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +34,13 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,23 +61,31 @@
   "customColor": "",
   "associatedIndex": 5
 }]]></component>
-  <component name="ProjectId" id="36QhVULaNIzJLQHtzz1EBwtawIK" />
+  <component name="ProjectId" id="36QiMs7Mk2kRvFCkYZ9LanPYMiD" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.PostgreSqlBuilderTest.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="PostgreSqlBuilderTest.buildSelect" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="PostgreSqlBuilderTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -70,7 +98,7 @@
           <list>
             <option value=":sql:test" />
             <option value="--tests" />
-            <option value="&quot;io.datlin.sql.builder.PostgreSqlBuilderTest.buildSelect&quot;" />
+            <option value="&quot;io.datlin.sql.builder.PostgreSqlBuilderTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -83,7 +111,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.PostgreSqlBuilderTest.buildSelect" />
+        <item itemvalue="Gradle.PostgreSqlBuilderTest" />
       </list>
     </recent_temporary>
   </component>
@@ -97,16 +125,27 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="763ee997-8d7d-4bb5-a1db-e9b178c09fa5" name="Changes" comment="" />
-      <created>1764944726199</created>
+      <changelist id="40988a6b-83b0-41d0-98a0-bdcd5995ae65" name="Changes" comment="" />
+      <created>1764945151050</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1764944726199</updated>
-      <workItem from="1764944728111" duration="9000" />
+      <updated>1764945151050</updated>
+      <workItem from="1764945152177" duration="3046000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/PostgreSqlBuilderTest.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

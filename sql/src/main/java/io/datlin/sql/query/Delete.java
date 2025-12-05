@@ -1,9 +1,8 @@
 package io.datlin.sql.query;
 
 import io.datlin.sql.clause.Where;
-import io.datlin.sql.sql.Expression;
+import io.datlin.sql.expression.Expression;
 import io.datlin.sql.sql.Identifier;
-import io.datlin.sql.sql.LogicOperator;
 import jakarta.annotation.Nullable;
 
 public final class Delete implements Expression {

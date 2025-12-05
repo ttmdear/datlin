@@ -1,6 +1,9 @@
 package io.datlin.sql.sql;
 
-public class RelationExpression implements Expression {
+import io.datlin.sql.expression.Expression;
+
+public class RelationExpression implements Expression
+{
 
     private final Expression left;
     private final RelationOperator operator;

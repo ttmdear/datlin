@@ -2,8 +2,11 @@ package io.datlin.sql.sql;
 
 import jakarta.annotation.Nonnull;
 
+import io.datlin.sql.expression.Expression;
+
 @SuppressWarnings("ClassCanBeRecord")
-public class Identifier implements Expression {
+public class Identifier implements Expression
+{
     final @Nonnull String qualifier;
     final @Nonnull String identifier;
 

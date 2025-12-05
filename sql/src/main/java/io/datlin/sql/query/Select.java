@@ -1,11 +1,11 @@
 package io.datlin.sql.query;
 
 import io.datlin.sql.clause.From;
-import io.datlin.sql.sql.Expression;
+import io.datlin.sql.expression.Expression;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -14,14 +14,27 @@ public class Select implements Expression {
     @Nonnull
     private final List<Column> columns = new ArrayList<>();
 
-    @Nullable
+    @Nonnull
     private final From from;
 
-    public Select(
-        @Nullable final From from
-    ) {
+    public Select(@Nonnull final From from) {
         this.from = from;
     }
+
+    @Nonnull
+    public List<Column> getColumns() {
+        return Collections.unmodifiableList(columns);
+    }
+
+    @Nonnull
+    public From getFrom() {
+        return from;
+    }
+
+    // @Nonnull
+    // public From om() {
+    //     return from;
+    // }
 
     // @Nullable
     // private final Where where;
@@ -106,4 +119,6 @@ public class Select implements Expression {
             this.alias = alias;
         }
     }
+
+
 }

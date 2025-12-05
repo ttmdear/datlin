@@ -1,13 +1,23 @@
 package io.datlin.sql.builder;
 
+import io.datlin.sql.clause.From;
+import io.datlin.sql.clause.From.TableSource;
+import io.datlin.sql.query.Select;
+import io.datlin.sql.sql.BuildContext;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class PostgreSqlBuilderTest {
+    PostgreSqlBuilder postgreSqlBuilder = new PostgreSqlBuilder();
 
     @Test
-    void build() {
-        System.out.printf("PostgreSqlBuilderTest.build()\n");
+    void buildSelect() {
+        final Select select = new Select(new From(new TableSource("pls_plan"), "p"));
+
+
+        final BuildContext buildContext = new BuildContext();
+
+        postgreSqlBuilder.build(select, buildContext);
+
+        System.out.printf("test");
     }
 }

@@ -1,6 +1,9 @@
 package io.datlin.sql.sql;
 
-public final class ValueExpression implements Expression {
+import io.datlin.sql.expression.Expression;
+
+public final class ValueExpression implements Expression
+{
 
     final Object value;
 

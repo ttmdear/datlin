@@ -1,6 +1,6 @@
 package io.datlin.sql.query;
 
-import io.datlin.sql.sql.Expression;
+import io.datlin.sql.expression.Expression;
 import io.datlin.sql.sql.Identifier;
 import jakarta.annotation.Nullable;
 

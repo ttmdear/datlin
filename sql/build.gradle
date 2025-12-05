@@ -1,5 +1,4 @@
 plugins {
-    id "java"
     id "java-library"
     id "maven-publish"
 }
@@ -8,10 +7,9 @@ dependencies {
     // Jakarta Annotation Api
     implementation "jakarta.annotation:jakarta.annotation-api:3.0.0"
 
-    // Tests
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation platform("org.junit:junit-bom:5.10.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.junit.platform:junit-platform-launcher"
 }
 
 test {

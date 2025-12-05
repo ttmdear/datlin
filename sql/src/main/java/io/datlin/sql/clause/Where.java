@@ -1,11 +1,13 @@
 package io.datlin.sql.clause;
 
+import io.datlin.sql.expression.Expression;
 import io.datlin.sql.sql.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Where implements Expression {
+public final class Where implements Expression
+{
 
     final LogicOperator operator;
     final List<Condition> conditions = new ArrayList<>();
