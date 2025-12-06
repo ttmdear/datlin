@@ -1,5 +1,6 @@
 package io.datlin.sql.expression;
 
+import io.datlin.sql.builder.SelectExpressionBuilder;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -10,5 +11,10 @@ public record SelectExpression(
     @Nonnull FromExpression from,
     @Nullable Expression where
 ) implements Expression {
+
+    @Nonnull
+    public static SelectExpressionBuilder builder() {
+        return new SelectExpressionBuilder();
+    }
 
 }

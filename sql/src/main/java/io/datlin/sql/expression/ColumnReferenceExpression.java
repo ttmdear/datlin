@@ -2,9 +2,9 @@ package io.datlin.sql.expression;
 
 import jakarta.annotation.Nonnull;
 
-public record TableLiteralExpression(
-    @Nonnull String schema,
-    @Nonnull String name
+public record ColumnReferenceExpression(
+    @Nonnull String table,
+    @Nonnull String column
 ) implements Expression {
 
 }

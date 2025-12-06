@@ -5,13 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/UuidValueExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SelectExpressionBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exception/FetchSQLException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exception/FromNotSetException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/execution/ExecutionConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/execution/SelectExecution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnReferenceExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ConditionsExpressionBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/expression/SelectExpressionBuilderTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnLiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnLiteralExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/SelectExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/SelectExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/TableLiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/TableLiteralExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/BuildContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/BuildContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,11 +30,49 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="datlin" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="datlin" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="datlin" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="datlin" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="publishing" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -49,11 +93,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Gradle.GenericSqlBuilderTest.buildSelect.executor": "Debug",
+    "Gradle.GenericSqlBuilderTest.buildSelect.executor": "Run",
     "Gradle.PostgreSqlBuilderTest.buildSelect.executor": "Debug",
+    "Gradle.SelectExpressionBuilderTest.build.executor": "Run",
+    "Gradle.datlin [publish].executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -68,11 +116,18 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="io.datlin.sql.expression" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="io.datlin.sql.exception" />
       <recent name="io.datlin.sql.expression" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.GenericSqlBuilderTest.buildSelect">
+  <component name="RunManager" selected="Gradle.datlin [publish]">
     <configuration name="GenericSqlBuilderTest.buildSelect" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -121,8 +176,56 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="SelectExpressionBuilderTest.build" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":sql:test" />
+            <option value="--tests" />
+            <option value="&quot;io.datlin.sql.expression.SelectExpressionBuilderTest.build&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="datlin [publish]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="publish" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.datlin [publish]" />
+        <item itemvalue="Gradle.SelectExpressionBuilderTest.build" />
         <item itemvalue="Gradle.GenericSqlBuilderTest.buildSelect" />
         <item itemvalue="Gradle.PostgreSqlBuilderTest.buildSelect" />
       </list>
@@ -145,6 +248,7 @@
       <updated>1764963614010</updated>
       <workItem from="1764963615847" duration="4513000" />
       <workItem from="1765031171669" duration="2792000" />
+      <workItem from="1765049947021" duration="9681000" />
     </task>
     <servers />
   </component>
@@ -156,8 +260,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="6" />
+          <line>79</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

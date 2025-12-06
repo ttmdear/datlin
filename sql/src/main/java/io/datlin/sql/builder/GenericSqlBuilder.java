@@ -42,27 +42,20 @@ public class GenericSqlBuilder implements SqlBuilder {
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        sql.append("SELECT ");
+        sql.append("SELECT");
 
         // columns -----------------------------------------------------------------------------------------------------
         if (select.columns().isEmpty()) {
-            sql.append("*");
+            sql.append(" *");
         } else {
             for (int i = 0; i < select.columns().size(); i++) {
                 final ColumnExpression column = select.columns().get(i);
 
-                if (column.value() instanceof ColumnExpression) {
-                    build(column, sql, context);
-                } else {
-                    sql.append("(");
-                    build(column, sql, context);
-                    sql.append(")");
-                }
-
-                sql.append(" AS ").append(column.alias());
+                sql.append(" ");
+                build(column, sql, context);
 
                 if (i < select.columns().size() - 1) {
-                    sql.append(", ");
+                    sql.append(",");
                 }
             }
         }
@@ -71,8 +64,9 @@ public class GenericSqlBuilder implements SqlBuilder {
         final Expression fromValue = select.from().value();
         sql.append(" FROM ");
 
-        if (fromValue instanceof TableLiteralExpression) {
-            sql.append("\"").append(((TableLiteralExpression) fromValue).value()).append("\"");
+        if (fromValue instanceof TableLiteralExpression tableLiteralExpression) {
+            sql.append("\"").append(tableLiteralExpression.schema()).append("\"");
+            sql.append(".\"").append(tableLiteralExpression.name()).append("\"");
         } else {
             sql.append("(");
             build(fromValue, sql, context);
@@ -120,7 +114,8 @@ public class GenericSqlBuilder implements SqlBuilder {
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        sql.append(uuidValueExpression.value());
+        context.addStatementObjects(uuidValueExpression.value());
+        sql.append("?");
     }
 
     public void build(
@@ -130,14 +125,15 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         if (columnExpression.value() instanceof ColumnLiteralExpression columnLiteralExpression) {
             sql.append("\"").append(columnLiteralExpression.table()).append("\"");
+            sql.append(".");
             sql.append("\"").append(columnLiteralExpression.column()).append("\"");
         } else {
             sql.append("(");
-
+            build(columnExpression.value(), sql, context);
+            sql.append(")");
         }
-        sql.append("\"").append(columnExpression.table()).append("\"");
-        sql.append(".");
-        sql.append("\"").append(columnExpression.column()).append("\"");
+
+        sql.append(" AS ").append(columnExpression.alias());
     }
 
     public void build(

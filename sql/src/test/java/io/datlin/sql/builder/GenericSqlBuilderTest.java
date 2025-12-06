@@ -30,7 +30,7 @@ class GenericSqlBuilderTest {
                 new ColumnExpression(new ColumnLiteralExpression("p", "plan_id"), "plan_id"),
                 new ColumnExpression(new ColumnLiteralExpression("p", "name"), "name")
             ),
-            new FromExpression(new TableLiteralExpression("pls_plan"), "p", List.of()),
+            new FromExpression(new TableLiteralExpression("public", "pls_plan"), "p", List.of()),
             new ConditionsExpression(AND, List.of(
                 new BinaryExpression(
                     new ColumnLiteralExpression("p", "plan_id"),
@@ -44,7 +44,10 @@ class GenericSqlBuilderTest {
         final StringBuilder sql = new StringBuilder();
 
         builder.build(select, sql, buildContext);
+        final List<Object> statementObjects = buildContext.getStatementObjects();
 
-        assertEquals("SELECT \"p\".\"plan_id\", \"p\".\"name\" FROM \"pls_plan\" AS p", sql.toString());
+        assertEquals("SELECT \"p\".\"plan_id\" AS plan_id, \"p\".\"name\" AS name FROM \"pls_plan\" AS p WHERE (\"p\".\"plan_id\" = ?)", sql.toString());
+        assertEquals(1, statementObjects.size());
+        assertEquals(UUID.fromString("b2c63d7c-d2b2-11f0-8de9-0242ac120002"), statementObjects.get(0));
     }
 }
