@@ -2,9 +2,10 @@ package io.datlin.sql.expression;
 
 import jakarta.annotation.Nonnull;
 
-public record ColumnLiteralExpression(
-    @Nonnull String table,
-    @Nonnull String column
+import java.util.UUID;
+
+public record UuidValueExpression(
+    @Nonnull UUID value
 ) implements Expression {
 
 }

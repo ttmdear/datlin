@@ -5,30 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryOperator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnLiteralExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ConditionsExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/FromExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/JoinExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/LogicOperator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/SelectExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/TableLiteralExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/UuidValueExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sql/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/PostgreSqlBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/From.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/From.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/TableExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Delete.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Delete.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Select.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/PostgreSqlBuilderTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryOperator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnLiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnLiteralExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/SelectExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/SelectExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,10 +35,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="36RJmz1W5PMLUJejxMNw8IK73XB" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -160,10 +144,22 @@
       <option name="presentableId" value="Default" />
       <updated>1764963614010</updated>
       <workItem from="1764963615847" duration="4513000" />
+      <workItem from="1765031171669" duration="2792000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
