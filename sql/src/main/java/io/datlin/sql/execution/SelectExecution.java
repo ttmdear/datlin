@@ -3,7 +3,7 @@ package io.datlin.sql.execution;
 import io.datlin.sql.builder.SelectExpressionBuilder;
 import io.datlin.sql.builder.SqlBuilder;
 import io.datlin.sql.exception.FetchSQLException;
-import io.datlin.sql.expression.ConditionsExpressionBuilder;
+import io.datlin.sql.builder.ConditionsExpressionBuilder;
 import io.datlin.sql.expression.SelectExpression;
 import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;

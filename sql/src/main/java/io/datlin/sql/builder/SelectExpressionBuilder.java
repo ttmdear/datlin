@@ -2,7 +2,7 @@ package io.datlin.sql.builder;
 
 import io.datlin.sql.exception.FromNotSetException;
 import io.datlin.sql.expression.*;
-import io.datlin.sql.expression.ConditionsExpressionBuilder.ConditionsExpressionConfigurer;
+import io.datlin.sql.builder.ConditionsExpressionBuilder.ConditionsExpressionConfigurer;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -17,8 +17,8 @@ public class SelectExpressionBuilder {
     @Nullable
     private FromExpression from;
 
-    @Nonnull
-    private final ConditionsExpressionBuilder whereBuilder = new ConditionsExpressionBuilder();
+    @Nullable
+    private ConditionsExpressionBuilder where;
 
     @Nonnull
     public SelectExpressionBuilder column(
@@ -44,7 +44,23 @@ public class SelectExpressionBuilder {
     public SelectExpressionBuilder where(
         @Nonnull final ConditionsExpressionConfigurer configurer
     ) {
-        configurer.configure(whereBuilder);
+        if (this.where == null) {
+            this.where = new ConditionsExpressionBuilder();
+        }
+
+        configurer.configure(where);
+        return this;
+    }
+
+    @Nonnull
+    public SelectExpressionBuilder whereOr(
+        @Nonnull final ConditionsExpressionConfigurer configurer
+    ) {
+        if (this.where == null) {
+            this.where = new ConditionsExpressionBuilder(LogicOperator.OR);
+        }
+
+        configurer.configure(where);
         return this;
     }
 

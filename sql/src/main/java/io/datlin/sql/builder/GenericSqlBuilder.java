@@ -77,8 +77,12 @@ public class GenericSqlBuilder implements SqlBuilder {
 
         // where -------------------------------------------------------------------------------------------------------
         if (select.where() != null) {
-            sql.append(" WHERE ");
-            build(select.where(), sql, context);
+            final StringBuilder whereSql = new StringBuilder();
+            build(select.where(), whereSql, context);
+
+            if (!whereSql.isEmpty()) {
+                sql.append(" WHERE ").append(whereSql);
+            }
         }
     }
 
