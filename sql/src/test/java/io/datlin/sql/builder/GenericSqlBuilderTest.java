@@ -4,14 +4,13 @@ import io.datlin.sql.expression.BinaryExpression;
 import io.datlin.sql.expression.BinaryOperator;
 import io.datlin.sql.expression.ColumnExpression;
 import io.datlin.sql.expression.ColumnLiteralExpression;
-import io.datlin.sql.expression.ConditionsExpression;
+import io.datlin.sql.expression.LogicalExpression;
 import io.datlin.sql.expression.FromExpression;
 import io.datlin.sql.expression.SelectExpression;
 import io.datlin.sql.expression.TableLiteralExpression;
 import io.datlin.sql.expression.UuidValueExpression;
 import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -33,7 +32,7 @@ class GenericSqlBuilderTest {
                 new ColumnExpression(new ColumnLiteralExpression("p", "name"), "name")
             ),
             new FromExpression(new TableLiteralExpression("public", "pls_plan"), "p", List.of()),
-            new ConditionsExpression(AND, List.of(
+            new LogicalExpression(AND, List.of(
                 new BinaryExpression(
                     new ColumnLiteralExpression("p", "plan_id"),
                     BinaryOperator.EQ,
@@ -81,7 +80,7 @@ class GenericSqlBuilderTest {
                 new ColumnExpression(new ColumnLiteralExpression("p", "name"), "name")
             ),
             new FromExpression(new TableLiteralExpression("public", "pls_plan"), "p", List.of()),
-            new  ConditionsExpression(AND, List.of())
+            new LogicalExpression(AND, List.of())
         );
 
         final BuildContext buildContext = new BuildContext();

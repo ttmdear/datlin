@@ -4,15 +4,13 @@ import io.datlin.sql.expression.BinaryExpression;
 import io.datlin.sql.expression.BinaryOperator;
 import io.datlin.sql.expression.ColumnExpression;
 import io.datlin.sql.expression.ColumnLiteralExpression;
-import io.datlin.sql.expression.ConditionsExpression;
+import io.datlin.sql.expression.LogicalExpression;
 import io.datlin.sql.expression.Expression;
 import io.datlin.sql.expression.SelectExpression;
 import io.datlin.sql.expression.TableLiteralExpression;
 import io.datlin.sql.expression.UuidValueExpression;
 import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
-
-import java.nio.file.attribute.UserPrincipalLookupService;
 
 public class GenericSqlBuilder implements SqlBuilder {
 
@@ -23,8 +21,8 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         if (expression instanceof SelectExpression) {
             build((SelectExpression) expression, sql, context);
-        } else if (expression instanceof ConditionsExpression) {
-            build((ConditionsExpression) expression, sql, context);
+        } else if (expression instanceof LogicalExpression) {
+            build((LogicalExpression) expression, sql, context);
         } else if (expression instanceof BinaryExpression) {
             build((BinaryExpression) expression, sql, context);
         } else if (expression instanceof UuidValueExpression) {
@@ -87,7 +85,7 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     public void build(
-        @Nonnull final ConditionsExpression conditions,
+        @Nonnull final LogicalExpression conditions,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {

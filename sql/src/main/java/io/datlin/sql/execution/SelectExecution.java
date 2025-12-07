@@ -3,7 +3,7 @@ package io.datlin.sql.execution;
 import io.datlin.sql.builder.SelectExpressionBuilder;
 import io.datlin.sql.builder.SqlBuilder;
 import io.datlin.sql.exception.FetchSQLException;
-import io.datlin.sql.builder.ConditionsExpressionBuilder;
+import io.datlin.sql.builder.LogicalExpressionBuilder;
 import io.datlin.sql.expression.SelectExpression;
 import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
@@ -61,7 +61,7 @@ public class SelectExecution<T> {
 
     @Nonnull
     public SelectExecution<T> where(
-        final @Nonnull ConditionsExpressionBuilder.ConditionsExpressionConfigurer configurer
+        final @Nonnull LogicalExpressionBuilder.ConditionsExpressionConfigurer configurer
     ) {
         builder.where(configurer);
         return this;
