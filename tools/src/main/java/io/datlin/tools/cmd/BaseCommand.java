@@ -6,14 +6,18 @@ import picocli.CommandLine.Option;
 
 public abstract class BaseCommand implements Runnable {
     @Option(names = {"-v", "--verbose"}, defaultValue = "0")
-    private @Nullable Integer verbose;
+    @Nullable
+    private Integer verbose;
 
     @Option(names = {"-wd", "--working-directory"})
-    private @Nullable String workingDirectory;
+    @Nullable
+    private String workingDirectory;
 
     @Option(names = {"-rc", "--repository-configuration"}, defaultValue = "datlin-repository-configuration.xml")
-    private @Nullable String repositoryConfiguration;
+    @Nullable
+    private String repositoryConfiguration;
 
+    @Nullable
     protected Services services;
 
     abstract void handleCommand();

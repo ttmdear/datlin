@@ -14,7 +14,7 @@ public class PathUtil {
     public PathUtil() {
     }
 
-    public @Nonnull Path expand(final @Nonnull Path path) {
+    public @Nonnull Path expand(@Nonnull final Path path) {
         String pathString = path.toString();
 
         // user home ---------------------------------------------------------------------------------------------------
@@ -53,6 +53,6 @@ public class PathUtil {
         windowMatcher.appendTail(windowBuffer);
         pathString = windowBuffer.toString();
 
-        return Paths.get(pathString).toAbsolutePath().normalize();
+        return Paths.get(pathString).normalize();
     }
 }

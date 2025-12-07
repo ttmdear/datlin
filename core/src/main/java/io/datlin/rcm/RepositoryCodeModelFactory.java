@@ -11,13 +11,14 @@ import java.util.stream.Collectors;
 import static java.util.Collections.unmodifiableList;
 
 public class RepositoryCodeModelFactory {
+    @Nonnull
     public RepositoryCodeModel create(
-        final @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration,
-        final @Nonnull DatabaseMetadata databaseMetadata
+        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration,
+        @Nonnull final DatabaseMetadata databaseMetadata
     ) {
-        final @Nonnull String repositoryPackageName = xmlRepositoryConfiguration.getPackage();
-        final @Nonnull String recordsPackageName = repositoryPackageName + ".records";
-        final @Nonnull List<RecordCodeModel> records = new ArrayList<>();
+        final String repositoryPackageName = xmlRepositoryConfiguration.getPackage();
+        final String recordsPackageName = repositoryPackageName + ".records";
+        final List<RecordCodeModel> records = new ArrayList<>();
 
         for (final DatabaseMetadata.Table table : databaseMetadata.tables()) {
             records.add(createRecordCodeModel(
@@ -34,10 +35,11 @@ public class RepositoryCodeModelFactory {
         );
     }
 
-    private @Nonnull RecordCodeModel createRecordCodeModel(
-        final @Nonnull String recordsPackageName,
-        final @Nonnull DatabaseMetadata.Table table,
-        final @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration
+    @Nonnull
+    private RecordCodeModel createRecordCodeModel(
+        @Nonnull final String recordsPackageName,
+        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
     ) {
         final List<RecordFieldCodeModel<?>> primaryKeys = table.columns().stream()
             .filter(DatabaseMetadata.Column::primaryKey)
@@ -68,7 +70,8 @@ public class RepositoryCodeModelFactory {
      *
      * @return The converted string in PascalCase format.
      */
-    private @Nonnull String toPascalCase(final @Nonnull String name) {
+    @Nonnull
+    private String toPascalCase(@Nonnull final String name) {
         // Step 1: Normalize separators. Replace hyphens and spaces with underscores.
         final String underscoredName = name.replace('-', '_').replace(' ', '_');
 
@@ -99,7 +102,8 @@ public class RepositoryCodeModelFactory {
         return pascalCaseString.toString();
     }
 
-    private @Nonnull String toCamelCase(final @Nonnull String name) {
+    @Nonnull
+    private String toCamelCase(@Nonnull final String name) {
         if (name.isEmpty()) {
             return name;
         }
@@ -144,7 +148,8 @@ public class RepositoryCodeModelFactory {
         return camelCaseString.toString();
     }
 
-    private <T> Class<T> getJavaType(final @Nonnull String type) {
+    @Nonnull
+    private <T> Class<T> getJavaType(@Nonnull final String type) {
         final String normalizedType = type.toLowerCase().split("\\(")[0].trim();
         final Class<?> javaClass = switch (normalizedType) {
             // Numeric Types
@@ -184,10 +189,11 @@ public class RepositoryCodeModelFactory {
         return (Class<T>) javaClass;
     }
 
-    private @Nonnull RecordFieldCodeModel<?> createRecordFieldCodeModel(
-        final @Nonnull DatabaseMetadata.Column column
+    @Nonnull
+    private RecordFieldCodeModel<?> createRecordFieldCodeModel(
+        @Nonnull final DatabaseMetadata.Column column
     ) {
-        final @Nonnull String name = toCamelCase(column.name());
+        final String name = toCamelCase(column.name());
         final Class<?> javaType = getJavaType(column.type());
         return new RecordFieldCodeModel<>(
             name,

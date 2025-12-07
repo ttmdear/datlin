@@ -14,11 +14,11 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class TemplateProcessor {
-    private final @Nonnull FilesUtil fileUtils;
-    private final @Nonnull Configuration configuration;
+    private @Nonnull final FilesUtil fileUtils;
+    private @Nonnull final Configuration configuration;
 
     public TemplateProcessor(
-        final @Nonnull FilesUtil fileUtils
+        @Nonnull final FilesUtil fileUtils
     ) {
         this.fileUtils = fileUtils;
 
@@ -34,9 +34,9 @@ public class TemplateProcessor {
     }
 
     public void process(
-        final @Nonnull Map<String, Object> model,
-        final @Nonnull String template,
-        final @Nonnull String target
+        @Nonnull final Map<String, Object> model,
+        @Nonnull final String template,
+        @Nonnull final String target
     ) {
         try {
             fileUtils.createDirectories(Path.of(target).getParent());

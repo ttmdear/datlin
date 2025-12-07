@@ -14,9 +14,9 @@ import jakarta.annotation.Nullable;
 import java.nio.file.Path;
 
 public class Services {
-    private final @Nonnull Integer verbose;
-    private final @Nonnull String workingDirectoryPath;
-    private final @Nonnull String xmlRepositoryConfigurationPath;
+    private @Nonnull final Integer verbose;
+    private @Nonnull final String workingDirectoryPath;
+    private @Nonnull final String xmlRepositoryConfigurationPath;
 
     private @Nullable PathUtil pathUtil;
     private @Nullable FilesUtil filesUtil = null;
@@ -28,22 +28,22 @@ public class Services {
     private @Nullable TemplateProcessor templateProcessor = null;
 
     public Services(
-        final @Nonnull Integer verbose,
-        final @Nonnull String workingDirectoryPath,
-        final @Nonnull String xmlRepositoryConfigurationPath
+        @Nonnull final Integer verbose,
+        @Nonnull final String workingDirectoryPath,
+        @Nonnull final String xmlRepositoryConfigurationPath
     ) {
         this.pathUtil = new PathUtil();
         this.verbose = verbose;
         this.workingDirectoryPath = pathUtil.expand(Path.of(workingDirectoryPath)).toString();
 
         // preparing repository configuration path ---------------------------------------------------------------------
-        Path workingDirectoryPath1 = pathUtil.expand(Path.of(xmlRepositoryConfigurationPath));
+        Path xmlRepositoryConfigurationPath1 = pathUtil.expand(Path.of(xmlRepositoryConfigurationPath));
 
-        if (!workingDirectoryPath1.isAbsolute()) {
-            workingDirectoryPath1 = workingDirectoryPath1.resolve(workingDirectoryPath1);
+        if (!xmlRepositoryConfigurationPath1.isAbsolute()) {
+            xmlRepositoryConfigurationPath1 = Path.of(workingDirectoryPath).resolve(xmlRepositoryConfigurationPath1);
         }
 
-        this.xmlRepositoryConfigurationPath = workingDirectoryPath1.toString();
+        this.xmlRepositoryConfigurationPath = xmlRepositoryConfigurationPath1.toString();
     }
 
     public @Nonnull Integer verbose() {

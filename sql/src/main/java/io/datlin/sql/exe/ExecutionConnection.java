@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.util.function.Supplier;
 
 public class ExecutionConnection {
-    private final @Nonnull Supplier<Connection> connectionSupplier;
+    private @Nonnull final Supplier<Connection> connectionSupplier;
     private @Nullable Connection connection;
 
     public ExecutionConnection(@Nonnull final Supplier<Connection> connectionSupplier) {

@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class DatabaseMetadataFactory {
     public @Nonnull DatabaseMetadata create(
-        final @Nonnull Connection connection
+        @Nonnull final Connection connection
     ) throws SQLException {
         return new DatabaseMetadata(
             getTables(connection)
@@ -24,7 +24,7 @@ public class DatabaseMetadataFactory {
     }
 
     private @Nonnull List<Table> getTables(
-        final @Nonnull Connection connection
+        @Nonnull final Connection connection
     ) throws SQLException {
         final DatabaseMetaData databaseMetaData = connection.getMetaData();
         final ResultSet tablesResultSet = databaseMetaData.getTables(
@@ -45,8 +45,8 @@ public class DatabaseMetadataFactory {
     }
 
     private @Nonnull List<Column> getColumns(
-        final @Nonnull String tableName,
-        final @Nonnull DatabaseMetaData databaseMetaData
+        @Nonnull final String tableName,
+        @Nonnull final DatabaseMetaData databaseMetaData
     ) throws SQLException {
         final ResultSet columnsResultSet = databaseMetaData.getColumns(
             null,
@@ -71,8 +71,8 @@ public class DatabaseMetadataFactory {
     }
 
     private @Nonnull Set<String> getPrimaryKeys(
-        final @Nonnull String tableName,
-        final @Nonnull DatabaseMetaData metaData
+        @Nonnull final String tableName,
+        @Nonnull final DatabaseMetaData metaData
     ) throws SQLException {
         final ResultSet resultSet = metaData.getPrimaryKeys(null, null, tableName);
         final Set<String> primaryKeys = new HashSet<>();

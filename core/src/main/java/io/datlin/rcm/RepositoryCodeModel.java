@@ -13,9 +13,9 @@ public record RepositoryCodeModel(
     @Nonnull List<RecordCodeModel> records
 ) {
     public RepositoryCodeModel(
-        final @Nonnull String packageName,
-        final @Nonnull String recordsPackageName,
-        final @Nonnull List<RecordCodeModel> records
+        @Nonnull final String packageName,
+        @Nonnull final String recordsPackageName,
+        @Nonnull final List<RecordCodeModel> records
     ) {
         this.packageName = packageName;
         this.recordsPackageName = recordsPackageName;

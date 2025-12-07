@@ -7,25 +7,25 @@ import io.datlin.sql.ast.Node;
 @SuppressWarnings("ClassCanBeRecord")
 public class Identifier implements Node
 {
-    final @Nonnull String qualifier;
-    final @Nonnull String identifier;
+    @Nonnull final String qualifier;
+    @Nonnull final String identifier;
 
     Identifier(
-        final @Nonnull String qualifier,
-        final @Nonnull String identifier
+        @Nonnull final String qualifier,
+        @Nonnull final String identifier
     ) {
         this.qualifier = qualifier;
         this.identifier = identifier;
     }
 
     public static @Nonnull Identifier of(
-        final @Nonnull String qualifier,
-        final @Nonnull String identifier
+        @Nonnull final String qualifier,
+        @Nonnull final String identifier
     ) {
         return new Identifier(qualifier, identifier);
     }
 
-    public static @Nonnull Identifier of(final @Nonnull String identifier) {
+    public static @Nonnull Identifier of(@Nonnull final String identifier) {
         final String[] parts = identifier.split("\\.");
 
         if (parts.length == 1) {

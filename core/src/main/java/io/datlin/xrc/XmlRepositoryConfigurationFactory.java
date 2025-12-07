@@ -12,14 +12,14 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class XmlRepositoryConfigurationFactory {
-    private final @Nonnull FilesUtil filesUtil;
+    private @Nonnull final FilesUtil filesUtil;
 
-    public XmlRepositoryConfigurationFactory(final @Nonnull FilesUtil filesUtil) {
+    public XmlRepositoryConfigurationFactory(@Nonnull final FilesUtil filesUtil) {
         this.filesUtil = filesUtil;
     }
 
     public XmlRepositoryConfiguration create(
-        final @Nonnull String repositoryConfigurationPath
+        @Nonnull final String repositoryConfigurationPath
     ) {
         final Path repositoryConfigurationPath1 = Path.of(repositoryConfigurationPath);
 
@@ -33,7 +33,7 @@ public class XmlRepositoryConfigurationFactory {
     }
 
     private @Nonnull XmlRepositoryConfiguration loadXmlRepositoryConfiguration(
-        final @Nonnull String repositoryConfigurationPath
+        @Nonnull final String repositoryConfigurationPath
     ) {
         try {
             final JAXBContext context = JAXBContext.newInstance("io.datlin.xrc.generated");

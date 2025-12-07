@@ -51,9 +51,9 @@ public class SelectExecution<T> {
 
     @Nonnull
     public SelectExecution<T> from(
-        final @Nonnull String schema,
-        final @Nonnull String name,
-        final @Nonnull String alias
+        @Nonnull final String schema,
+        @Nonnull final String name,
+        @Nonnull final String alias
     ) {
         builder.from(schema, name, alias);
         return this;
@@ -61,7 +61,7 @@ public class SelectExecution<T> {
 
     @Nonnull
     public SelectExecution<T> where(
-        final @Nonnull LogicalBuilder.LogicalConfigurer configurer
+        @Nonnull final LogicalBuilder.LogicalConfigurer configurer
     ) {
         builder.where(configurer);
         return this;

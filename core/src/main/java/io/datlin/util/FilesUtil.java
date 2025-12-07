@@ -23,7 +23,7 @@ import java.util.zip.CheckedInputStream;
 import jakarta.annotation.Nonnull;
 
 public class FilesUtil {
-    public @Nonnull InputStream getInputStreamFromResource(final @Nonnull String path) {
+    public @Nonnull InputStream getInputStreamFromResource(@Nonnull final String path) {
         final InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
 
         if (inputStream == null) {
@@ -33,7 +33,7 @@ public class FilesUtil {
         return inputStream;
     }
 
-    public @Nonnull InputStream getInputStream(final @Nonnull Path path) {
+    public @Nonnull InputStream getInputStream(@Nonnull final Path path) {
         try {
             if (!Files.exists(path)) {
                 throw new IllegalArgumentException("File does not exist: " + path);
@@ -49,7 +49,7 @@ public class FilesUtil {
         }
     }
 
-    public long getSize(final @Nonnull Path path) {
+    public long getSize(@Nonnull final Path path) {
         try {
             if (!Files.exists(path)) {
                 throw new IllegalArgumentException("File does not exist: " + path);
@@ -66,20 +66,20 @@ public class FilesUtil {
     }
 
     public boolean exists(
-        final @Nonnull Path path,
-        final @Nonnull LinkOption... options
+        @Nonnull final Path path,
+        @Nonnull final LinkOption... options
     ) {
         return Files.exists(path, options);
     }
 
-    public boolean isReadable(final @Nonnull Path path) {
+    public boolean isReadable(@Nonnull final Path path) {
         return Files.isReadable(path);
     }
 
     public void copy(
-        final @Nonnull InputStream inputStream,
-        final @Nonnull Path target,
-        final @Nonnull CopyOption... options
+        @Nonnull final InputStream inputStream,
+        @Nonnull final Path target,
+        @Nonnull final CopyOption... options
     ) {
         try {
             Files.createDirectories(target.getParent());
@@ -89,7 +89,7 @@ public class FilesUtil {
         }
     }
 
-    public void delete(final @Nonnull Path path) {
+    public void delete(@Nonnull final Path path) {
         try {
             if (Files.notExists(path)) {
                 throw new IllegalArgumentException("File does not exist: " + path);
@@ -106,8 +106,8 @@ public class FilesUtil {
     }
 
     public @Nonnull Stream<Path> walk(
-        final @Nonnull Path start,
-        final @Nonnull FileVisitOption... options
+        @Nonnull final Path start,
+        @Nonnull final FileVisitOption... options
     ) {
         try {
             return Files.walk(start, options);
@@ -117,10 +117,10 @@ public class FilesUtil {
     }
 
     public @Nonnull Stream<Path> walk(
-        final @Nonnull Path start,
-        final @Nonnull List<String> exclude,
-        final @Nonnull List<String> include,
-        final @Nonnull FileVisitOption... options
+        @Nonnull final Path start,
+        @Nonnull final List<String> exclude,
+        @Nonnull final List<String> include,
+        @Nonnull final FileVisitOption... options
     ) {
         final List<PathMatcher> includeMatchers = include.stream()
             .map(pattern -> FileSystems.getDefault().getPathMatcher("glob:" + pattern))
@@ -147,7 +147,7 @@ public class FilesUtil {
         }
     }
 
-    public @Nonnull Stream<Path> list(final @Nonnull Path dir) {
+    public @Nonnull Stream<Path> list(@Nonnull final Path dir) {
         try {
             return Files.list(dir);
         } catch (IOException e) {
@@ -156,11 +156,11 @@ public class FilesUtil {
 
     }
 
-    public boolean isDirectory(final @Nonnull Path path, final @Nonnull LinkOption... options) {
+    public boolean isDirectory(@Nonnull final Path path, @Nonnull final LinkOption... options) {
         return Files.isDirectory(path, options);
     }
 
-    public void createDirectories(final @Nonnull Path dir, final @Nonnull FileAttribute<?>... attrs) {
+    public void createDirectories(@Nonnull final Path dir, @Nonnull final FileAttribute<?>... attrs) {
         try {
             Files.createDirectories(dir, attrs);
         } catch (IOException e) {
@@ -168,7 +168,7 @@ public class FilesUtil {
         }
     }
 
-    public boolean isEmpty(final @Nonnull Path path) {
+    public boolean isEmpty(@Nonnull final Path path) {
         try {
             if (Files.isDirectory(path)) {
                 try (Stream<Path> entries = Files.list(path)) {
@@ -182,11 +182,11 @@ public class FilesUtil {
         }
     }
 
-    public @Nonnull Path getFileName(final @Nonnull Path path) {
+    public @Nonnull Path getFileName(@Nonnull final Path path) {
         return getFileName(path, false);
     }
 
-    public @Nonnull Path getFileName(final @Nonnull Path path, boolean noExtension) {
+    public @Nonnull Path getFileName(@Nonnull final Path path, boolean noExtension) {
         final Path fileName = path.getFileName();
 
         if (fileName == null) {
@@ -203,7 +203,7 @@ public class FilesUtil {
         return Path.of(name);
     }
 
-    public @Nonnull Long getLastModifiedTime(final @Nonnull Path file) {
+    public @Nonnull Long getLastModifiedTime(@Nonnull final Path file) {
         try {
             return Files.getLastModifiedTime(file).toMillis();
         } catch (IOException e) {
@@ -211,7 +211,7 @@ public class FilesUtil {
         }
     }
 
-    public void setLastModifiedTime(final @Nonnull Path path, final long time) {
+    public void setLastModifiedTime(@Nonnull final Path path, final long time) {
         try {
             Files.setLastModifiedTime(path, FileTime.fromMillis(time));
         } catch (IOException e) {
@@ -219,7 +219,7 @@ public class FilesUtil {
         }
     }
 
-    public long calculateCRC32(final @Nonnull Path path) throws IOException {
+    public long calculateCRC32(@Nonnull final Path path) throws IOException {
         final File file = path.toFile();
         try (final InputStream in = new BufferedInputStream(new FileInputStream(file))) {
             final CRC32 crc = new CRC32();

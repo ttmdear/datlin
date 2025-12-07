@@ -16,14 +16,14 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class RepositoryCodeGenerator {
-    private final @Nonnull String xmlRepositoryConfigurationPath;
-    private final @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration;
-    private final @Nonnull TemplateProcessor templateProcessor;
+    private @Nonnull final String xmlRepositoryConfigurationPath;
+    private @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration;
+    private @Nonnull final TemplateProcessor templateProcessor;
 
     public RepositoryCodeGenerator(
-        final @Nonnull String xmlRepositoryConfigurationPath,
-        final @Nonnull XmlRepositoryConfiguration xmlRepositoryConfiguration,
-        final @Nonnull TemplateProcessor templateProcessor
+        @Nonnull final String xmlRepositoryConfigurationPath,
+        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration,
+        @Nonnull final TemplateProcessor templateProcessor
     ) {
         this.xmlRepositoryConfigurationPath = xmlRepositoryConfigurationPath;
         this.xmlRepositoryConfiguration = xmlRepositoryConfiguration;
@@ -73,7 +73,7 @@ public class RepositoryCodeGenerator {
     }
 
     private @Nonnull String getRecordsOutput(
-        final @Nonnull RepositoryCodeModel repositoryCodeModel
+        @Nonnull final RepositoryCodeModel repositoryCodeModel
     ) {
         final String recordsPackagePath = repositoryCodeModel.recordsPackageName()
             .replace(".", "/");
