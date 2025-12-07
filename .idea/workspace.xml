@@ -5,13 +5,71 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/ArithmeticNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/ComparisonOperator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/JoinNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/LogicalOperator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/MatchNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/Node.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/LogicalBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/ConditionsExpressionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/LogicalExpressionBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SelectExpressionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SelectExpressionBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/execution/SelectExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/execution/SelectExecution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ConditionsExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/LogicalExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ColumnDataType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ColumnDataType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ColumnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ColumnType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ConnectionDriverType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ConnectionDriverType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ConnectionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ConnectionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ParameterType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ParameterType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ProcedureType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ProcedureType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/QueryType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/QueryType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/SqlContentType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/SqlContentType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/LogicalExpressionBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SelectExpressionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SelectBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/builder/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Fetch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/From.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/GroupBy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Having.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/InnerJoin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/LeftJoin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Limit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Offset.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/OrderBy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Where.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/clause/Window.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/connection/ConnectionProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/con/ConnectionProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exception/FetchSQLException.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/FetchSQLException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exception/FromNotSetException.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/FromNotSetException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/execution/ExecutionConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/ExecutionConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/execution/SelectExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/SelectExecution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/ComparisonNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/BinaryOperator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/ColumnNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnLiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/ColumnLiteralNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/ColumnReferenceExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/Expression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/FromExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/FromNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/JoinExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/LogicOperator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/LogicalExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/LogicalNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/SelectExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/SelectNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/TableLiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/TableLiteralNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/expression/UuidValueExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/UuidValueNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/DatabaseMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/mtd/DatabaseMetadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/metadata/DatabaseMetadataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/mtd/DatabaseMetadataFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Delete.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Insert.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/query/Update.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/RelationExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/RelationExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValueExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValueExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValuesExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ValuesExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/builder/GenericSqlBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/GenericSqlBuilderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/expression/SelectExpressionBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/SelectBuilderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/Services.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +149,9 @@
     "Gradle.GenericSqlBuilderTest.buildSelectNoWhere.executor": "Run",
     "Gradle.GenericSqlBuilderTest.executor": "Run",
     "Gradle.PostgreSqlBuilderTest.buildSelect.executor": "Debug",
+    "Gradle.SelectBuilderTest (1).executor": "Run",
+    "Gradle.SelectBuilderTest.buildNoWhere.executor": "Debug",
+    "Gradle.SelectBuilderTest.executor": "Run",
     "Gradle.SelectExpressionBuilderTest.build.executor": "Run",
     "Gradle.SelectExpressionBuilderTest.buildNoWhere.executor": "Run",
     "Gradle.SelectExpressionBuilderTest.executor": "Run",
@@ -117,6 +178,9 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="io.datlin.sql.ast" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="io.datlin.sql.expression" />
     </key>
@@ -126,30 +190,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.datlin [publish]">
-    <configuration name="GenericSqlBuilderTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":sql:test" />
-            <option value="--tests" />
-            <option value="&quot;io.datlin.sql.builder.GenericSqlBuilderTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="GenericSqlBuilderTest.buildSelectEmptyWhere" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -174,7 +214,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="GenericSqlBuilderTest.buildSelectNoWhere" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SelectBuilderTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -187,7 +227,7 @@
           <list>
             <option value=":sql:test" />
             <option value="--tests" />
-            <option value="&quot;io.datlin.sql.builder.GenericSqlBuilderTest.buildSelectNoWhere&quot;" />
+            <option value="&quot;io.datlin.sql.bld.SelectBuilderTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -198,7 +238,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SelectExpressionBuilderTest.buildNoWhere" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SelectBuilderTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -211,7 +251,31 @@
           <list>
             <option value=":sql:test" />
             <option value="--tests" />
-            <option value="&quot;io.datlin.sql.expression.SelectExpressionBuilderTest.buildNoWhere&quot;" />
+            <option value="&quot;io.datlin.sql.ast.SelectBuilderTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="SelectBuilderTest.buildNoWhere" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":sql:test" />
+            <option value="--tests" />
+            <option value="&quot;io.datlin.sql.bld.SelectBuilderTest.buildNoWhere&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -247,10 +311,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.datlin [publish]" />
+        <item itemvalue="Gradle.SelectBuilderTest (1)" />
+        <item itemvalue="Gradle.SelectBuilderTest.buildNoWhere" />
+        <item itemvalue="Gradle.SelectBuilderTest" />
         <item itemvalue="Gradle.GenericSqlBuilderTest.buildSelectEmptyWhere" />
-        <item itemvalue="Gradle.GenericSqlBuilderTest" />
-        <item itemvalue="Gradle.GenericSqlBuilderTest.buildSelectNoWhere" />
-        <item itemvalue="Gradle.SelectExpressionBuilderTest.buildNoWhere" />
       </list>
     </recent_temporary>
   </component>
@@ -272,7 +336,7 @@
       <workItem from="1764963615847" duration="4513000" />
       <workItem from="1765031171669" duration="2792000" />
       <workItem from="1765049947021" duration="9681000" />
-      <workItem from="1765134752583" duration="1888000" />
+      <workItem from="1765134752583" duration="6830000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
@@ -282,7 +346,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765136142554</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="increase">
+      <option name="closed" value="true" />
+      <created>1765136726677</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1765136726677</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

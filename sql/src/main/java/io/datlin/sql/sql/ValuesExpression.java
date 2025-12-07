@@ -2,9 +2,9 @@ package io.datlin.sql.sql;
 
 import java.util.List;
 
-import io.datlin.sql.expression.Expression;
+import io.datlin.sql.ast.Node;
 
-public final class ValuesExpression implements Expression
+public final class ValuesExpression implements Node
 {
     final List<?> values;
 

@@ -47,7 +47,7 @@ public class ColumnType {
     protected Boolean nullable;
 
     /**
-     * Gets the value of the name property.
+     * Gets the source of the name property.
      * 
      * @return
      *     possible object is
@@ -59,7 +59,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the source of the name property.
      * 
      * @param value
      *     allowed object is
@@ -71,7 +71,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the identity property.
+     * Gets the source of the identity property.
      * 
      * @return
      *     possible object is
@@ -83,7 +83,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the identity property.
+     * Sets the source of the identity property.
      * 
      * @param value
      *     allowed object is
@@ -95,7 +95,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the dataType property.
+     * Gets the source of the dataType property.
      * 
      * @return
      *     possible object is
@@ -107,7 +107,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the dataType property.
+     * Sets the source of the dataType property.
      * 
      * @param value
      *     allowed object is
@@ -119,7 +119,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the nullable property.
+     * Gets the source of the nullable property.
      * 
      * @return
      *     possible object is
@@ -135,7 +135,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the nullable property.
+     * Sets the source of the nullable property.
      * 
      * @param value
      *     allowed object is

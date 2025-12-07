@@ -1,15 +1,13 @@
 package io.datlin.rcm;
 
-import io.datlin.sql.metadata.DatabaseMetadata;
+import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.unmodifiableCollection;
 import static java.util.Collections.unmodifiableList;
 
 public class RepositoryCodeModelFactory {

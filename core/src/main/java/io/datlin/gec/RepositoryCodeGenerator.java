@@ -4,8 +4,8 @@ import io.datlin.frm.TemplateProcessor;
 import io.datlin.rcm.RecordCodeModel;
 import io.datlin.rcm.RepositoryCodeModel;
 import io.datlin.rcm.RepositoryCodeModelFactory;
-import io.datlin.sql.metadata.DatabaseMetadata;
-import io.datlin.sql.metadata.DatabaseMetadataFactory;
+import io.datlin.sql.mtd.DatabaseMetadata;
+import io.datlin.sql.mtd.DatabaseMetadataFactory;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
 

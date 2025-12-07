@@ -3,7 +3,7 @@ package io.datlin.tools;
 import io.datlin.frm.TemplateProcessor;
 import io.datlin.gec.RepositoryCodeGenerator;
 import io.datlin.rcm.RepositoryCodeModel;
-import io.datlin.sql.metadata.DatabaseMetadataFactory;
+import io.datlin.sql.mtd.DatabaseMetadataFactory;
 import io.datlin.util.FilesUtil;
 import io.datlin.util.PathUtil;
 import io.datlin.xrc.XmlRepositoryConfigurationFactory;

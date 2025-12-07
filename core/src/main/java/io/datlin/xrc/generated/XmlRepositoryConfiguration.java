@@ -30,7 +30,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="package" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="connection" type="{http://www.datlin.com/datlin}ConnectionType"/>
- *           <element name="value" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
+ *           <element name="source" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="query" type="{http://www.datlin.com/datlin}QueryType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="procedure" type="{http://www.datlin.com/datlin}ProcedureType" maxOccurs="unbounded" minOccurs="0"/>
  *         </sequence>
@@ -60,7 +60,7 @@ public class XmlRepositoryConfiguration {
     protected String _package;
     @XmlElement(required = true)
     protected ConnectionType connection;
-    @XmlElement(name = "value")
+    @XmlElement(name = "source")
     protected List<TableType> tables;
     @XmlElement(name = "query")
     protected List<QueryType> queries;
@@ -68,7 +68,7 @@ public class XmlRepositoryConfiguration {
     protected List<ProcedureType> procedures;
 
     /**
-     * Gets the value of the output property.
+     * Gets the source of the output property.
      * 
      * @return
      *     possible object is
@@ -80,7 +80,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the value of the output property.
+     * Sets the source of the output property.
      * 
      * @param value
      *     allowed object is
@@ -92,7 +92,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the value of the package property.
+     * Gets the source of the package property.
      * 
      * @return
      *     possible object is
@@ -104,7 +104,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the value of the package property.
+     * Sets the source of the package property.
      * 
      * @param value
      *     allowed object is
@@ -116,7 +116,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the value of the connection property.
+     * Gets the source of the connection property.
      * 
      * @return
      *     possible object is
@@ -128,7 +128,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the value of the connection property.
+     * Sets the source of the connection property.
      * 
      * @param value
      *     allowed object is
@@ -140,7 +140,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the value of the tables property.
+     * Gets the source of the tables property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -162,7 +162,7 @@ public class XmlRepositoryConfiguration {
      * 
      * 
      * @return
-     *     The value of the tables property.
+     *     The source of the tables property.
      */
     public List<TableType> getTables() {
         if (tables == null) {
@@ -172,7 +172,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the value of the queries property.
+     * Gets the source of the queries property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -194,7 +194,7 @@ public class XmlRepositoryConfiguration {
      * 
      * 
      * @return
-     *     The value of the queries property.
+     *     The source of the queries property.
      */
     public List<QueryType> getQueries() {
         if (queries == null) {
@@ -204,7 +204,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the value of the procedures property.
+     * Gets the source of the procedures property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -226,7 +226,7 @@ public class XmlRepositoryConfiguration {
      * 
      * 
      * @return
-     *     The value of the procedures property.
+     *     The source of the procedures property.
      */
     public List<ProcedureType> getProcedures() {
         if (procedures == null) {
