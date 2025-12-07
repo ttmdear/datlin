@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/frm/TemplateProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/frm/TemplateProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/util/FilesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/util/FilesUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/util/PathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/util/PathUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/XmlRepositoryConfigurationFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/XmlRepositoryConfigurationFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/exc/RepositoryConfigurationNotReadableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/exc/RepositoryConfigurationNotReadableException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/ExecutionConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/ExecutionConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/SelectExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/SelectExecution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/mtd/DatabaseMetadataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/mtd/DatabaseMetadataFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/Identifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/Services.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/cmd/BaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/cmd/BaseCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/cmd/DatlinCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/cmd/DatlinCommand.java" afterDir="false" />
-    </list>
+    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -310,7 +293,7 @@
       <workItem from="1764963615847" duration="4513000" />
       <workItem from="1765031171669" duration="2792000" />
       <workItem from="1765049947021" duration="9681000" />
-      <workItem from="1765134752583" duration="7917000" />
+      <workItem from="1765134752583" duration="8000000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
