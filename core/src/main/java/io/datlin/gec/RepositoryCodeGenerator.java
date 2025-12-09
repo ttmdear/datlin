@@ -1,9 +1,11 @@
 package io.datlin.gec;
 
 import io.datlin.frm.TemplateProcessor;
+import io.datlin.rcm.ExecutionCodeModel;
 import io.datlin.rcm.RecordCodeModel;
 import io.datlin.rcm.RepositoryCodeModel;
 import io.datlin.rcm.RepositoryCodeModelFactory;
+import io.datlin.rcm.TableCodeModel;
 import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.sql.mtd.DatabaseMetadataFactory;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
@@ -16,9 +18,15 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class RepositoryCodeGenerator {
-    private @Nonnull final String xmlRepositoryConfigurationPath;
-    private @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration;
-    private @Nonnull final TemplateProcessor templateProcessor;
+
+    @Nonnull
+    private final String xmlRepositoryConfigurationPath;
+
+    @Nonnull
+    private final XmlRepositoryConfiguration xmlRepositoryConfiguration;
+
+    @Nonnull
+    private final TemplateProcessor templateProcessor;
 
     public RepositoryCodeGenerator(
         @Nonnull final String xmlRepositoryConfigurationPath,
@@ -36,9 +44,21 @@ public class RepositoryCodeGenerator {
             .create(xmlRepositoryConfiguration, databaseMetadata);
 
         final String output = getOutput();
-        final String recordsOutput = getRecordsOutput(repositoryCodeModel);
+
+        // generate tables code ----------------------------------------------------------------------------------------
+        final String tablesOutput = getTablesOutput(repositoryCodeModel);
+        for (final TableCodeModel table : repositoryCodeModel.tables()) {
+            templateProcessor.process(
+                Map.of(
+                    "table", table
+                ),
+                "table.ftlh",
+                tablesOutput + "/" + table.simpleName() + ".java"
+            );
+        }
 
         // generate records code ---------------------------------------------------------------------------------------
+        final String recordsOutput = getRecordsOutput(repositoryCodeModel);
         for (final RecordCodeModel record : repositoryCodeModel.records()) {
             templateProcessor.process(
                 Map.of(
@@ -46,6 +66,20 @@ public class RepositoryCodeGenerator {
                 ),
                 "record.ftlh",
                 recordsOutput + "/" + record.simpleName() + ".java"
+            );
+        }
+
+        // generate records code ---------------------------------------------------------------------------------------
+        final String executionsOutput = getExecutionsOutput(repositoryCodeModel);
+
+        for (final ExecutionCodeModel execution : repositoryCodeModel.executions()) {
+            // execution.record().fields().getFirst().getClass().getCanonicalName()
+            templateProcessor.process(
+                Map.of(
+                    "execution", execution
+                ),
+                "execution.ftlh",
+                executionsOutput + "/" + execution.simpleName() + ".java"
             );
         }
     }
@@ -72,7 +106,24 @@ public class RepositoryCodeGenerator {
         }
     }
 
-    private @Nonnull String getRecordsOutput(
+    @Nonnull
+    private String getTablesOutput(
+        @Nonnull final RepositoryCodeModel repositoryCodeModel
+    ) {
+        final String tablesPackagePath = repositoryCodeModel.tablesPackageName()
+            .replace(".", "/");
+
+        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
+            return xmlRepositoryConfiguration.getOutput() + "/" + tablesPackagePath;
+        } else {
+            return Path.of(xmlRepositoryConfigurationPath).getParent()
+                .resolve(xmlRepositoryConfiguration.getOutput())
+                .toAbsolutePath() + "/" + tablesPackagePath;
+        }
+    }
+
+    @Nonnull
+    private String getRecordsOutput(
         @Nonnull final RepositoryCodeModel repositoryCodeModel
     ) {
         final String recordsPackagePath = repositoryCodeModel.recordsPackageName()
@@ -83,7 +134,23 @@ public class RepositoryCodeGenerator {
         } else {
             return Path.of(xmlRepositoryConfigurationPath).getParent()
                 .resolve(xmlRepositoryConfiguration.getOutput())
-                .toAbsolutePath().toString() + "/" + recordsPackagePath;
+                .toAbsolutePath() + "/" + recordsPackagePath;
+        }
+    }
+
+    @Nonnull
+    private String getExecutionsOutput(
+        @Nonnull final RepositoryCodeModel repositoryCodeModel
+    ) {
+        final String executionsPackagePath = repositoryCodeModel.executionsPackageName()
+            .replace(".", "/");
+
+        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
+            return xmlRepositoryConfiguration.getOutput() + "/" + executionsPackagePath;
+        } else {
+            return Path.of(xmlRepositoryConfigurationPath).getParent()
+                .resolve(xmlRepositoryConfiguration.getOutput())
+                .toAbsolutePath() + "/" + executionsPackagePath;
         }
     }
 }

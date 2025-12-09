@@ -18,20 +18,67 @@ public class RepositoryCodeModelFactory {
     ) {
         final String repositoryPackageName = xmlRepositoryConfiguration.getPackage();
         final String recordsPackageName = repositoryPackageName + ".records";
+        final String tablesPackageName = repositoryPackageName + ".tables";
+        final String executionsPackageName = repositoryPackageName + ".executions";
+        final List<TableCodeModel> tables = new ArrayList<>();
         final List<RecordCodeModel> records = new ArrayList<>();
+        final List<ExecutionCodeModel> executions = new ArrayList<>();
 
         for (final DatabaseMetadata.Table table : databaseMetadata.tables()) {
-            records.add(createRecordCodeModel(
+            tables.add(createTableCodeModel(
+                tablesPackageName,
+                table
+            ));
+
+            // create record code model --------------------------------------------------------------------------------
+            final RecordCodeModel recordCodeModel = createRecordCodeModel(
                 recordsPackageName,
                 table,
-                xmlRepositoryConfiguration)
+                xmlRepositoryConfiguration
             );
+
+            records.add(recordCodeModel);
+
+            // create execution code model -----------------------------------------------------------------------------
+            final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
+                executionsPackageName,
+                table,
+                recordCodeModel
+            );
+
+            executions.add(executionCodeModel);
         }
 
         return new RepositoryCodeModel(
             repositoryPackageName,
             recordsPackageName,
-            records
+            tablesPackageName,
+            executionsPackageName,
+            unmodifiableList(tables),
+            unmodifiableList(records),
+            unmodifiableList(executions)
+        );
+    }
+
+    @Nonnull
+    private TableCodeModel createTableCodeModel(
+        @Nonnull final String tablesPackageName,
+        @Nonnull final DatabaseMetadata.Table table
+    ) {
+        final String simpleName = toPascalCase(table.name()) + "Table";
+        final String canonicalName = tablesPackageName + "." + simpleName;
+        final List<TableColumnCodeModel> columns = table.columns().stream()
+            .map(column -> new TableColumnCodeModel(
+                column.name(),
+                column.nullable()
+            )).toList();
+
+        return new TableCodeModel(
+            table.name(),
+            simpleName,
+            canonicalName,
+            tablesPackageName,
+            columns
         );
     }
 
@@ -50,7 +97,7 @@ public class RepositoryCodeModelFactory {
             .map(this::createRecordFieldCodeModel)
             .collect(Collectors.toCollection(ArrayList::new));
 
-        final String simpleName = toPascalCase(table.name());
+        final String simpleName = toPascalCase(table.name()) + "Record";
         final String canonicalName = recordsPackageName + "." + simpleName;
 
         return new RecordCodeModel(
@@ -60,6 +107,24 @@ public class RepositoryCodeModelFactory {
             recordsPackageName,
             unmodifiableList(primaryKeys),
             unmodifiableList(fields)
+        );
+    }
+
+    @Nonnull
+    private ExecutionCodeModel createExecutionCodeModel(
+        @Nonnull final String executionsPackageName,
+        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final RecordCodeModel recordCodeModel
+    ) {
+        final String simpleName = toPascalCase(table.name()) + "Execution";
+        final String canonicalName = executionsPackageName + "." + simpleName;
+
+        return new ExecutionCodeModel(
+            table.name(),
+            simpleName,
+            canonicalName,
+            executionsPackageName,
+            recordCodeModel
         );
     }
 
