@@ -11,7 +11,7 @@ public record ${record.simpleName}(
 <#list record.fields as field>
     <#if field.primaryKey>@Id</#if>
     <#if field.nullable>@Column(name = "${field.columnName}")<#else>@Column(name = "${field.columnName}", nullable = false)</#if>
-    <#if field.nullable>@Nullable<#else>@Nullable</#if> ${field.type.canonicalName} ${field.name}<#if field?has_next>,</#if>
+    <#if field.nullable>@Nullable<#else>@Nullable</#if> ${field.type} ${field.name}<#if field?has_next>,</#if>
 </#list>
 ) {
 

@@ -51,7 +51,7 @@ public class QueryType {
     protected String name;
 
     /**
-     * Gets the source of the parameter property.
+     * Gets the value of the parameter property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -73,7 +73,7 @@ public class QueryType {
      * 
      * 
      * @return
-     *     The source of the parameter property.
+     *     The value of the parameter property.
      */
     public List<ParameterType> getParameter() {
         if (parameter == null) {
@@ -83,7 +83,7 @@ public class QueryType {
     }
 
     /**
-     * Gets the source of the sql property.
+     * Gets the value of the sql property.
      * 
      * @return
      *     possible object is
@@ -95,7 +95,7 @@ public class QueryType {
     }
 
     /**
-     * Sets the source of the sql property.
+     * Sets the value of the sql property.
      * 
      * @param value
      *     allowed object is
@@ -107,7 +107,7 @@ public class QueryType {
     }
 
     /**
-     * Gets the source of the name property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
@@ -119,7 +119,7 @@ public class QueryType {
     }
 
     /**
-     * Sets the source of the name property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is

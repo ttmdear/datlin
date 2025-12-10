@@ -12,16 +12,16 @@ public record RecordCodeModel(
     @Nonnull String simpleName,
     @Nonnull String canonicalName,
     @Nonnull String packageName,
-    @Nonnull List<RecordFieldCodeModel<?>> primaryKeys,
-    @Nonnull List<RecordFieldCodeModel<?>> fields
+    @Nonnull List<RecordFieldCodeModel> primaryKeys,
+    @Nonnull List<RecordFieldCodeModel> fields
 ) {
     public RecordCodeModel(
         @Nonnull String table,
         @Nonnull String simpleName,
         @Nonnull String canonicalName,
         @Nonnull String packageName,
-        @Nonnull List<RecordFieldCodeModel<?>> primaryKeys,
-        @Nonnull List<RecordFieldCodeModel<?>> fields
+        @Nonnull List<RecordFieldCodeModel> primaryKeys,
+        @Nonnull List<RecordFieldCodeModel> fields
     ) {
         this.table = table;
         this.simpleName = simpleName;

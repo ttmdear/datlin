@@ -1,8 +1,11 @@
 package io.datlin.rcm;
 
 import io.datlin.sql.mtd.DatabaseMetadata;
+import io.datlin.xrc.generated.ColumnType;
+import io.datlin.xrc.generated.TableType;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,13 +91,13 @@ public class RepositoryCodeModelFactory {
         @Nonnull final DatabaseMetadata.Table table,
         @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
     ) {
-        final List<RecordFieldCodeModel<?>> primaryKeys = table.columns().stream()
+        final List<RecordFieldCodeModel> primaryKeys = table.columns().stream()
             .filter(DatabaseMetadata.Column::primaryKey)
-            .map(this::createRecordFieldCodeModel)
+            .map(column -> createRecordFieldCodeModel(column, table, xmlRepositoryConfiguration))
             .collect(Collectors.toCollection(ArrayList::new));
 
-        final List<RecordFieldCodeModel<?>> fields = table.columns().stream()
-            .map(this::createRecordFieldCodeModel)
+        final List<RecordFieldCodeModel> fields = table.columns().stream()
+            .map(column -> createRecordFieldCodeModel(column, table, xmlRepositoryConfiguration))
             .collect(Collectors.toCollection(ArrayList::new));
 
         final String simpleName = toPascalCase(table.name()) + "Record";
@@ -255,17 +258,86 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nonnull
-    private RecordFieldCodeModel<?> createRecordFieldCodeModel(
-        @Nonnull final DatabaseMetadata.Column column
+    private String mapSqlTypeToJavaTypeCanonicalName(@Nonnull final String type) {
+        final String normalizedType = type.toLowerCase().split("\\(")[0].trim();
+        final String javaClass = switch (normalizedType) {
+            // Numeric Types
+            case "smallint", "int2" -> Short.class.getCanonicalName();
+            case "integer", "int4" -> Integer.class.getCanonicalName();
+            case "bigint", "int8", "serial", "bigserial" -> Long.class.getCanonicalName();
+            case "real", "float4" -> Float.class.getCanonicalName();
+            case "double precision", "float8" -> Double.class.getCanonicalName();
+            case "numeric", "decimal" -> java.math.BigDecimal.class.getCanonicalName();
+
+            // Character/String Types
+            case "varchar", "character varying", "char", "character", "text" -> String.class.getCanonicalName();
+            case "uuid" -> java.util.UUID.class.getCanonicalName();
+
+            // Boolean Type
+            case "boolean", "bool" -> Boolean.class.getCanonicalName();
+
+            // Date/Time Types (Using Java 8+ time classes)
+            case "date" -> java.time.LocalDate.class.getCanonicalName();
+            case "time", "time without time zone" -> java.time.LocalTime.class.getCanonicalName();
+            case "timestamp", "timestamp without time zone" -> java.sql.Timestamp.class.getCanonicalName();
+            case "timestamptz", "timestamp with time zone" -> java.sql.Timestamp.class.getCanonicalName();
+            case "timetz", "time with time zone" -> java.sql.Timestamp.class.getCanonicalName();
+
+            // Binary/LOB Types
+            case "bytea" -> byte[].class.getCanonicalName(); // Often mapped to byte array
+
+            // Special/Other Types
+            case "json", "jsonb" ->
+                String.class.getCanonicalName(); // Often treated as a String, or a custom type/library object
+
+            // Default Case for Unsupported or Unknown Types
+            default -> throw new IllegalArgumentException("Unsupported PostgreSQL type: " + type);
+        };
+
+        return javaClass;
+    }
+
+    @Nonnull
+    private RecordFieldCodeModel createRecordFieldCodeModel(
+        @Nonnull final DatabaseMetadata.Column column,
+        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
     ) {
+        final ColumnType columnConfiguration = getColumnConfiguration(table, column, xmlRepositoryConfiguration);
+        String type = mapSqlTypeToJavaTypeCanonicalName(column.type());
+
+        if (columnConfiguration != null && columnConfiguration.getJavaType() != null) {
+            type = columnConfiguration.getJavaType();
+        }
+
         final String name = toCamelCase(column.name());
-        final Class<?> javaType = getJavaType(column.type());
-        return new RecordFieldCodeModel<>(
+        return new RecordFieldCodeModel(
             name,
             column.name(),
-            javaType,
+            type,
             column.nullable(),
             column.primaryKey()
         );
+    }
+
+    @Nullable
+    private ColumnType getColumnConfiguration(
+        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final DatabaseMetadata.Column column,
+        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
+    ) {
+        for (final TableType tableConfiguration : xmlRepositoryConfiguration.getTables()) {
+            if (!tableConfiguration.getName().equalsIgnoreCase(table.name())) {
+                continue;
+            }
+
+            for (final ColumnType columnConfiguration : tableConfiguration.getColumns()) {
+                if (columnConfiguration.getName().equalsIgnoreCase(column.name())) {
+                    return columnConfiguration;
+                }
+            }
+        }
+
+        return null;
     }
 }

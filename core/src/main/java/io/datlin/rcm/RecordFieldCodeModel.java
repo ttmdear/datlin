@@ -2,10 +2,10 @@ package io.datlin.rcm;
 
 import jakarta.annotation.Nonnull;
 
-public record RecordFieldCodeModel<T>(
+public record RecordFieldCodeModel(
     @Nonnull String name,
     @Nonnull String columnName,
-    @Nonnull Class<T> type,
+    @Nonnull String type,
     @Nonnull Boolean nullable,
     @Nonnull Boolean primaryKey
 ) {

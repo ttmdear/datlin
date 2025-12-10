@@ -48,7 +48,7 @@ public class TableType {
     protected String name;
 
     /**
-     * Gets the source of the columns property.
+     * Gets the value of the columns property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -70,7 +70,7 @@ public class TableType {
      * 
      * 
      * @return
-     *     The source of the columns property.
+     *     The value of the columns property.
      */
     public List<ColumnType> getColumns() {
         if (columns == null) {
@@ -80,7 +80,7 @@ public class TableType {
     }
 
     /**
-     * Gets the source of the name property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
@@ -92,7 +92,7 @@ public class TableType {
     }
 
     /**
-     * Sets the source of the name property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is

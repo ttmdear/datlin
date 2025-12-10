@@ -21,9 +21,9 @@ import jakarta.xml.bind.annotation.XmlType;
  * <pre>{@code
  * <simpleType name="ConnectionDriverType">
  *   <restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     <enumeration source="postgres"/>
- *     <enumeration source="mysql"/>
- *     <enumeration source="oracle"/>
+ *     <enumeration value="postgres"/>
+ *     <enumeration value="mysql"/>
+ *     <enumeration value="oracle"/>
  *   </restriction>
  * </simpleType>
  * }</pre>
@@ -46,24 +46,24 @@ public enum ConnectionDriverType {
     }
 
     /**
-     * Gets the source associated to the enum constant.
+     * Gets the value associated to the enum constant.
      * 
      * @return
-     *     The source linked to the enum.
+     *     The value linked to the enum.
      */
     public String value() {
         return value;
     }
 
     /**
-     * Gets the enum associated to the source passed as parameter.
+     * Gets the enum associated to the value passed as parameter.
      * 
      * @param v
-     *     The source to get the enum from.
+     *     The value to get the enum from.
      * @return
-     *     The enum which corresponds to the source, if it exists.
+     *     The enum which corresponds to the value, if it exists.
      * @throws IllegalArgumentException
-     *     If no source matches in the enum declaration.
+     *     If no value matches in the enum declaration.
      */
     public static ConnectionDriverType fromValue(String v) {
         for (ConnectionDriverType c: ConnectionDriverType.values()) {

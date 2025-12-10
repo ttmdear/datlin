@@ -39,7 +39,7 @@ public class SqlContentType {
     protected String content;
 
     /**
-     * Gets the source of the content property.
+     * Gets the value of the content property.
      * 
      * @return
      *     possible object is
@@ -51,7 +51,7 @@ public class SqlContentType {
     }
 
     /**
-     * Sets the source of the content property.
+     * Sets the value of the content property.
      * 
      * @param value
      *     allowed object is

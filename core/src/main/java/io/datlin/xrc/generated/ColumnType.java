@@ -23,9 +23,9 @@ import jakarta.xml.bind.annotation.XmlType;
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       <attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       <attribute name="identity" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *       <attribute name="data-type" use="required" type="{http://www.datlin.com/datlin}ColumnDataType" />
- *       <attribute name="nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
+ *       <attribute name="primary-key" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       <attribute name="java-type" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       <attribute name="nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -39,15 +39,15 @@ public class ColumnType {
 
     @XmlAttribute(name = "name", required = true)
     protected String name;
-    @XmlAttribute(name = "identity")
-    protected Boolean identity;
-    @XmlAttribute(name = "data-type", required = true)
-    protected ColumnDataType dataType;
+    @XmlAttribute(name = "primary-key")
+    protected Boolean primaryKey;
+    @XmlAttribute(name = "java-type")
+    protected String javaType;
     @XmlAttribute(name = "nullable")
     protected Boolean nullable;
 
     /**
-     * Gets the source of the name property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
@@ -59,7 +59,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the source of the name property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
@@ -71,55 +71,55 @@ public class ColumnType {
     }
 
     /**
-     * Gets the source of the identity property.
+     * Gets the value of the primaryKey property.
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
-    public Boolean isIdentity() {
-        return identity;
+    public Boolean isPrimaryKey() {
+        return primaryKey;
     }
 
     /**
-     * Sets the source of the identity property.
+     * Sets the value of the primaryKey property.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setIdentity(Boolean value) {
-        this.identity = value;
+    public void setPrimaryKey(Boolean value) {
+        this.primaryKey = value;
     }
 
     /**
-     * Gets the source of the dataType property.
+     * Gets the value of the javaType property.
      * 
      * @return
      *     possible object is
-     *     {@link ColumnDataType }
+     *     {@link String }
      *     
      */
-    public ColumnDataType getDataType() {
-        return dataType;
+    public String getJavaType() {
+        return javaType;
     }
 
     /**
-     * Sets the source of the dataType property.
+     * Sets the value of the javaType property.
      * 
      * @param value
      *     allowed object is
-     *     {@link ColumnDataType }
+     *     {@link String }
      *     
      */
-    public void setDataType(ColumnDataType value) {
-        this.dataType = value;
+    public void setJavaType(String value) {
+        this.javaType = value;
     }
 
     /**
-     * Gets the source of the nullable property.
+     * Gets the value of the nullable property.
      * 
      * @return
      *     possible object is
@@ -128,14 +128,14 @@ public class ColumnType {
      */
     public boolean isNullable() {
         if (nullable == null) {
-            return false;
+            return true;
         } else {
             return nullable;
         }
     }
 
     /**
-     * Sets the source of the nullable property.
+     * Sets the value of the nullable property.
      * 
      * @param value
      *     allowed object is

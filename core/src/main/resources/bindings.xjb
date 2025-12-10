@@ -6,7 +6,7 @@
 >
     <jxb:bindings node="//xs:schema">
         <jxb:schemaBindings>
-            <jxb:package name="dev.datlin.xrc.generated"/>
+            <jxb:package name="io.datlin.xrc.generated"/>
         </jxb:schemaBindings>
     </jxb:bindings>
 

@@ -3,6 +3,7 @@ package ${execution.packageName};
 import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exe.ExecutionConnection;
 import io.datlin.sql.exe.SelectExecution;
+import io.datlin.sql.sql.ResultSetMapper;
 import jakarta.annotation.Nonnull;
 import ${execution.record.canonicalName};
 
@@ -25,6 +26,8 @@ public class ${execution.simpleName} {
     }
 
     public SelectExecution<${execution.record.simpleName}> select() {
+        final ResultSetMapper resultSetMapper = new ResultSetMapper();
+
         final SelectExecution<${execution.record.simpleName}> selectExecution = new SelectExecution<>(
             executionConnection,
             sqlBuilder,
@@ -32,7 +35,7 @@ public class ${execution.simpleName} {
                     try {
                         return new ${execution.record.simpleName}(
                         <#list execution.record.fields as field>
-                            (${field.type.canonicalName}) resultSet.getObject("${field.columnName}")<#if field?has_next>,</#if>
+                            resultSetMapper.map(resultSet.getObject("${field.columnName}"), ${field.type}.class)<#if field?has_next>,</#if>
                         </#list>
                         );
                     } catch (SQLException e) {
