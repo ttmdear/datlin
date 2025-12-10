@@ -73,7 +73,6 @@ public class RepositoryCodeGenerator {
         final String executionsOutput = getExecutionsOutput(repositoryCodeModel);
 
         for (final ExecutionCodeModel execution : repositoryCodeModel.executions()) {
-            // execution.record().fields().getFirst().getClass().getCanonicalName()
             templateProcessor.process(
                 Map.of(
                     "execution", execution

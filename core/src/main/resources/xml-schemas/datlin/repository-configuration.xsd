@@ -44,7 +44,7 @@
     <xs:complexType name="ColumnType">
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="primary-key" type="xs:boolean"/>
-        <xs:attribute name="data-type" type="ColumnDataType" use="required"/>
+        <xs:attribute name="java-type" type="xs:string"/>
         <xs:attribute name="nullable" type="xs:boolean" default="true"/>
     </xs:complexType>
 
