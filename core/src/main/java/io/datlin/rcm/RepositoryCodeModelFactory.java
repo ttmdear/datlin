@@ -1,6 +1,7 @@
 package io.datlin.rcm;
 
 import io.datlin.sql.mtd.DatabaseMetadata;
+import io.datlin.sql.rsp.DefaultResultSetProcessor;
 import io.datlin.xrc.generated.ColumnType;
 import io.datlin.xrc.generated.TableType;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
@@ -42,10 +43,13 @@ public class RepositoryCodeModelFactory {
 
             records.add(recordCodeModel);
 
+            final String resultSetProcessor = resolveTableResultSetProcessor(table, xmlRepositoryConfiguration);
+
             // create execution code model -----------------------------------------------------------------------------
             final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
                 executionsPackageName,
                 table,
+                resultSetProcessor,
                 recordCodeModel
             );
 
@@ -117,6 +121,7 @@ public class RepositoryCodeModelFactory {
     private ExecutionCodeModel createExecutionCodeModel(
         @Nonnull final String executionsPackageName,
         @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final String resultSetProcessor,
         @Nonnull final RecordCodeModel recordCodeModel
     ) {
         final String simpleName = toPascalCase(table.name()) + "Execution";
@@ -127,6 +132,7 @@ public class RepositoryCodeModelFactory {
             simpleName,
             canonicalName,
             executionsPackageName,
+            resultSetProcessor,
             recordCodeModel
         );
     }
@@ -339,5 +345,21 @@ public class RepositoryCodeModelFactory {
         }
 
         return null;
+    }
+
+    @Nonnull
+    private String resolveTableResultSetProcessor(
+        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
+    ) {
+        final TableType tableType = xmlRepositoryConfiguration.getTables().stream()
+            .filter(tableType1 -> tableType1.getName().equalsIgnoreCase(table.name()))
+            .findFirst().orElse(null);
+
+        if (tableType == null || tableType.getResultSetProcessor() == null) {
+            return DefaultResultSetProcessor.class.getCanonicalName();
+        } else {
+            return tableType.getResultSetProcessor();
+        }
     }
 }

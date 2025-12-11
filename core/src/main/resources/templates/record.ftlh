@@ -3,9 +3,11 @@ package ${record.packageName};
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@Entity
 @Table(name = "${record.table}")
 public record ${record.simpleName}(
 <#list record.fields as field>

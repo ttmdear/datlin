@@ -29,6 +29,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         <element name="column" type="{http://www.datlin.com/datlin}ColumnType" maxOccurs="unbounded"/>
  *       </sequence>
  *       <attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       <attribute name="result-set-processor" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -46,6 +47,8 @@ public class TableType {
     protected List<ColumnType> columns;
     @XmlAttribute(name = "name", required = true)
     protected String name;
+    @XmlAttribute(name = "result-set-processor")
+    protected String resultSetProcessor;
 
     /**
      * Gets the value of the columns property.
@@ -101,6 +104,30 @@ public class TableType {
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    /**
+     * Gets the value of the resultSetProcessor property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getResultSetProcessor() {
+        return resultSetProcessor;
+    }
+
+    /**
+     * Sets the value of the resultSetProcessor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setResultSetProcessor(String value) {
+        this.resultSetProcessor = value;
     }
 
 }

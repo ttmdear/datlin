@@ -7,6 +7,7 @@ public record ExecutionCodeModel(
     @Nonnull String simpleName,
     @Nonnull String canonicalName,
     @Nonnull String packageName,
+    @Nonnull String resultSetProcessor,
     @Nonnull RecordCodeModel record
 ) {
 
