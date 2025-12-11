@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/GettingResultSetValueException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/rsp/DefaultResultSetProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/rsp/ResultSetProcessorContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/ExecutionCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/ExecutionCodeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/record.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/record.ftlh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/ResultSetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/rsp/ResultSetProcessor.java" afterDir="false" />
-    </list>
+    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -335,7 +322,7 @@
       <workItem from="1765359567062" duration="863000" />
       <workItem from="1765396289239" duration="5456000" />
       <workItem from="1765442437669" duration="3257000" />
-      <workItem from="1765458856078" duration="3839000" />
+      <workItem from="1765458856078" duration="3947000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
