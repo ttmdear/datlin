@@ -56,11 +56,22 @@ public class RepositoryCodeModelFactory {
             executions.add(executionCodeModel);
         }
 
+        // database code model -----------------------------------------------------------------------------------------
+        final String simpleName = xmlRepositoryConfiguration.getSimpleName();
+
+        final DatabaseCodeModel databaseCodeModel = new DatabaseCodeModel(
+            simpleName,
+            xmlRepositoryConfiguration.getPackage() + "." + simpleName,
+            xmlRepositoryConfiguration.getPackage(),
+            executions
+        );
+
         return new RepositoryCodeModel(
             repositoryPackageName,
             recordsPackageName,
             tablesPackageName,
             executionsPackageName,
+            databaseCodeModel,
             unmodifiableList(tables),
             unmodifiableList(records),
             unmodifiableList(executions)
@@ -125,11 +136,13 @@ public class RepositoryCodeModelFactory {
         @Nonnull final RecordCodeModel recordCodeModel
     ) {
         final String simpleName = toPascalCase(table.name()) + "Execution";
+        final String methodName = toCamelCase(table.name());
         final String canonicalName = executionsPackageName + "." + simpleName;
 
         return new ExecutionCodeModel(
             table.name(),
             simpleName,
+            methodName,
             canonicalName,
             executionsPackageName,
             resultSetProcessor,

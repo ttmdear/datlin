@@ -45,6 +45,16 @@ public class RepositoryCodeGenerator {
 
         final String output = getOutput();
 
+        // generate database code --------------------------------------------------------------------------------------
+        final String databaseOutput = getDatabaseOutput(repositoryCodeModel);
+        templateProcessor.process(
+            Map.of(
+                "database", repositoryCodeModel.database()
+            ),
+            "database.ftlh",
+            databaseOutput + "/" + repositoryCodeModel.database().simpleName() + ".java"
+        );
+
         // generate tables code ----------------------------------------------------------------------------------------
         final String tablesOutput = getTablesOutput(repositoryCodeModel);
         for (final TableCodeModel table : repositoryCodeModel.tables()) {
@@ -102,6 +112,22 @@ public class RepositoryCodeGenerator {
             return Path.of(xmlRepositoryConfigurationPath).getParent()
                 .resolve(xmlRepositoryConfiguration.getOutput())
                 .toAbsolutePath().toString();
+        }
+    }
+
+    @Nonnull
+    private String getDatabaseOutput(
+        @Nonnull final RepositoryCodeModel repositoryCodeModel
+    ) {
+        final String databasePath = repositoryCodeModel.packageName()
+            .replace(".", "/");
+
+        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
+            return xmlRepositoryConfiguration.getOutput() + "/" + databasePath;
+        } else {
+            return Path.of(xmlRepositoryConfigurationPath).getParent()
+                .resolve(xmlRepositoryConfiguration.getOutput())
+                .toAbsolutePath() + "/" + databasePath;
         }
     }
 

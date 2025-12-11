@@ -8,8 +8,10 @@
     <xs:element name="repository-configuration">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="output" type="xs:string"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="simpleName" type="xs:string"/>
                 <xs:element name="package" type="xs:string"/>
+                <xs:element name="output" type="xs:string"/>
                 <xs:element name="connection" type="ConnectionType"/>
                 <xs:element name="table" type="TableType" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="query" type="QueryType" minOccurs="0" maxOccurs="unbounded"/>

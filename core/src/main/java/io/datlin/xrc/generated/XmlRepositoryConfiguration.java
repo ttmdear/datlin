@@ -27,8 +27,10 @@ import jakarta.xml.bind.annotation.XmlType;
  *     <complexContent>
  *       <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *         <sequence>
- *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *           <element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *           <element name="simpleName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="package" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="connection" type="{http://www.datlin.com/datlin}ConnectionType"/>
  *           <element name="table" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="query" type="{http://www.datlin.com/datlin}QueryType" maxOccurs="unbounded" minOccurs="0"/>
@@ -44,8 +46,10 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "output",
+    "name",
+    "simpleName",
     "_package",
+    "output",
     "connection",
     "tables",
     "queries",
@@ -55,9 +59,13 @@ import jakarta.xml.bind.annotation.XmlType;
 public class XmlRepositoryConfiguration {
 
     @XmlElement(required = true)
-    protected String output;
+    protected String name;
+    @XmlElement(required = true)
+    protected String simpleName;
     @XmlElement(name = "package", required = true)
     protected String _package;
+    @XmlElement(required = true)
+    protected String output;
     @XmlElement(required = true)
     protected ConnectionType connection;
     @XmlElement(name = "table")
@@ -68,27 +76,51 @@ public class XmlRepositoryConfiguration {
     protected List<ProcedureType> procedures;
 
     /**
-     * Gets the value of the output property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getOutput() {
-        return output;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the output property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setOutput(String value) {
-        this.output = value;
+    public void setName(String value) {
+        this.name = value;
+    }
+
+    /**
+     * Gets the value of the simpleName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSimpleName() {
+        return simpleName;
+    }
+
+    /**
+     * Sets the value of the simpleName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSimpleName(String value) {
+        this.simpleName = value;
     }
 
     /**
@@ -113,6 +145,30 @@ public class XmlRepositoryConfiguration {
      */
     public void setPackage(String value) {
         this._package = value;
+    }
+
+    /**
+     * Gets the value of the output property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getOutput() {
+        return output;
+    }
+
+    /**
+     * Sets the value of the output property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setOutput(String value) {
+        this.output = value;
     }
 
     /**
