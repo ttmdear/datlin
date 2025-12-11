@@ -4,13 +4,18 @@ import io.datlin.sql.ast.ComparisonNode;
 import io.datlin.sql.ast.ColumnNode;
 import io.datlin.sql.ast.ColumnLiteralNode;
 import io.datlin.sql.ast.ComparisonOperator;
+import io.datlin.sql.ast.InsertNode;
 import io.datlin.sql.ast.LogicalNode;
 import io.datlin.sql.ast.Node;
 import io.datlin.sql.ast.SelectNode;
 import io.datlin.sql.ast.TableLiteralNode;
 import io.datlin.sql.ast.UuidValueNode;
+import io.datlin.sql.exc.InsertColumnsNotSetException;
+import io.datlin.sql.exc.InsertValuesNumberIsDifferentThenColumnsException;
 import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
+
+import java.util.List;
 
 public class GenericSqlBuilder implements SqlBuilder {
 
@@ -79,6 +84,67 @@ public class GenericSqlBuilder implements SqlBuilder {
 
             if (!whereSql.isEmpty()) {
                 sql.append(" WHERE ").append(whereSql);
+            }
+        }
+    }
+
+    @Override
+    public void build(
+        @Nonnull final InsertNode insert,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        sql.append("INSERT INTO ");
+        build(insert.into(), sql, context);
+
+        if (insert.columns().isEmpty()) {
+            throw new InsertColumnsNotSetException(insert.into().name());
+        }
+
+        sql.append(" (");
+        for (int i = 0; i < insert.columns().size(); i++) {
+            sql.append(insert.columns().get(i));
+
+            if (i < insert.columns().size() - 1) {
+                sql.append(", ");
+            }
+        }
+        sql.append(")");
+
+        if (insert.values().isEmpty()) {
+            throw new InsertColumnsNotSetException(insert.into().name());
+        }
+
+        sql.append(" VALUES");
+
+        for (int i = 0; i < insert.values().size(); i++) {
+            final List<Object> values = insert.values().get(i);
+
+            if (values.size() != insert.columns().size()) {
+                throw new InsertValuesNumberIsDifferentThenColumnsException();
+            }
+
+            sql.append(" (");
+
+            for (int i1 = 0; i1 < values.size(); i1++) {
+                final Object value = values.get(i1);
+
+                if (value instanceof Node node) {
+                    build((node), sql, context);
+                } else {
+                    context.addStatementObjects(value);
+                    sql.append("?");
+                }
+
+                if (i1 < values.size() - 1) {
+                    sql.append(", ");
+                }
+            }
+
+            sql.append(")");
+
+            if (i < insert.values().size() - 1) {
+                sql.append(", ");
             }
         }
     }

@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/DatabaseCodeModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/resources/templates/database.ftlh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/InsertNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/IntegerValueNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/LongValueNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/ObjectValueNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/StringValueNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/InsertBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertColumnsNotSetException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertIntoNotSetException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertValuesNotSetException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertValuesNumberIsDifferentThenColumnsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/InsertBuilderTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/ExecutionCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/ExecutionCodeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +79,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -108,6 +117,7 @@
     "Gradle.GenericSqlBuilderTest.buildSelectEmptyWhere.executor": "Run",
     "Gradle.GenericSqlBuilderTest.buildSelectNoWhere.executor": "Run",
     "Gradle.GenericSqlBuilderTest.executor": "Run",
+    "Gradle.InsertBuilderTest.build.executor": "Run",
     "Gradle.PostgreSqlBuilderTest.buildSelect.executor": "Debug",
     "Gradle.SelectBuilderTest (1).executor": "Run",
     "Gradle.SelectBuilderTest.buildNoWhere.executor": "Debug",
@@ -150,17 +160,18 @@
       <recent name="io.datlin.sql.ast" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="io.datlin.sql.bld" />
       <recent name="io.datlin.sql.expression" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="io.datlin.rcm" />
       <recent name="io.datlin.sql.exc" />
+      <recent name="io.datlin.sql.ast" />
+      <recent name="io.datlin.sql.bld" />
+      <recent name="io.datlin.rcm" />
       <recent name="io.datlin.sql.rsp" />
-      <recent name="io.datlin.sql.exception" />
-      <recent name="io.datlin.sql.expression" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.datlin generate">
+  <component name="RunManager" selected="Gradle.InsertBuilderTest.build">
     <configuration name="datlin generate" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.datlin.tools.cmd.DatlinCommand" />
       <module name="datlin.tools.main" />
@@ -174,6 +185,30 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="InsertBuilderTest.build" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":sql:test" />
+            <option value="--tests" />
+            <option value="&quot;io.datlin.sql.bld.InsertBuilderTest.build&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
     </configuration>
     <configuration name="SelectBuilderTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -189,30 +224,6 @@
             <option value=":sql:test" />
             <option value="--tests" />
             <option value="&quot;io.datlin.sql.bld.SelectBuilderTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="SelectBuilderTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":sql:test" />
-            <option value="--tests" />
-            <option value="&quot;io.datlin.sql.ast.SelectBuilderTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -293,19 +304,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.datlin generate" />
+      <item itemvalue="Gradle.InsertBuilderTest.build" />
       <item itemvalue="Gradle.datlin:sql [publish]" />
       <item itemvalue="Gradle.datlin [publish]" />
-      <item itemvalue="Gradle.SelectBuilderTest" />
       <item itemvalue="Gradle.SelectBuilderTest.buildNoWhere" />
       <item itemvalue="Gradle.SelectBuilderTest (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.InsertBuilderTest.build" />
         <item itemvalue="Gradle.datlin:sql [publish]" />
         <item itemvalue="Gradle.datlin [publish]" />
         <item itemvalue="Gradle.SelectBuilderTest (1)" />
         <item itemvalue="Gradle.SelectBuilderTest.buildNoWhere" />
-        <item itemvalue="Gradle.SelectBuilderTest" />
       </list>
     </recent_temporary>
   </component>
@@ -334,7 +345,7 @@
       <workItem from="1765442437669" duration="3257000" />
       <workItem from="1765458856078" duration="3947000" />
       <workItem from="1765476298516" duration="66000" />
-      <workItem from="1765476373975" duration="3087000" />
+      <workItem from="1765476373975" duration="7525000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
@@ -360,7 +371,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765398467920</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="increase">
+      <option name="closed" value="true" />
+      <created>1765479465591</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765479465591</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -42,6 +42,10 @@
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="result-set-processor" type="xs:string"/>
+        <xs:attribute name="insert" type="xs:boolean" default="true"/>
+        <xs:attribute name="select" type="xs:boolean" default="true"/>
+        <xs:attribute name="delete" type="xs:boolean" default="true"/>
+        <xs:attribute name="update" type="xs:boolean" default="true"/>
     </xs:complexType>
 
     <xs:complexType name="ColumnType">

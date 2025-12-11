@@ -30,6 +30,10 @@ import jakarta.xml.bind.annotation.XmlType;
  *       </sequence>
  *       <attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="result-set-processor" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       <attribute name="insert" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
+ *       <attribute name="select" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
+ *       <attribute name="delete" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
+ *       <attribute name="update" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -49,6 +53,14 @@ public class TableType {
     protected String name;
     @XmlAttribute(name = "result-set-processor")
     protected String resultSetProcessor;
+    @XmlAttribute(name = "insert")
+    protected Boolean insert;
+    @XmlAttribute(name = "select")
+    protected Boolean select;
+    @XmlAttribute(name = "delete")
+    protected Boolean delete;
+    @XmlAttribute(name = "update")
+    protected Boolean update;
 
     /**
      * Gets the value of the columns property.
@@ -128,6 +140,118 @@ public class TableType {
      */
     public void setResultSetProcessor(String value) {
         this.resultSetProcessor = value;
+    }
+
+    /**
+     * Gets the value of the insert property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isInsert() {
+        if (insert == null) {
+            return true;
+        } else {
+            return insert;
+        }
+    }
+
+    /**
+     * Sets the value of the insert property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setInsert(Boolean value) {
+        this.insert = value;
+    }
+
+    /**
+     * Gets the value of the select property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isSelect() {
+        if (select == null) {
+            return true;
+        } else {
+            return select;
+        }
+    }
+
+    /**
+     * Sets the value of the select property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setSelect(Boolean value) {
+        this.select = value;
+    }
+
+    /**
+     * Gets the value of the delete property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isDelete() {
+        if (delete == null) {
+            return true;
+        } else {
+            return delete;
+        }
+    }
+
+    /**
+     * Sets the value of the delete property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDelete(Boolean value) {
+        this.delete = value;
+    }
+
+    /**
+     * Gets the value of the update property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isUpdate() {
+        if (update == null) {
+            return true;
+        } else {
+            return update;
+        }
+    }
+
+    /**
+     * Sets the value of the update property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setUpdate(Boolean value) {
+        this.update = value;
     }
 
 }
