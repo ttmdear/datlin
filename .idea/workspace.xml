@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/InsertNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/IntegerValueNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/LongValueNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/ObjectValueNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/StringValueNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/InsertBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertColumnsNotSetException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertIntoNotSetException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertValuesNotSetException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertValuesNumberIsDifferentThenColumnsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/InsertBuilderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" afterDir="false" />
-    </list>
+    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -345,7 +326,7 @@
       <workItem from="1765442437669" duration="3257000" />
       <workItem from="1765458856078" duration="3947000" />
       <workItem from="1765476298516" duration="66000" />
-      <workItem from="1765476373975" duration="7525000" />
+      <workItem from="1765476373975" duration="7585000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
@@ -379,7 +360,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765479465591</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="increase">
+      <option name="closed" value="true" />
+      <created>1765483940143</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765483940143</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
