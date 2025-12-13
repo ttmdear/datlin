@@ -169,7 +169,7 @@
       <recent name="io.datlin.sql.exception" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.datlin generate">
+  <component name="RunManager" selected="Gradle.InsertBuilderTest">
     <configuration name="datlin generate" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.datlin.tools.cmd.DatlinCommand" />
       <module name="datlin.tools.main" />
@@ -310,6 +310,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.InsertBuilderTest" />
         <item itemvalue="Gradle.datlin:sql [publish]" />
         <item itemvalue="Gradle.InsertBuilderTest" />
         <item itemvalue="Gradle.datlin [publish]" />
