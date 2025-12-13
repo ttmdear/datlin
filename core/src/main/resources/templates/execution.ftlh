@@ -27,7 +27,6 @@ public class ${execution.simpleName} {
 
     static {
         INSERT_FIELDS = new ArrayList<>();
-        INSERT_FIELDS.add("id");
         <#list execution.record.fields as field>
         INSERT_FIELDS.add("${field.columnName}");
         </#list>

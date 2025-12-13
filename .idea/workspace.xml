@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/InsertExecutionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/InsertExecution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/gec/RepositoryCodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ColumnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/ColumnType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/FetchSQLException.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exc/FetchSQLException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/SelectExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/SelectExecution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/sql/BuildContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/BuildContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/GenericSqlBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/GenericSqlBuilderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/InsertBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/InsertBuilderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/SelectBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/test/java/io/datlin/sql/bld/SelectBuilderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,45 +94,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.GenericSqlBuilderTest.buildSelect.executor": "Run",
-    "Gradle.GenericSqlBuilderTest.buildSelectEmptyWhere.executor": "Run",
-    "Gradle.GenericSqlBuilderTest.buildSelectNoWhere.executor": "Run",
-    "Gradle.GenericSqlBuilderTest.executor": "Run",
-    "Gradle.InsertBuilderTest.executor": "Run",
-    "Gradle.PostgreSqlBuilderTest.buildSelect.executor": "Debug",
-    "Gradle.SelectBuilderTest (1).executor": "Run",
-    "Gradle.SelectBuilderTest.buildNoWhere.executor": "Debug",
-    "Gradle.SelectBuilderTest.executor": "Run",
-    "Gradle.SelectExpressionBuilderTest.build.executor": "Run",
-    "Gradle.SelectExpressionBuilderTest.buildNoWhere.executor": "Run",
-    "Gradle.SelectExpressionBuilderTest.executor": "Run",
-    "Gradle.datlin [publish].executor": "Run",
-    "Gradle.datlin:sql [publish].executor": "Run",
-    "Gradle.datlin:tools [:tools:io.datlin.tools.cmd.DatlinCommand.main()].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHELLCHECK.PATH": "/home/inspipi/.local/share/JetBrains/IntelliJIdea2025.1/Shell Script/shellcheck",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/workstati/desktop/datlin/core/src/main/resources/templates",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.GenericSqlBuilderTest.buildSelect.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GenericSqlBuilderTest.buildSelectEmptyWhere.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GenericSqlBuilderTest.buildSelectNoWhere.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GenericSqlBuilderTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.InsertBuilderTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PostgreSqlBuilderTest.buildSelect.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.SelectBuilderTest (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SelectBuilderTest.buildNoWhere.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.SelectBuilderTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SelectExpressionBuilderTest.build.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SelectExpressionBuilderTest.buildNoWhere.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SelectExpressionBuilderTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.datlin [publish].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.datlin:sql [publish].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.datlin:tools [:tools:io.datlin.tools.cmd.DatlinCommand.main()].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/home/inspipi/.local/share/JetBrains/IntelliJIdea2025.1/Shell Script/shellcheck&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/workstati/desktop/datlin/core/src/main/resources/templates&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/core/src/main/resources/templates" />
@@ -169,7 +154,7 @@
       <recent name="io.datlin.sql.exception" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.InsertBuilderTest">
+  <component name="RunManager" selected="Application.datlin generate">
     <configuration name="datlin generate" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.datlin.tools.cmd.DatlinCommand" />
       <module name="datlin.tools.main" />
@@ -310,20 +295,19 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.InsertBuilderTest" />
         <item itemvalue="Gradle.datlin:sql [publish]" />
+        <item itemvalue="Gradle.InsertBuilderTest" />
         <item itemvalue="Gradle.InsertBuilderTest" />
         <item itemvalue="Gradle.datlin [publish]" />
         <item itemvalue="Gradle.SelectBuilderTest (1)" />
-        <item itemvalue="Gradle.SelectBuilderTest.buildNoWhere" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
