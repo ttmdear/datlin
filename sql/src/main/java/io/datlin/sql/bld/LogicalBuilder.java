@@ -37,6 +37,8 @@ public class LogicalBuilder {
         return builder;
     }
 
+    // eq --------------------------------------------------------------------------------------------------------------
+
     @Nonnull
     public LogicalBuilder eq(
         @Nonnull final String table,
@@ -54,6 +56,8 @@ public class LogicalBuilder {
         return this;
     }
 
+    // build -----------------------------------------------------------------------------------------------------------
+
     @Nonnull
     public LogicalNode build() {
         final List<Node> conditions = new ArrayList<>(this.criteria.size());
@@ -66,6 +70,8 @@ public class LogicalBuilder {
         }
         return new LogicalNode(operator, conditions);
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
 
     public interface LogicalConfigurer {
         void configure(final LogicalBuilder builder);

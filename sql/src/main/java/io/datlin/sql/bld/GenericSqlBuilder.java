@@ -9,9 +9,12 @@ import io.datlin.sql.ast.LogicalNode;
 import io.datlin.sql.ast.Node;
 import io.datlin.sql.ast.SelectNode;
 import io.datlin.sql.ast.TableLiteralNode;
+import io.datlin.sql.ast.UpdateNode;
+import io.datlin.sql.ast.UpdateSetNode;
 import io.datlin.sql.ast.UuidValueNode;
 import io.datlin.sql.exc.InsertColumnsNotSetException;
 import io.datlin.sql.exc.InsertValuesNumberIsDifferentThenColumnsException;
+import io.datlin.sql.exc.UpdateSetIsNotSetException;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;
@@ -144,6 +147,50 @@ public class GenericSqlBuilder implements SqlBuilder {
 
             if (i < insert.values().size() - 1) {
                 sql.append(", ");
+            }
+        }
+    }
+
+    public void build(
+        @Nonnull final UpdateNode update,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        // update ------------------------------------------------------------------------------------------------------
+        sql.append("UPDATE ");
+        build(update.table(), sql, context);
+
+        if (update.sets().isEmpty()) {
+            throw new UpdateSetIsNotSetException(update.table().name());
+        }
+
+        // set ---------------------------------------------------------------------------------------------------------
+        sql.append(" SET ");
+        for (int i = 0; i < update.sets().size(); i++) {
+            final UpdateSetNode updateSet = update.sets().get(i);
+            sql.append("\"").append(updateSet.column()).append("\"").append(" = ");
+
+            if (updateSet.value() instanceof Node node) {
+                sql.append("(");
+                build((node), sql, context);
+                sql.append(")");
+            } else {
+                context.addStatementObjects(updateSet.value());
+                sql.append("?");
+            }
+
+            if (i < update.sets().size() - 1) {
+                sql.append(", ");
+            }
+        }
+
+        // where -------------------------------------------------------------------------------------------------------
+        if (update.where() != null) {
+            final StringBuilder whereSql = new StringBuilder();
+            build(update.where(), whereSql, context);
+
+            if (!whereSql.isEmpty()) {
+                sql.append(" WHERE ").append(whereSql);
             }
         }
     }
