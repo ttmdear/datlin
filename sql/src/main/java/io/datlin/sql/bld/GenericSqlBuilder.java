@@ -12,7 +12,6 @@ import io.datlin.sql.ast.TableLiteralNode;
 import io.datlin.sql.ast.UuidValueNode;
 import io.datlin.sql.exc.InsertColumnsNotSetException;
 import io.datlin.sql.exc.InsertValuesNumberIsDifferentThenColumnsException;
-import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

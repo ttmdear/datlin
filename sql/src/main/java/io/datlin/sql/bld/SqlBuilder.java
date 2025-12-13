@@ -2,7 +2,6 @@ package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.InsertNode;
 import io.datlin.sql.ast.SelectNode;
-import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
 
 public interface SqlBuilder {

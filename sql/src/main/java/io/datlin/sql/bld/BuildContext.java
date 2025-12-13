@@ -1,4 +1,4 @@
-package io.datlin.sql.sql;
+package io.datlin.sql.bld;
 
 import jakarta.annotation.Nonnull;
 

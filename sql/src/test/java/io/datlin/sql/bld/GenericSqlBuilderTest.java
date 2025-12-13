@@ -1,15 +1,14 @@
 package io.datlin.sql.bld;
 
-import io.datlin.sql.ast.ComparisonNode;
-import io.datlin.sql.ast.ColumnNode;
 import io.datlin.sql.ast.ColumnLiteralNode;
+import io.datlin.sql.ast.ColumnNode;
+import io.datlin.sql.ast.ComparisonNode;
 import io.datlin.sql.ast.ComparisonOperator;
-import io.datlin.sql.ast.LogicalNode;
 import io.datlin.sql.ast.FromNode;
+import io.datlin.sql.ast.LogicalNode;
 import io.datlin.sql.ast.SelectNode;
 import io.datlin.sql.ast.TableLiteralNode;
 import io.datlin.sql.ast.UuidValueNode;
-import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 

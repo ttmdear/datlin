@@ -60,9 +60,9 @@ public class RepositoryCodeGenerator {
         for (final TableCodeModel table : repositoryCodeModel.tables()) {
             templateProcessor.process(
                 Map.of(
-                    "into", table
+                    "table", table
                 ),
-                "into.ftlh",
+                "table.ftlh",
                 tablesOutput + "/" + table.simpleName() + ".java"
             );
         }
@@ -79,7 +79,7 @@ public class RepositoryCodeGenerator {
             );
         }
 
-        // generate records code ---------------------------------------------------------------------------------------
+        // generate executions code ------------------------------------------------------------------------------------
         final String executionsOutput = getExecutionsOutput(repositoryCodeModel);
 
         for (final ExecutionCodeModel execution : repositoryCodeModel.executions()) {

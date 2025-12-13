@@ -24,6 +24,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       <attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="primary-key" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       <attribute name="autoincrement" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *       <attribute name="java-type" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
  *     </restriction>
@@ -41,6 +42,8 @@ public class ColumnType {
     protected String name;
     @XmlAttribute(name = "primary-key")
     protected Boolean primaryKey;
+    @XmlAttribute(name = "autoincrement")
+    protected Boolean autoincrement;
     @XmlAttribute(name = "java-type")
     protected String javaType;
     @XmlAttribute(name = "nullable")
@@ -92,6 +95,34 @@ public class ColumnType {
      */
     public void setPrimaryKey(Boolean value) {
         this.primaryKey = value;
+    }
+
+    /**
+     * Gets the value of the autoincrement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isAutoincrement() {
+        if (autoincrement == null) {
+            return false;
+        } else {
+            return autoincrement;
+        }
+    }
+
+    /**
+     * Sets the value of the autoincrement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAutoincrement(Boolean value) {
+        this.autoincrement = value;
     }
 
     /**

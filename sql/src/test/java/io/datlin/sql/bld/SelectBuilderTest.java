@@ -1,7 +1,6 @@
 package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.SelectNode;
-import io.datlin.sql.sql.BuildContext;
 import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 

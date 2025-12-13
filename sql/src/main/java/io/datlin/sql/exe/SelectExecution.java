@@ -5,7 +5,7 @@ import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exc.FetchSQLException;
 import io.datlin.sql.bld.LogicalBuilder;
 import io.datlin.sql.ast.SelectNode;
-import io.datlin.sql.sql.BuildContext;
+import io.datlin.sql.bld.BuildContext;
 import jakarta.annotation.Nonnull;
 
 import java.sql.PreparedStatement;
