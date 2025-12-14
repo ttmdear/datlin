@@ -4,6 +4,7 @@ import io.datlin.sql.ast.ComparisonNode;
 import io.datlin.sql.ast.ColumnNode;
 import io.datlin.sql.ast.ColumnLiteralNode;
 import io.datlin.sql.ast.ComparisonOperator;
+import io.datlin.sql.ast.DeleteNode;
 import io.datlin.sql.ast.InsertNode;
 import io.datlin.sql.ast.LogicalNode;
 import io.datlin.sql.ast.Node;
@@ -191,6 +192,27 @@ public class GenericSqlBuilder implements SqlBuilder {
         if (update.where() != null) {
             final StringBuilder whereSql = new StringBuilder();
             build(update.where(), whereSql, context);
+
+            if (!whereSql.isEmpty()) {
+                sql.append(" WHERE ").append(whereSql);
+            }
+        }
+    }
+
+    @Override
+    public void build(
+        @Nonnull final DeleteNode delete,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        // delete ------------------------------------------------------------------------------------------------------
+        sql.append("DELETE FROM ");
+        build(delete.table(), sql, context);
+
+        // where -------------------------------------------------------------------------------------------------------
+        if (delete.where() != null) {
+            final StringBuilder whereSql = new StringBuilder();
+            build(delete.where(), whereSql, context);
 
             if (!whereSql.isEmpty()) {
                 sql.append(" WHERE ").append(whereSql);

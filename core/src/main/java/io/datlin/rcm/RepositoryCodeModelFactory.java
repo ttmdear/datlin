@@ -3,6 +3,7 @@ package io.datlin.rcm;
 import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.sql.rsp.DefaultResultSetProcessor;
 import io.datlin.xrc.generated.ColumnType;
+import io.datlin.xrc.generated.GenerateTableStrategy;
 import io.datlin.xrc.generated.TableType;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import static java.util.Collections.unmodifiableList;
 
 public class RepositoryCodeModelFactory {
+
     @Nonnull
     public RepositoryCodeModel create(
         @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration,
@@ -29,6 +31,10 @@ public class RepositoryCodeModelFactory {
         final List<ExecutionCodeModel> executions = new ArrayList<>();
 
         for (final DatabaseMetadata.Table table : databaseMetadata.tables()) {
+            if (isTableExcluded(table, xmlRepositoryConfiguration)) {
+                continue;
+            }
+
             tables.add(createTableCodeModel(
                 tablesPackageName,
                 table
@@ -76,6 +82,31 @@ public class RepositoryCodeModelFactory {
             unmodifiableList(records),
             unmodifiableList(executions)
         );
+    }
+
+    private boolean isTableExcluded(
+        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
+    ) {
+        if (xmlRepositoryConfiguration.getGenerateTableStrategy().equals(GenerateTableStrategy.ALL)) {
+            for (final TableType configurationTable : xmlRepositoryConfiguration.getTables()) {
+                if (configurationTable.getName().equals(table.name()) && configurationTable.isExclude()) {
+                    return true;
+                }
+            }
+
+            return false;
+        } else if (xmlRepositoryConfiguration.getGenerateTableStrategy().equals(GenerateTableStrategy.ONLY_DEFINED)) {
+            for (final TableType configurationTable : xmlRepositoryConfiguration.getTables()) {
+                if (configurationTable.getName().equals(table.name()) && !configurationTable.isExclude()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return true;
     }
 
     @Nonnull

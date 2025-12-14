@@ -46,7 +46,7 @@
 
     <xs:complexType name="TableType">
         <xs:sequence>
-            <xs:element name="column" type="ColumnType" maxOccurs="unbounded"/>
+            <xs:element name="column" type="ColumnType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="result-set-processor" type="xs:string"/>
