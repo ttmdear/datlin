@@ -13,6 +13,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 
 
@@ -32,6 +33,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *           <element name="package" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="connection" type="{http://www.datlin.com/datlin}ConnectionType"/>
+ *           <element name="generate-table-strategy" type="{http://www.datlin.com/datlin}GenerateTableStrategy"/>
  *           <element name="table" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="query" type="{http://www.datlin.com/datlin}QueryType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="procedure" type="{http://www.datlin.com/datlin}ProcedureType" maxOccurs="unbounded" minOccurs="0"/>
@@ -51,6 +53,7 @@ import jakarta.xml.bind.annotation.XmlType;
     "_package",
     "output",
     "connection",
+    "generateTableStrategy",
     "tables",
     "queries",
     "procedures"
@@ -68,6 +71,9 @@ public class XmlRepositoryConfiguration {
     protected String output;
     @XmlElement(required = true)
     protected ConnectionType connection;
+    @XmlElement(name = "generate-table-strategy", required = true, defaultValue = "all")
+    @XmlSchemaType(name = "string")
+    protected GenerateTableStrategy generateTableStrategy;
     @XmlElement(name = "table")
     protected List<TableType> tables;
     @XmlElement(name = "query")
@@ -193,6 +199,30 @@ public class XmlRepositoryConfiguration {
      */
     public void setConnection(ConnectionType value) {
         this.connection = value;
+    }
+
+    /**
+     * Gets the value of the generateTableStrategy property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link GenerateTableStrategy }
+     *     
+     */
+    public GenerateTableStrategy getGenerateTableStrategy() {
+        return generateTableStrategy;
+    }
+
+    /**
+     * Sets the value of the generateTableStrategy property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link GenerateTableStrategy }
+     *     
+     */
+    public void setGenerateTableStrategy(GenerateTableStrategy value) {
+        this.generateTableStrategy = value;
     }
 
     /**

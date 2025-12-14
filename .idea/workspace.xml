@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/UpdateSetNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/ast/UpdateSetNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/UpdateBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/UpdateBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/UpdateExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/UpdateExecution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/TableType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/xrc/generated/XmlRepositoryConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/xml-schemas/datlin/repository-configuration.xsd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +161,7 @@
       <recent name="io.datlin.sql.rsp" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.datlin:sql [publish]">
+  <component name="RunManager" selected="Application.datlin generate">
     <configuration name="datlin generate" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.datlin.tools.cmd.DatlinCommand" />
       <module name="datlin.tools.main" />
@@ -339,7 +339,7 @@
       <workItem from="1765523152772" duration="15000" />
       <workItem from="1765527108591" duration="15000" />
       <workItem from="1765537281309" duration="3956000" />
-      <workItem from="1765707861656" duration="3169000" />
+      <workItem from="1765707861656" duration="4258000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
@@ -381,7 +381,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765710795693</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="increase">
+      <option name="closed" value="true" />
+      <created>1765711153607</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1765711153607</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

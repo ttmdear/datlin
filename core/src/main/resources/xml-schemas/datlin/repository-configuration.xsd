@@ -13,6 +13,7 @@
                 <xs:element name="package" type="xs:string"/>
                 <xs:element name="output" type="xs:string"/>
                 <xs:element name="connection" type="ConnectionType"/>
+                <xs:element name="generate-table-strategy" type="GenerateTableStrategy" default="all"/>
                 <xs:element name="table" type="TableType" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="query" type="QueryType" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="procedure" type="ProcedureType" minOccurs="0" maxOccurs="unbounded"/>
@@ -36,6 +37,13 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="GenerateTableStrategy">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="all"/>
+            <xs:enumeration value="only-defined"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="TableType">
         <xs:sequence>
             <xs:element name="column" type="ColumnType" maxOccurs="unbounded"/>
@@ -46,6 +54,7 @@
         <xs:attribute name="select" type="xs:boolean" default="true"/>
         <xs:attribute name="delete" type="xs:boolean" default="true"/>
         <xs:attribute name="update" type="xs:boolean" default="true"/>
+        <xs:attribute name="exclude" type="xs:boolean" default="false"/>
     </xs:complexType>
 
     <xs:complexType name="ColumnType">

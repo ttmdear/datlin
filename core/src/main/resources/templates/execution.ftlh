@@ -97,7 +97,7 @@ public class ${execution.simpleName} {
         </#list>
         update.where(where -> {
             <#list execution.record.primaryKeys as field>
-            where.eq("${execution.table}", "record.${field.columnName}()", record.${field.name}());
+            where.eq("${execution.table}", "record.${field.columnName}", record.${field.name}());
             </#list>
         });
 

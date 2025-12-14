@@ -34,6 +34,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *       <attribute name="select" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
  *       <attribute name="delete" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
  *       <attribute name="update" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
+ *       <attribute name="exclude" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -61,6 +62,8 @@ public class TableType {
     protected Boolean delete;
     @XmlAttribute(name = "update")
     protected Boolean update;
+    @XmlAttribute(name = "exclude")
+    protected Boolean exclude;
 
     /**
      * Gets the value of the columns property.
@@ -252,6 +255,34 @@ public class TableType {
      */
     public void setUpdate(Boolean value) {
         this.update = value;
+    }
+
+    /**
+     * Gets the value of the exclude property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isExclude() {
+        if (exclude == null) {
+            return false;
+        } else {
+            return exclude;
+        }
+    }
+
+    /**
+     * Sets the value of the exclude property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setExclude(Boolean value) {
+        this.exclude = value;
     }
 
 }
