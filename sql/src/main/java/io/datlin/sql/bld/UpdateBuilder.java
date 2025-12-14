@@ -42,7 +42,7 @@ public class UpdateBuilder {
     @Nonnull
     public UpdateBuilder set(
         @Nonnull final String column,
-        @Nonnull final Object value
+        @Nullable final Object value
     ) {
         sets.add(new UpdateSetNode(column, value));
         return this;

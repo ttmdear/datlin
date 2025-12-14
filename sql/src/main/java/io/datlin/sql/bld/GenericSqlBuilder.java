@@ -168,15 +168,17 @@ public class GenericSqlBuilder implements SqlBuilder {
         // set ---------------------------------------------------------------------------------------------------------
         sql.append(" SET ");
         for (int i = 0; i < update.sets().size(); i++) {
-            final UpdateSetNode updateSet = update.sets().get(i);
-            sql.append("\"").append(updateSet.column()).append("\"").append(" = ");
+            final UpdateSetNode set = update.sets().get(i);
+            sql.append("\"").append(set.column()).append("\"").append(" = ");
 
-            if (updateSet.value() instanceof Node node) {
+            if (set.value() == null) {
+                sql.append("NULL");
+            } else if (set.value() instanceof Node node) {
                 sql.append("(");
                 build((node), sql, context);
                 sql.append(")");
             } else {
-                context.addStatementObjects(updateSet.value());
+                context.addStatementObjects(set.value());
                 sql.append("?");
             }
 

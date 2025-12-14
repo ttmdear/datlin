@@ -8,6 +8,7 @@ import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.bld.UpdateBuilder;
 import io.datlin.sql.exc.InsertExecutionException;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -58,7 +59,7 @@ public class UpdateExecution {
     @Nonnull
     public UpdateExecution set(
         @Nonnull final String column,
-        @Nonnull final Object value
+        @Nullable final Object value
     ) {
         builder.set(column, value);
         return this;
