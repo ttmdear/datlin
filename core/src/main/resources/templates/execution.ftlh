@@ -7,6 +7,7 @@ import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exe.ExecutionConnection;
 import io.datlin.sql.exe.InsertExecution;
 import io.datlin.sql.exe.SelectExecution;
+import io.datlin.sql.exe.UpdateExecution;
 import io.datlin.sql.rsp.ResultSetProcessor;
 import jakarta.annotation.Nonnull;
 import ${execution.record.canonicalName};
@@ -78,5 +79,28 @@ public class ${execution.simpleName} {
         insert.values(values);
 
         return insert;
+    }
+
+    @Nonnull
+    public UpdateExecution update() {
+        return new UpdateExecution(executionConnection, sqlBuilder)
+            .table("public", "${execution.table}");
+    }
+
+    @Nonnull
+    public UpdateExecution update(@Nonnull final ${execution.record.simpleName} record) {
+        final UpdateExecution update = new UpdateExecution(executionConnection, sqlBuilder)
+            .table("public", "${execution.table}");
+
+        <#list execution.record.fields as field>
+        update.set("${field.columnName}", record.${field.name}());
+        </#list>
+        update.where(where -> {
+            <#list execution.record.primaryKeys as field>
+            where.eq("${execution.table}", "record.${field.columnName}()", record.${field.name}());
+            </#list>
+        });
+
+        return update;
     }
 }

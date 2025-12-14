@@ -151,6 +151,7 @@ public class GenericSqlBuilder implements SqlBuilder {
         }
     }
 
+    @Override
     public void build(
         @Nonnull final UpdateNode update,
         @Nonnull final StringBuilder sql,

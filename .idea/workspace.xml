@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase" />
+    <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
+      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/UpdateExecution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/record.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/record.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/GenericSqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/bld/SqlBuilder.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,6 +114,7 @@
     "Gradle.SelectExpressionBuilderTest.buildNoWhere.executor": "Run",
     "Gradle.SelectExpressionBuilderTest.executor": "Run",
     "Gradle.UpdateBuilderTest.build.executor": "Run",
+    "Gradle.UpdateBuilderTest.executor": "Run",
     "Gradle.datlin [publish].executor": "Run",
     "Gradle.datlin:sql [publish].executor": "Run",
     "Gradle.datlin:tools [:tools:io.datlin.tools.cmd.DatlinCommand.main()].executor": "Run",
@@ -147,14 +155,14 @@
       <recent name="io.datlin.sql.expression" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="io.datlin.sql.exe" />
       <recent name="io.datlin.sql.exc" />
       <recent name="io.datlin.sql.bld" />
       <recent name="io.datlin.sql.ast" />
-      <recent name="io.datlin.sql.exe" />
       <recent name="io.datlin.sql.rsp" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.UpdateBuilderTest.build">
+  <component name="RunManager" selected="Application.datlin generate">
     <configuration name="datlin generate" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.datlin.tools.cmd.DatlinCommand" />
       <module name="datlin.tools.main" />
@@ -217,6 +225,30 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="UpdateBuilderTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":sql:test" />
+            <option value="--tests" />
+            <option value="&quot;io.datlin.sql.bld.UpdateBuilderTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="UpdateBuilderTest.build" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -239,28 +271,6 @@
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="datlin [publish]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="publish" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="datlin:sql [publish]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -287,19 +297,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.datlin generate" />
+      <item itemvalue="Gradle.UpdateBuilderTest" />
       <item itemvalue="Gradle.UpdateBuilderTest.build" />
       <item itemvalue="Gradle.InsertBuilderTest" />
       <item itemvalue="Gradle.datlin:sql [publish]" />
-      <item itemvalue="Gradle.datlin [publish]" />
       <item itemvalue="Gradle.SelectBuilderTest (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.UpdateBuilderTest.build" />
         <item itemvalue="Gradle.datlin:sql [publish]" />
+        <item itemvalue="Gradle.UpdateBuilderTest" />
+        <item itemvalue="Gradle.UpdateBuilderTest.build" />
         <item itemvalue="Gradle.InsertBuilderTest" />
         <item itemvalue="Gradle.InsertBuilderTest" />
-        <item itemvalue="Gradle.datlin [publish]" />
       </list>
     </recent_temporary>
   </component>
@@ -330,6 +340,7 @@
       <workItem from="1765523152772" duration="15000" />
       <workItem from="1765527108591" duration="15000" />
       <workItem from="1765537281309" duration="3956000" />
+      <workItem from="1765707861656" duration="2697000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
