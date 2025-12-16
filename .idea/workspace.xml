@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
-      <change afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/exe/DeleteExecution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/templates/execution.ftlh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,6 +340,8 @@
       <workItem from="1765707861656" duration="4258000" />
       <workItem from="1765744650205" duration="1587000" />
       <workItem from="1765804113038" duration="1013000" />
+      <workItem from="1765872700807" duration="1255000" />
+      <workItem from="1765879015023" duration="4395000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
