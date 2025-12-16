@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.datlin.sql.bld.SqlBuilder;
+import io.datlin.sql.exe.DeleteExecution;
 import io.datlin.sql.exe.ExecutionConnection;
 import io.datlin.sql.exe.InsertExecution;
 import io.datlin.sql.exe.SelectExecution;
@@ -102,5 +103,25 @@ public class ${execution.simpleName} {
         });
 
         return update;
+    }
+
+    @Nonnull
+    public DeleteExecution delete() {
+        return new DeleteExecution(executionConnection, sqlBuilder)
+            .table("public", "${execution.table}");
+    }
+
+    @Nonnull
+    public DeleteExecution delete(@Nonnull final ${execution.record.simpleName} record) {
+        final DeleteExecution delete = new DeleteExecution(executionConnection, sqlBuilder)
+            .table("public", "${execution.table}");
+
+        delete.where(where -> {
+        <#list execution.record.primaryKeys as field>
+            where.eq("${execution.table}", "${field.columnName}", record.${field.name}());
+        </#list>
+        });
+
+        return delete;
     }
 }
