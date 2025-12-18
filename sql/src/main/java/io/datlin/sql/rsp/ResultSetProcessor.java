@@ -5,7 +5,9 @@ import jakarta.annotation.Nullable;
 
 import java.sql.ResultSet;
 
+@SuppressWarnings("unused")
 public interface ResultSetProcessor {
+
     @Nullable
     <T, R> T getValue(
         @Nonnull final ResultSet resultSet,
@@ -16,4 +18,3 @@ public interface ResultSetProcessor {
         @Nonnull final Class<T> fieldType
     );
 }
-

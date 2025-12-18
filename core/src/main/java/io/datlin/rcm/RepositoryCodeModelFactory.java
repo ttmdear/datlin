@@ -35,10 +35,7 @@ public class RepositoryCodeModelFactory {
                 continue;
             }
 
-            tables.add(createTableCodeModel(
-                tablesPackageName,
-                table
-            ));
+            tables.add(createTableCodeModel(tablesPackageName, table));
 
             // create record code model --------------------------------------------------------------------------------
             final RecordCodeModel recordCodeModel = createRecordCodeModel(
@@ -135,15 +132,15 @@ public class RepositoryCodeModelFactory {
     private RecordCodeModel createRecordCodeModel(
         @Nonnull final String recordsPackageName,
         @Nonnull final DatabaseMetadata.Table table,
-        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
+        @Nonnull final XmlRepositoryConfiguration xrc
     ) {
         final List<RecordFieldCodeModel> primaryKeys = table.columns().stream()
             .filter(DatabaseMetadata.Column::primaryKey)
-            .map(column -> createRecordFieldCodeModel(column, table, xmlRepositoryConfiguration))
+            .map(column -> createRecordFieldCodeModel(column, table, xrc))
             .collect(Collectors.toCollection(ArrayList::new));
 
         final List<RecordFieldCodeModel> fields = table.columns().stream()
-            .map(column -> createRecordFieldCodeModel(column, table, xmlRepositoryConfiguration))
+            .map(column -> createRecordFieldCodeModel(column, table, xrc))
             .collect(Collectors.toCollection(ArrayList::new));
 
         final String simpleName = toPascalCase(table.name()) + "Record";
@@ -351,9 +348,9 @@ public class RepositoryCodeModelFactory {
     private RecordFieldCodeModel createRecordFieldCodeModel(
         @Nonnull final DatabaseMetadata.Column column,
         @Nonnull final DatabaseMetadata.Table table,
-        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
+        @Nonnull final XmlRepositoryConfiguration xrc
     ) {
-        final ColumnType columnConfiguration = getColumnConfiguration(table, column, xmlRepositoryConfiguration);
+        final ColumnType columnConfiguration = resolveColumnConfiguration(table, column, xrc);
         String type = mapSqlTypeToJavaTypeCanonicalName(column.type());
 
         if (columnConfiguration != null && columnConfiguration.getJavaType() != null) {
@@ -371,12 +368,12 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nullable
-    private ColumnType getColumnConfiguration(
+    private ColumnType resolveColumnConfiguration(
         @Nonnull final DatabaseMetadata.Table table,
         @Nonnull final DatabaseMetadata.Column column,
-        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
+        @Nonnull final XmlRepositoryConfiguration xrc
     ) {
-        for (final TableType tableConfiguration : xmlRepositoryConfiguration.getTables()) {
+        for (final TableType tableConfiguration : xrc.getTables()) {
             if (!tableConfiguration.getName().equalsIgnoreCase(table.name())) {
                 continue;
             }
