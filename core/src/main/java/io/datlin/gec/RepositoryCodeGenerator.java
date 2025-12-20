@@ -40,8 +40,8 @@ public class RepositoryCodeGenerator {
 
     public void generate() {
         final DatabaseMetadata databaseMetadata = createDatabaseMetadata();
-        final RepositoryCodeModel repositoryCodeModel = new RepositoryCodeModelFactory()
-            .create(xmlRepositoryConfiguration, databaseMetadata);
+        final RepositoryCodeModel repositoryCodeModel = new RepositoryCodeModelFactory(xmlRepositoryConfiguration,
+            databaseMetadata).create();
 
         final String output = getOutput();
 

@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       <sequence>
- *         <element name="column" type="{http://www.datlin.com/datlin}ColumnType" maxOccurs="unbounded"/>
+ *         <element name="column" type="{http://www.datlin.com/datlin}ColumnType" maxOccurs="unbounded" minOccurs="0"/>
  *       </sequence>
  *       <attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="result-set-processor" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -48,7 +48,7 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class TableType {
 
-    @XmlElement(name = "column", required = true)
+    @XmlElement(name = "column")
     protected List<ColumnType> columns;
     @XmlAttribute(name = "name", required = true)
     protected String name;

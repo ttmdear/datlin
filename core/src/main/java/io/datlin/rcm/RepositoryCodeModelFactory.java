@@ -4,6 +4,7 @@ import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.sql.rsp.DefaultResultSetProcessor;
 import io.datlin.xrc.generated.ColumnType;
 import io.datlin.xrc.generated.GenerateTableStrategy;
+import io.datlin.xrc.generated.ResultSetProcessorType.TypeBinding;
 import io.datlin.xrc.generated.TableType;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
@@ -18,11 +19,22 @@ import static java.util.Collections.unmodifiableList;
 public class RepositoryCodeModelFactory {
 
     @Nonnull
-    public RepositoryCodeModel create(
-        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration,
+    private final XmlRepositoryConfiguration xrc;
+
+    @Nonnull
+    private final DatabaseMetadata databaseMetadata;
+
+    public RepositoryCodeModelFactory(
+        @Nonnull final XmlRepositoryConfiguration xrc,
         @Nonnull final DatabaseMetadata databaseMetadata
     ) {
-        final String repositoryPackageName = xmlRepositoryConfiguration.getPackage();
+        this.xrc = xrc;
+        this.databaseMetadata = databaseMetadata;
+    }
+
+    @Nonnull
+    public RepositoryCodeModel create() {
+        final String repositoryPackageName = xrc.getPackage();
         final String recordsPackageName = repositoryPackageName + ".records";
         final String tablesPackageName = repositoryPackageName + ".tables";
         final String executionsPackageName = repositoryPackageName + ".executions";
@@ -31,7 +43,7 @@ public class RepositoryCodeModelFactory {
         final List<ExecutionCodeModel> executions = new ArrayList<>();
 
         for (final DatabaseMetadata.Table table : databaseMetadata.tables()) {
-            if (isTableExcluded(table, xmlRepositoryConfiguration)) {
+            if (isTableExcluded(table, xrc)) {
                 continue;
             }
 
@@ -41,12 +53,12 @@ public class RepositoryCodeModelFactory {
             final RecordCodeModel recordCodeModel = createRecordCodeModel(
                 recordsPackageName,
                 table,
-                xmlRepositoryConfiguration
+                xrc
             );
 
             records.add(recordCodeModel);
 
-            final String resultSetProcessor = resolveTableResultSetProcessor(table, xmlRepositoryConfiguration);
+            final String resultSetProcessor = resolveTableResultSetProcessor(table, xrc);
 
             // create execution code model -----------------------------------------------------------------------------
             final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
@@ -60,12 +72,12 @@ public class RepositoryCodeModelFactory {
         }
 
         // database code model -----------------------------------------------------------------------------------------
-        final String simpleName = xmlRepositoryConfiguration.getSimpleName();
+        final String simpleName = xrc.getSimpleName();
 
         final DatabaseCodeModel databaseCodeModel = new DatabaseCodeModel(
             simpleName,
-            xmlRepositoryConfiguration.getPackage() + "." + simpleName,
-            xmlRepositoryConfiguration.getPackage(),
+            xrc.getPackage() + "." + simpleName,
+            xrc.getPackage(),
             executions
         );
 
@@ -136,11 +148,11 @@ public class RepositoryCodeModelFactory {
     ) {
         final List<RecordFieldCodeModel> primaryKeys = table.columns().stream()
             .filter(DatabaseMetadata.Column::primaryKey)
-            .map(column -> createRecordFieldCodeModel(column, table, xrc))
+            .map(column -> createRecordFieldCodeModel(column, table))
             .collect(Collectors.toCollection(ArrayList::new));
 
         final List<RecordFieldCodeModel> fields = table.columns().stream()
-            .map(column -> createRecordFieldCodeModel(column, table, xrc))
+            .map(column -> createRecordFieldCodeModel(column, table))
             .collect(Collectors.toCollection(ArrayList::new));
 
         final String simpleName = toPascalCase(table.name()) + "Record";
@@ -304,10 +316,38 @@ public class RepositoryCodeModelFactory {
         return (Class<T>) javaClass;
     }
 
+    /**
+     * Resolves the canonical name of the Java type as a {@link String} for the given database type.
+     * <p>
+     * The resolution follows this priority order:
+     * 1. If an expected type is provided (suggested), it is used first.
+     * 2. If no suggestion is available, the method checks the result-set-processor definitions.
+     * 3. If still not found, the type is retrieved from the default configuration.
+     * 3. If still not found, the type {@link Object} is returned.
+     *
+     * @param databaseType     the database-specific type to be resolved.
+     * @param expectedJavaType an optional suggested Java type (takes precedence if provided).
+     * @return the canonical name of the resolved Java type
+     */
     @Nonnull
-    private String mapSqlTypeToJavaTypeCanonicalName(@Nonnull final String type) {
-        final String normalizedType = type.toLowerCase().split("\\(")[0].trim();
-        final String javaClass = switch (normalizedType) {
+    private String resolveJavaType(
+        @Nonnull final String databaseType,
+        @Nullable final String expectedJavaType
+    ) {
+        if (expectedJavaType != null) {
+            return expectedJavaType;
+        }
+
+        @Nullable final TypeBinding typeBinding = xrc.getResultSetProcessor().getTypeBindings().stream()
+            .filter(typeBinding1 -> typeBinding1.getDatabaseType().equals(databaseType))
+            .findFirst().orElse(null);
+
+        if (typeBinding != null) {
+            return typeBinding.getJavaType();
+        }
+
+        final String normalizedType = databaseType.toLowerCase().split("\\(")[0].trim();
+        return switch (normalizedType) {
             // Numeric Types
             case "smallint", "int2" -> Short.class.getCanonicalName();
             case "integer", "int4" -> Integer.class.getCanonicalName();
@@ -338,30 +378,31 @@ public class RepositoryCodeModelFactory {
                 String.class.getCanonicalName(); // Often treated as a String, or a custom type/library object
 
             // Default Case for Unsupported or Unknown Types
-            default -> throw new IllegalArgumentException("Unsupported PostgreSQL type: " + type);
+            default -> Object.class.getCanonicalName();
         };
-
-        return javaClass;
     }
 
+    /**
+     * Create {@link RecordCodeModel} for given column.
+     *
+     * @param column the column from {@link DatabaseMetadata}.
+     * @param table  the table from {{@link DatabaseMetadata}.
+     * @return the {@link RecordCodeModel}.
+     */
     @Nonnull
     private RecordFieldCodeModel createRecordFieldCodeModel(
         @Nonnull final DatabaseMetadata.Column column,
-        @Nonnull final DatabaseMetadata.Table table,
-        @Nonnull final XmlRepositoryConfiguration xrc
+        @Nonnull final DatabaseMetadata.Table table
     ) {
-        final ColumnType columnConfiguration = resolveColumnConfiguration(table, column, xrc);
-        String type = mapSqlTypeToJavaTypeCanonicalName(column.type());
-
-        if (columnConfiguration != null && columnConfiguration.getJavaType() != null) {
-            type = columnConfiguration.getJavaType();
-        }
-
+        final ColumnType cc = resolveColumnConfiguration(table, column, xrc);
+        final String databaseType = (cc != null && cc.getDatabaseType() != null) ? cc.getDatabaseType() : column.type();
+        final String javaType = resolveJavaType(databaseType, cc != null ? cc.getJavaType() : null);
         final String name = toCamelCase(column.name());
+
         return new RecordFieldCodeModel(
             name,
             column.name(),
-            type,
+            javaType,
             column.nullable(),
             column.primaryKey()
         );

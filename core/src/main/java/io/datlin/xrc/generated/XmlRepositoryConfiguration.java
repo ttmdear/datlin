@@ -34,6 +34,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="connection" type="{http://www.datlin.com/datlin}ConnectionType"/>
  *           <element name="generate-table-strategy" type="{http://www.datlin.com/datlin}GenerateTableStrategy"/>
+ *           <element name="result-set-processor" type="{http://www.datlin.com/datlin}ResultSetProcessorType" minOccurs="0"/>
  *           <element name="table" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="query" type="{http://www.datlin.com/datlin}QueryType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="procedure" type="{http://www.datlin.com/datlin}ProcedureType" maxOccurs="unbounded" minOccurs="0"/>
@@ -54,6 +55,7 @@ import jakarta.xml.bind.annotation.XmlType;
     "output",
     "connection",
     "generateTableStrategy",
+    "resultSetProcessor",
     "tables",
     "queries",
     "procedures"
@@ -74,6 +76,8 @@ public class XmlRepositoryConfiguration {
     @XmlElement(name = "generate-table-strategy", required = true, defaultValue = "all")
     @XmlSchemaType(name = "string")
     protected GenerateTableStrategy generateTableStrategy;
+    @XmlElement(name = "result-set-processor")
+    protected ResultSetProcessorType resultSetProcessor;
     @XmlElement(name = "table")
     protected List<TableType> tables;
     @XmlElement(name = "query")
@@ -223,6 +227,30 @@ public class XmlRepositoryConfiguration {
      */
     public void setGenerateTableStrategy(GenerateTableStrategy value) {
         this.generateTableStrategy = value;
+    }
+
+    /**
+     * Gets the value of the resultSetProcessor property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ResultSetProcessorType }
+     *     
+     */
+    public ResultSetProcessorType getResultSetProcessor() {
+        return resultSetProcessor;
+    }
+
+    /**
+     * Sets the value of the resultSetProcessor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ResultSetProcessorType }
+     *     
+     */
+    public void setResultSetProcessor(ResultSetProcessorType value) {
+        this.resultSetProcessor = value;
     }
 
     /**

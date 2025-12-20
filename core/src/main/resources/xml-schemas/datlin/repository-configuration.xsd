@@ -14,6 +14,7 @@
                 <xs:element name="output" type="xs:string"/>
                 <xs:element name="connection" type="ConnectionType"/>
                 <xs:element name="generate-table-strategy" type="GenerateTableStrategy" default="all"/>
+                <xs:element name="result-set-processor" type="ResultSetProcessorType" minOccurs="0"/>
                 <xs:element name="table" type="TableType" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="query" type="QueryType" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="procedure" type="ProcedureType" minOccurs="0" maxOccurs="unbounded"/>
@@ -44,6 +45,17 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:complexType name="ResultSetProcessorType">
+        <xs:sequence>
+            <xs:element name="type-binding" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="database-type" type="xs:string" use="required"/>
+                    <xs:attribute name="java-type" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="TableType">
         <xs:sequence>
             <xs:element name="column" type="ColumnType" minOccurs="0" maxOccurs="unbounded"/>
@@ -61,6 +73,7 @@
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="primary-key" type="xs:boolean"/>
         <xs:attribute name="autoincrement" type="xs:boolean" default="false"/>
+        <xs:attribute name="database-type" type="xs:string"/>
         <xs:attribute name="java-type" type="xs:string"/>
         <xs:attribute name="nullable" type="xs:boolean" default="true"/>
     </xs:complexType>

@@ -25,6 +25,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *       <attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="primary-key" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       <attribute name="autoincrement" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
+ *       <attribute name="database-type" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="java-type" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
  *     </restriction>
@@ -44,6 +45,8 @@ public class ColumnType {
     protected Boolean primaryKey;
     @XmlAttribute(name = "autoincrement")
     protected Boolean autoincrement;
+    @XmlAttribute(name = "database-type")
+    protected String databaseType;
     @XmlAttribute(name = "java-type")
     protected String javaType;
     @XmlAttribute(name = "nullable")
@@ -123,6 +126,30 @@ public class ColumnType {
      */
     public void setAutoincrement(Boolean value) {
         this.autoincrement = value;
+    }
+
+    /**
+     * Gets the value of the databaseType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDatabaseType() {
+        return databaseType;
+    }
+
+    /**
+     * Sets the value of the databaseType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDatabaseType(String value) {
+        this.databaseType = value;
     }
 
     /**

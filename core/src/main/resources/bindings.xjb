@@ -26,4 +26,7 @@
     <jxb:bindings node="//xs:element[@name='repository-configuration']//xs:element[@name='procedure']">
         <jxb:property name="procedures"/>
     </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='ResultSetProcessorType']//xs:element[@name='type-binding']">
+        <jxb:property name="typeBindings"/>
+    </jxb:bindings>
 </jxb:bindings>

@@ -36,6 +36,16 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ResultSetProcessorType }
+     * 
+     * @return
+     *     the new instance of {@link ResultSetProcessorType }
+     */
+    public ResultSetProcessorType createResultSetProcessorType() {
+        return new ResultSetProcessorType();
+    }
+
+    /**
      * Create an instance of {@link XmlRepositoryConfiguration }
      * 
      * @return
@@ -113,6 +123,16 @@ public class ObjectFactory {
      */
     public ProcedureType createProcedureType() {
         return new ProcedureType();
+    }
+
+    /**
+     * Create an instance of {@link ResultSetProcessorType.TypeBinding }
+     * 
+     * @return
+     *     the new instance of {@link ResultSetProcessorType.TypeBinding }
+     */
+    public ResultSetProcessorType.TypeBinding createResultSetProcessorTypeTypeBinding() {
+        return new ResultSetProcessorType.TypeBinding();
     }
 
 }
