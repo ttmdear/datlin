@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15adb2aa-9d6f-44b9-be16-e420f21fc59b" name="Changes" comment="increase">
-      <change afterPath="$PROJECT_DIR$/.idea-run/datlin generate.run.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/datlin/rcm/RepositoryCodeModelFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/rsp/ResultSetProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/sql/src/main/java/io/datlin/sql/rsp/ResultSetProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/cmd/DatlinCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/tools/src/main/java/io/datlin/tools/cmd/DatlinCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +114,7 @@
     "Gradle.UpdateBuilderTest.executor": "Run",
     "Gradle.datlin [publish].executor": "Run",
     "Gradle.datlin:sql [publish].executor": "Run",
-    "Gradle.datlin:tools [:tools:io.datlin.tools.cmd.DatlinCommand.main()].executor": "Debug",
+    "Gradle.datlin:tools [:tools:io.datlin.tools.cmd.DatlinCommand.main()].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -162,6 +160,20 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.datlin generate">
+    <configuration name="datlin generate" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="io.datlin.tools.cmd.DatlinCommand" />
+      <module name="datlin.tools.main" />
+      <option name="PROGRAM_PARAMETERS" value="generate --working-directory=$PROJECT_DIR$/../traisit/traisit-core/src/main/resources --repository-configuration=traisit-db-repository-configuration.xml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.datlin.tools.cmd.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DeleteBuilderTest.build" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -301,8 +313,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
@@ -334,6 +346,7 @@
       <workItem from="1765972408447" duration="1801000" />
       <workItem from="1766045942294" duration="32000" />
       <workItem from="1766063259038" duration="4320000" />
+      <workItem from="1766236220864" duration="351000" />
     </task>
     <task id="LOCAL-00001" summary="increase">
       <option name="closed" value="true" />
