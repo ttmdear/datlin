@@ -1,21 +1,5 @@
 package io.datlin.sql.bld;
 
-import io.datlin.sql.ast.ColumnReference;
-import io.datlin.sql.ast.SelectColumnReference;
-import io.datlin.sql.ast.ComparisonNode;
-import io.datlin.sql.ast.ComparisonOperator;
-import io.datlin.sql.ast.FromNode;
-import io.datlin.sql.ast.LogicalNode;
-import io.datlin.sql.ast.Select;
-import io.datlin.sql.ast.TableReference;
-import io.datlin.sql.ast.ValueNode;
-import jakarta.annotation.Nonnull;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.UUID;
-
-import static io.datlin.sql.ast.LogicalOperator.AND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GenericSqlBuilderTest {

@@ -2,13 +2,12 @@ package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.Aliasable;
 import io.datlin.sql.ast.ColumnReference;
-import io.datlin.sql.ast.ComparisonNode;
+import io.datlin.sql.ast.ComparisonCriterion;
 import io.datlin.sql.ast.ComparisonOperator;
 import io.datlin.sql.ast.DeleteNode;
 import io.datlin.sql.ast.InsertNode;
-import io.datlin.sql.ast.LogicalNode;
+import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Select;
-import io.datlin.sql.ast.SelectColumnReference;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.ast.UpdateNode;
@@ -50,14 +49,12 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         if (fragment instanceof Select) {
             build((Select) fragment, sql, context);
-        } else if (fragment instanceof LogicalNode) {
-            build((LogicalNode) fragment, sql, context);
-        } else if (fragment instanceof ComparisonNode) {
-            build((ComparisonNode) fragment, sql, context);
+        } else if (fragment instanceof Criteria) {
+            build((Criteria) fragment, sql, context);
+        } else if (fragment instanceof ComparisonCriterion) {
+            build((ComparisonCriterion) fragment, sql, context);
         } else if (fragment instanceof ValueNode) {
             build((ValueNode) fragment, sql, context);
-        } else if (fragment instanceof SelectColumnReference) {
-            build((SelectColumnReference) fragment, sql, context);
         } else if (fragment instanceof ColumnReference) {
             build((ColumnReference) fragment, sql, context);
         }
@@ -119,30 +116,15 @@ public class GenericSqlBuilder implements SqlBuilder {
             appendAlias(sql, aliasable);
         }
 
-        // final List<SqlFragment> from = select.from();
-        // final SqlFragment fromValue = from.source();
+        // where -------------------------------------------------------------------------------------------------------
+        if (select.where() != null) {
+            final StringBuilder whereSql = new StringBuilder();
+            build(select.where(), whereSql, context);
 
-        // if (fromValue instanceof TableReference tableLiteral) {
-        //     build(tableLiteral, sql, context);
-        // } else {
-        //     sql.append("(");
-        //     build(fromValue, sql, context);
-        //     sql.append(")");
-        // }
-
-        // if (from.alias() != null) {
-        //     sql.append(" AS ").append(from.alias());
-        // }
-
-//        // where -------------------------------------------------------------------------------------------------------
-//        if (select.where() != null) {
-//            final StringBuilder whereSql = new StringBuilder();
-//            build(select.where(), whereSql, context);
-//
-//            if (!whereSql.isEmpty()) {
-//                sql.append(" WHERE ").append(whereSql);
-//            }
-//        }
+            if (!whereSql.isEmpty()) {
+                sql.append(" WHERE ").append(whereSql);
+            }
+        }
     }
 
     @Override
@@ -275,30 +257,30 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     public void build(
-        @Nonnull final LogicalNode conditions,
+        @Nonnull final Criteria criteria,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        for (int i = 0; i < conditions.criteria().size(); i++) {
-            final SqlFragment condition = conditions.criteria().get(i);
+        for (int i = 0; i < criteria.criteria().size(); i++) {
+            final SqlFragment criterion = criteria.criteria().get(i);
             sql.append("(");
-            build(condition, sql, context);
+            build(criterion, sql, context);
             sql.append(")");
 
-            if (i < conditions.criteria().size() - 1) {
-                sql.append(" ").append(conditions.operator());
+            if (i < criteria.criteria().size() - 1) {
+                sql.append(" ").append(criteria.operator());
             }
         }
     }
 
     public void build(
-        @Nonnull final ComparisonNode comparisonNode,
+        @Nonnull final ComparisonCriterion comparisonCriterion,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        build(comparisonNode.left(), sql, context);
-        sql.append(" ").append(getBinaryOperatorSymbol(comparisonNode.operator())).append(" ");
-        build(comparisonNode.right(), sql, context);
+        build(comparisonCriterion.left(), sql, context);
+        sql.append(" ").append(getBinaryOperatorSymbol(comparisonCriterion.operator())).append(" ");
+        build(comparisonCriterion.right(), sql, context);
     }
 
     public void build(
@@ -308,24 +290,6 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         context.addStatementObjects(valueNode.value());
         sql.append("?");
-    }
-
-    public void build(
-        @Nonnull final SelectColumnReference selectColumnReference,
-        @Nonnull final StringBuilder sql,
-        @Nonnull final BuildContext context
-    ) {
-        if (selectColumnReference.value() instanceof ColumnReference columnReference) {
-            build(columnReference, sql, context);
-        } else {
-            sql.append("(");
-            build(selectColumnReference.value(), sql, context);
-            sql.append(")");
-        }
-
-        if (selectColumnReference.alias() != null) {
-            sql.append(" AS ").append(selectColumnReference.alias());
-        }
     }
 
     public void build(

@@ -80,7 +80,7 @@ public class LogicalBuilder {
     // build -----------------------------------------------------------------------------------------------------------
 
     @Nonnull
-    public LogicalNode build() {
+    public Criteria build() {
         final List<SqlFragment> conditions = new ArrayList<>(this.criteria.size());
         for (final Object condition : this.criteria) {
             if (condition instanceof LogicalBuilder logicalBuilder) {
@@ -89,7 +89,7 @@ public class LogicalBuilder {
                 conditions.add(sqlFragment);
             }
         }
-        return new LogicalNode(operator, conditions);
+        return new Criteria(operator, conditions);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

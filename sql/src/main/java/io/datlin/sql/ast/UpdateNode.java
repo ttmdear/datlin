@@ -8,7 +8,7 @@ import java.util.List;
 public record UpdateNode(
     @Nonnull TableReference table,
     @Nonnull List<UpdateSetNode> sets,
-    @Nullable LogicalNode where
+    @Nullable Criteria where
 ) implements SqlFragment {
 
 }

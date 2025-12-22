@@ -10,12 +10,12 @@ public record Select(
     @Nonnull List<SqlFragment> columns,
     @Nullable SqlFragment from,
     @Nonnull List<SqlFragment> joins,
-    @Nonnull List<SqlFragment> where
+    @Nullable Criteria where
 ) implements SqlFragment {
 
     @Nonnull
     public static Select select() {
-        return new Select(List.of(), null, List.of(), List.of());
+        return new Select(List.of(), null, List.of(), null);
     }
 
     // columns ---------------------------------------------------------------------------------------------------------
@@ -76,22 +76,22 @@ public record Select(
     // where -----------------------------------------------------------------------------------------------------------
 
     @Nonnull
-    public Select where(@Nonnull final SqlFragment... where) {
+    public Select where(@Nonnull final SqlFragment criteria) {
         return new Select(
             columns,
             from,
             joins,
-            Arrays.stream(where).toList()
+            Criteria.and(criteria)
         );
     }
 
     @Nonnull
-    public Select where(@Nonnull final List<SqlFragment> where) {
+    public Select where(@Nonnull final List<SqlFragment> criteria) {
         return new Select(
             columns,
             from,
             joins,
-            where
+            Criteria.and(criteria)
         );
     }
 }

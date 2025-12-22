@@ -5,7 +5,7 @@ import jakarta.annotation.Nullable;
 
 public record DeleteNode(
     @Nonnull TableReference table,
-    @Nullable LogicalNode where
+    @Nullable Criteria where
 ) implements SqlFragment {
 
 }

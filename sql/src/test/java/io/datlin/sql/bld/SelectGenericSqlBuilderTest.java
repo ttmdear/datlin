@@ -1,5 +1,6 @@
 package io.datlin.sql.bld;
 
+import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Select;
 import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import static io.datlin.sql.ast.ColumnReference.column;
 import static io.datlin.sql.ast.TableReference.table;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SelectGenericSqlBuilder {
+class SelectGenericSqlBuilderTest {
 
     @Nonnull
     private final GenericSqlBuilder sqlBuilder = new GenericSqlBuilder();
@@ -20,12 +21,13 @@ class SelectGenericSqlBuilder {
                 column("column1").from("p").as("column_2"),
                 column("column2").from("p"),
                 column("column3").as("column_2")
+                column("column2").gte(select())
             )
             .from(
                 table("pls_plan").schema("public").as("p")
-            );
-
-        // Update.column()
+            ).where(
+                Criteria.
+            )
 
         final StringBuilder sql = new StringBuilder();
         final BuildContext buildContext = new BuildContext();
