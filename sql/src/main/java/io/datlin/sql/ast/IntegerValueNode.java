@@ -4,6 +4,6 @@ import jakarta.annotation.Nonnull;
 
 public record IntegerValueNode(
     @Nonnull Integer value
-) implements Node {
+) implements SqlFragment {
 
 }

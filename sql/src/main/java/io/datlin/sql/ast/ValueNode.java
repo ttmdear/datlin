@@ -2,7 +2,7 @@ package io.datlin.sql.ast;
 
 import jakarta.annotation.Nonnull;
 
-public record ObjectValueNode(
+public record ValueNode(
     @Nonnull Object value
 ) implements SqlFragment {
 

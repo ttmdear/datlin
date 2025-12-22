@@ -4,7 +4,7 @@ import io.datlin.sql.bld.SelectBuilder;
 import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exc.FetchSQLException;
 import io.datlin.sql.bld.LogicalBuilder;
-import io.datlin.sql.ast.SelectNode;
+import io.datlin.sql.ast.Select;
 import io.datlin.sql.bld.BuildContext;
 import jakarta.annotation.Nonnull;
 
@@ -17,8 +17,8 @@ import java.util.function.Function;
 
 public class SelectExecution<T> {
 
-    @Nonnull
-    private final SelectBuilder builder = new SelectBuilder();
+    // @Nonnull
+    // private final Select select = new Select();
 
     @Nonnull
     private final ExecutionConnection executionConnection;
@@ -45,7 +45,8 @@ public class SelectExecution<T> {
         @Nonnull String column,
         @Nonnull String alias
     ) {
-        builder.column(table, column, alias);
+//        builder.column(table, column, alias);
+//        return this;
         return this;
     }
 
@@ -55,7 +56,8 @@ public class SelectExecution<T> {
         @Nonnull final String name,
         @Nonnull final String alias
     ) {
-        builder.from(schema, name, alias);
+//        builder.from(schema, name, alias);
+//        return this;
         return this;
     }
 
@@ -63,31 +65,33 @@ public class SelectExecution<T> {
     public SelectExecution<T> where(
         @Nonnull final LogicalBuilder.LogicalConfigurer configurer
     ) {
-        builder.where(configurer);
+        // builder.where(configurer);
         return this;
     }
 
     @Nonnull
     public List<T> fetch() {
-        final List<T> result = new ArrayList<>();
-        final SelectNode select = builder.build();
-        final BuildContext buildContext = new BuildContext();
-        final StringBuilder sql = new StringBuilder();
+//        final List<T> result = new ArrayList<>();
+//        final Select select = builder.build();
+//        final BuildContext buildContext = new BuildContext();
+//        final StringBuilder sql = new StringBuilder();
+//
+//        sqlBuilder.build(select, sql, buildContext);
+//
+//        try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
+//            buildContext.prepareStatement(statement);
+//
+//            final ResultSet resultSet = statement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                result.add(resultMapper.apply(resultSet));
+//            }
+//
+//            return result;
+//        } catch (SQLException e) {
+//            throw new FetchSQLException(sql.toString(), e);
+//        }
 
-        sqlBuilder.build(select, sql, buildContext);
-
-        try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            buildContext.prepareStatement(statement);
-
-            final ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                result.add(resultMapper.apply(resultSet));
-            }
-
-            return result;
-        } catch (SQLException e) {
-            throw new FetchSQLException(sql.toString(), e);
-        }
+        return List.of();
     }
 }

@@ -6,6 +6,6 @@ import java.util.List;
 
 public record LogicalNode(
     @Nonnull LogicalOperator operator,
-    @Nonnull List<Node> criteria
-) implements Node {
+    @Nonnull List<SqlFragment> criteria
+) implements SqlFragment {
 }

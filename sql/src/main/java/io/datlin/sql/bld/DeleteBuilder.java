@@ -1,22 +1,16 @@
 package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.DeleteNode;
-import io.datlin.sql.ast.TableLiteralNode;
-import io.datlin.sql.ast.UpdateNode;
-import io.datlin.sql.ast.UpdateSetNode;
+import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.bld.LogicalBuilder.LogicalConfigurer;
 import io.datlin.sql.exc.DeleteTableIsNotSetException;
-import io.datlin.sql.exc.UpdateTableIsNotSetException;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DeleteBuilder {
 
     @Nullable
-    private TableLiteralNode table;
+    private TableReference table;
 
     @Nullable
     private LogicalBuilder where;
@@ -25,7 +19,7 @@ public class DeleteBuilder {
     public DeleteBuilder table(
         @Nonnull final String name
     ) {
-        table = new TableLiteralNode(null, name);
+        table = new TableReference(null, name);
         return this;
     }
 
@@ -34,7 +28,7 @@ public class DeleteBuilder {
         @Nonnull final String schema,
         @Nonnull final String name
     ) {
-        table = new TableLiteralNode(schema, name);
+        table = new TableReference(schema, name);
         return this;
     }
 

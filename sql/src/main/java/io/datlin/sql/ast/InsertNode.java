@@ -7,7 +7,7 @@ import java.util.List;
 public record InsertNode(
     @Nonnull List<String> columns,
     @Nonnull List<List<Object>> values,
-    @Nonnull TableLiteralNode into
-) implements Node {
+    @Nonnull TableReference into
+) implements SqlFragment {
 
 }

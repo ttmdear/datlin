@@ -386,7 +386,7 @@ public class RepositoryCodeModelFactory {
      * Create {@link RecordCodeModel} for given column.
      *
      * @param column the column from {@link DatabaseMetadata}.
-     * @param table  the table from {{@link DatabaseMetadata}.
+     * @param table  the from from {{@link DatabaseMetadata}.
      * @return the {@link RecordCodeModel}.
      */
     @Nonnull

@@ -60,9 +60,9 @@ public class RepositoryCodeGenerator {
         for (final TableCodeModel table : repositoryCodeModel.tables()) {
             templateProcessor.process(
                 Map.of(
-                    "table", table
+                    "from", table
                 ),
-                "table.ftlh",
+                "from.ftlh",
                 tablesOutput + "/" + table.simpleName() + ".java"
             );
         }

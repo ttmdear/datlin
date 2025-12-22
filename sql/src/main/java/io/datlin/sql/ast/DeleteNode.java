@@ -3,11 +3,9 @@ package io.datlin.sql.ast;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-import java.util.List;
-
 public record DeleteNode(
-    @Nonnull TableLiteralNode table,
+    @Nonnull TableReference table,
     @Nullable LogicalNode where
-) implements Node {
+) implements SqlFragment {
 
 }

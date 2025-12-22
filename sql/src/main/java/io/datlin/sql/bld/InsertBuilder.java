@@ -1,7 +1,7 @@
 package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.InsertNode;
-import io.datlin.sql.ast.TableLiteralNode;
+import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.exc.InsertIntoNotSetException;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -18,13 +18,13 @@ public class InsertBuilder {
     private final List<List<Object>> values = new ArrayList<>();
 
     @Nullable
-    private TableLiteralNode into;
+    private TableReference into;
 
     @Nonnull
     public InsertBuilder into(
         @Nonnull final String name
     ) {
-        this.into = new TableLiteralNode(null, name);
+        this.into = new TableReference(null, name);
         return this;
     }
 
@@ -33,7 +33,7 @@ public class InsertBuilder {
         @Nonnull final String schema,
         @Nonnull final String name
     ) {
-        this.into = new TableLiteralNode(schema, name);
+        this.into = new TableReference(schema, name);
         return this;
     }
 

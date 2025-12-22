@@ -3,8 +3,8 @@ package io.datlin.sql.ast;
 import jakarta.annotation.Nonnull;
 
 public record ComparisonNode(
-    @Nonnull Node left,
+    @Nonnull SqlFragment left,
     @Nonnull ComparisonOperator operator,
-    @Nonnull Node right
-) implements Node {
+    @Nonnull SqlFragment right
+) implements SqlFragment {
 }

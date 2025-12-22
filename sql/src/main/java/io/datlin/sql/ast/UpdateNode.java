@@ -6,9 +6,9 @@ import jakarta.annotation.Nullable;
 import java.util.List;
 
 public record UpdateNode(
-    @Nonnull TableLiteralNode table,
+    @Nonnull TableReference table,
     @Nonnull List<UpdateSetNode> sets,
     @Nullable LogicalNode where
-) implements Node {
+) implements SqlFragment {
 
 }

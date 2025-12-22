@@ -33,9 +33,9 @@ import jakarta.xml.bind.annotation.XmlType;
  *           <element name="package" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="connection" type="{http://www.datlin.com/datlin}ConnectionType"/>
- *           <element name="generate-table-strategy" type="{http://www.datlin.com/datlin}GenerateTableStrategy"/>
+ *           <element name="generate-from-strategy" type="{http://www.datlin.com/datlin}GenerateTableStrategy"/>
  *           <element name="result-set-processor" type="{http://www.datlin.com/datlin}ResultSetProcessorType" minOccurs="0"/>
- *           <element name="table" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
+ *           <element name="from" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="query" type="{http://www.datlin.com/datlin}QueryType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="procedure" type="{http://www.datlin.com/datlin}ProcedureType" maxOccurs="unbounded" minOccurs="0"/>
  *         </sequence>
@@ -73,12 +73,12 @@ public class XmlRepositoryConfiguration {
     protected String output;
     @XmlElement(required = true)
     protected ConnectionType connection;
-    @XmlElement(name = "generate-table-strategy", required = true, defaultValue = "all")
+    @XmlElement(name = "generate-from-strategy", required = true, defaultValue = "all")
     @XmlSchemaType(name = "string")
     protected GenerateTableStrategy generateTableStrategy;
     @XmlElement(name = "result-set-processor")
     protected ResultSetProcessorType resultSetProcessor;
-    @XmlElement(name = "table")
+    @XmlElement(name = "from")
     protected List<TableType> tables;
     @XmlElement(name = "query")
     protected List<QueryType> queries;

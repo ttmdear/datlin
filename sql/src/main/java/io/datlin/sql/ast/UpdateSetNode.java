@@ -6,6 +6,6 @@ import jakarta.annotation.Nullable;
 public record UpdateSetNode(
     @Nonnull String column,
     @Nullable Object value
-) implements Node {
+) implements SqlFragment {
 
 }

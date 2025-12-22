@@ -7,12 +7,13 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SelectBuilder {
 
     @Nonnull
-    private final List<ColumnNode> columns = new ArrayList<>();
+    private final List<Object> columns = new ArrayList<>();
 
     @Nullable
     private FromNode from;
@@ -20,25 +21,42 @@ public class SelectBuilder {
     @Nullable
     private LogicalBuilder where;
 
+    // columns ---------------------------------------------------------------------------------------------------------
+
     @Nonnull
-    public SelectBuilder column(
-        @Nonnull final String table,
-        @Nonnull final String column,
-        @Nonnull final String alias
+    public SelectBuilder columns(@Nonnull final Object... columns) {
+        this.columns.addAll(Arrays.stream(columns).toList());
+        return this;
+    }
+
+    @Nonnull
+    public SelectBuilder columns(@Nonnull final List<?> columns) {
+        this.columns.addAll(columns);
+        return this;
+    }
+
+    // from ------------------------------------------------------------------------------------------------------------
+
+    @Nonnull
+    public SelectBuilder from(
+        @Nonnull String name,
+        @Nonnull String alias
     ) {
-        this.columns.add(new ColumnNode(new ColumnLiteralNode(table, column), alias));
+        this.from = new FromNode(new TableReference(null, name), alias, List.of());
         return this;
     }
 
     @Nonnull
     public SelectBuilder from(
-        @Nonnull String schema,
+        @Nullable String schema,
         @Nonnull String name,
         @Nonnull String alias
     ) {
-        this.from = new FromNode(new TableLiteralNode(schema, name), alias, List.of());
+        this.from = new FromNode(new TableReference(schema, name), alias, List.of());
         return this;
     }
+
+    // where -----------------------------------------------------------------------------------------------------------
 
     @Nonnull
     public SelectBuilder where(
@@ -64,16 +82,20 @@ public class SelectBuilder {
         return this;
     }
 
-    @Nonnull
-    public SelectNode build() {
-        if (this.from == null) {
-            throw new FromNotSetException();
-        }
+    // schema, as, schema, value ---------------------------------------------------------------------------------------------
 
-        return new SelectNode(
-            columns,
-            from,
-            where != null ? where.build() : null
-        );
+    @Nonnull
+    public Select build() {
+//        if (this.from == null) {
+//            throw new FromNotSetException();
+//        }
+//
+//        return new Select(
+//            columns,
+//            from,
+//            where != null ? where.build() : null
+//        );
+
+        return null;
     }
 }

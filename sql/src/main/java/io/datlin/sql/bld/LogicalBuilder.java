@@ -2,6 +2,7 @@ package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.*;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,17 +42,37 @@ public class LogicalBuilder {
 
     @Nonnull
     public LogicalBuilder eq(
-        @Nonnull final String table,
         @Nonnull final String column,
         @Nonnull final UUID value
     ) {
-        criteria.add(
-            new ComparisonNode(
-                new ColumnLiteralNode(table, column),
-                ComparisonOperator.EQ,
-                new UuidValueNode(value)
-            )
-        );
+//        criteria.add(
+//            new ComparisonNode(
+//                new ColumnReference(null, column),
+//                ComparisonOperator.EQ,
+//                new ValueNode(value)
+//            )
+//        );
+//
+//        return this;
+
+        return this;
+    }
+
+    @Nonnull
+    public LogicalBuilder eq(
+        @Nullable final String table,
+        @Nonnull final String column,
+        @Nonnull final UUID value
+    ) {
+//        criteria.add(
+//            new ComparisonNode(
+//                new ColumnReference(table, column),
+//                ComparisonOperator.EQ,
+//                new ValueNode(value)
+//            )
+//        );
+//
+//        return this;
 
         return this;
     }
@@ -60,12 +81,12 @@ public class LogicalBuilder {
 
     @Nonnull
     public LogicalNode build() {
-        final List<Node> conditions = new ArrayList<>(this.criteria.size());
+        final List<SqlFragment> conditions = new ArrayList<>(this.criteria.size());
         for (final Object condition : this.criteria) {
             if (condition instanceof LogicalBuilder logicalBuilder) {
                 conditions.add(logicalBuilder.build());
-            } else if (condition instanceof Node node) {
-                conditions.add(node);
+            } else if (condition instanceof SqlFragment sqlFragment) {
+                conditions.add(sqlFragment);
             }
         }
         return new LogicalNode(operator, conditions);
