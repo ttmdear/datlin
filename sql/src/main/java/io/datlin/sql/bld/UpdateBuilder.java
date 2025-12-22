@@ -26,7 +26,7 @@ public class UpdateBuilder {
     public UpdateBuilder table(
         @Nonnull final String name
     ) {
-        table = new TableReference(null, name);
+        table = new TableReference(null, name, null);
         return this;
     }
 
@@ -35,7 +35,7 @@ public class UpdateBuilder {
         @Nonnull final String schema,
         @Nonnull final String name
     ) {
-        table = new TableReference(schema, name);
+        table = new TableReference(schema, name, null);
         return this;
     }
 

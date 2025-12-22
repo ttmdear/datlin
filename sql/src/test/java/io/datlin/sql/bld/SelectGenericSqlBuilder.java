@@ -1,15 +1,14 @@
 package io.datlin.sql.bld;
 
-import io.datlin.sql.ast.ColumnReference;
 import io.datlin.sql.ast.Select;
-import io.datlin.sql.ast.TableReference;
 import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 
 import static io.datlin.sql.ast.ColumnReference.column;
 import static io.datlin.sql.ast.TableReference.table;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SelectBuilderTest {
+class SelectGenericSqlBuilder {
 
     @Nonnull
     private final GenericSqlBuilder sqlBuilder = new GenericSqlBuilder();
@@ -20,28 +19,19 @@ class SelectBuilderTest {
             .columns(
                 column("column1").from("p").as("column_2"),
                 column("column2").from("p"),
-                column("column3").as("column_2"),
-                column("column4")
+                column("column3").as("column_2")
             )
             .from(
-                table("plan"),
+                table("pls_plan").schema("public").as("p")
             );
 
-        System.out.printf("test");
-        // final SelectNode select = new SelectBuilder()
-        //     .column("p", "plan_id", "plan_id")
-        //     .from("public", "pls_plan", "p")
-        //     .where(builder -> {
-        //         builder.eq("p", "plan_id", UUID.fromString("9747e23a-e664-405e-9e3a-0c23e1c42c57"));
-        //     })
-        //     .build();
+        // Update.column()
 
-        // final StringBuilder sql = new StringBuilder();
-        // final BuildContext buildContext = new BuildContext();
-        // sqlBuilder.build(select, sql, buildContext);
+        final StringBuilder sql = new StringBuilder();
+        final BuildContext buildContext = new BuildContext();
+        sqlBuilder.build(select, sql, buildContext);
 
-        // assertEquals("SELECT \"p\".\"plan_id\" AS plan_id FROM \"public\".\"pls_plan\" AS p WHERE (\"p\".\"plan_id\" = ?)", sql.toString());
-
+        assertEquals("SELECT \"p\".\"column1\" AS \"column_2\", \"p\".\"column2\", \"column3\" AS \"column_2\" FROM \"public\".\"pls_plan\" AS \"p\"", sql.toString());
         // assertEquals(1, buildContext.getStatementObjects().size());
         // assertEquals(UUID.fromString("9747e23a-e664-405e-9e3a-0c23e1c42c57"), buildContext.getStatementObject(0));
     }

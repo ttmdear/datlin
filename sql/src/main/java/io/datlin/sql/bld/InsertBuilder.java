@@ -24,7 +24,7 @@ public class InsertBuilder {
     public InsertBuilder into(
         @Nonnull final String name
     ) {
-        this.into = new TableReference(null, name);
+        this.into = new TableReference(null, name, null);
         return this;
     }
 
@@ -33,7 +33,7 @@ public class InsertBuilder {
         @Nonnull final String schema,
         @Nonnull final String name
     ) {
-        this.into = new TableReference(schema, name);
+        this.into = new TableReference(schema, name, null);
         return this;
     }
 

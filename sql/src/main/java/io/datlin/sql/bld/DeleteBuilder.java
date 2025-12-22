@@ -19,7 +19,7 @@ public class DeleteBuilder {
     public DeleteBuilder table(
         @Nonnull final String name
     ) {
-        table = new TableReference(null, name);
+        table = new TableReference(null, name, null);
         return this;
     }
 
@@ -28,7 +28,7 @@ public class DeleteBuilder {
         @Nonnull final String schema,
         @Nonnull final String name
     ) {
-        table = new TableReference(schema, name);
+        table = new TableReference(schema, name, null);
         return this;
     }
 

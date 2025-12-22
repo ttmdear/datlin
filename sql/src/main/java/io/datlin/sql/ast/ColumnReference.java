@@ -7,7 +7,7 @@ public record ColumnReference(
     @Nullable String from,
     @Nonnull String column,
     @Nullable String as
-) implements SqlFragment {
+) implements SqlFragment, Aliasable<ColumnReference> {
 
     @Nonnull
     public ColumnReference from(@Nonnull final String table) {

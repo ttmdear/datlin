@@ -1,6 +1,5 @@
 package io.datlin.sql.bld;
 
-import io.datlin.sql.exc.FromNotSetException;
 import io.datlin.sql.ast.*;
 import io.datlin.sql.bld.LogicalBuilder.LogicalConfigurer;
 import jakarta.annotation.Nonnull;
@@ -42,7 +41,7 @@ public class SelectBuilder {
         @Nonnull String name,
         @Nonnull String alias
     ) {
-        this.from = new FromNode(new TableReference(null, name), alias, List.of());
+        this.from = new FromNode(new TableReference(null, name, null), alias, List.of());
         return this;
     }
 
@@ -52,7 +51,7 @@ public class SelectBuilder {
         @Nonnull String name,
         @Nonnull String alias
     ) {
-        this.from = new FromNode(new TableReference(schema, name), alias, List.of());
+        this.from = new FromNode(new TableReference(schema, name, null), alias, List.of());
         return this;
     }
 
