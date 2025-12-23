@@ -81,6 +81,16 @@ public record Select(
             columns,
             from,
             joins,
+            criteria instanceof Criteria ? (Criteria) criteria : Criteria.and(criteria)
+        );
+    }
+
+    @Nonnull
+    public Select where(@Nonnull final SqlFragment... criteria) {
+        return new Select(
+            columns,
+            from,
+            joins,
             Criteria.and(criteria)
         );
     }

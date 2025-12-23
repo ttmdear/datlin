@@ -258,6 +258,21 @@ public class GenericSqlBuilder implements SqlBuilder {
         }
     }
 
+    /**
+     * Translates the given criteria into a SQL fragment and appends it to the query buffer.
+     * <p>
+     * This method processes the logical {@code Criteria} definition, generates the
+     * corresponding SQL syntax, and manages query parameters or aliases through the
+     * provided {@code BuildContext}.
+     * </p>
+     *
+     * @param criteria the criteria definition (e.g., comparison, logical expression)
+     *                 to be processed; must not be {@code null}
+     * @param sql      the buffer to which the generated SQL fragment will be appended;
+     *                 must not be {@code null}
+     * @param context  the shared build state, used for tracking bind parameters,
+     *                 table aliases, and dialect-specific settings; must not be {@code null}
+     */
     public void build(
         @Nonnull final Criteria criteria,
         @Nonnull final StringBuilder sql,
@@ -265,12 +280,19 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         for (int i = 0; i < criteria.criteria().size(); i++) {
             final SqlFragment criterion = criteria.criteria().get(i);
-            sql.append("(");
-            build(criterion, sql, context);
-            sql.append(")");
+
+            if (criterion instanceof ColumnReference columnReference) {
+                build(columnReference, sql, context);
+            } else if (criterion instanceof Comparison comparison) {
+                build(comparison, sql, context);
+            } else {
+                sql.append("(");
+                build(criterion, sql, context);
+                sql.append(")");
+            }
 
             if (i < criteria.criteria().size() - 1) {
-                sql.append(" ").append(criteria.operator());
+                sql.append(" ").append(criteria.operator()).append(" ");
             }
         }
     }
