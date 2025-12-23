@@ -1,6 +1,7 @@
 package io.datlin.sql.ast;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +16,9 @@ import java.util.List;
  */
 public record Criteria(
     @Nonnull LogicalOperator operator,
-    @Nonnull List<SqlFragment> criteria
-) implements SqlFragment {
+    @Nonnull List<SqlFragment> criteria,
+    @Nullable String alias
+) implements SqlFragment, Aliasable<Criteria> {
 
     // and -------------------------------------------------------------------------------------------------------------
 
@@ -30,7 +32,7 @@ public record Criteria(
     public static Criteria and(
         @Nonnull final SqlFragment... criteria
     ) {
-        return new Criteria(LogicalOperator.AND, Arrays.stream(criteria).toList());
+        return new Criteria(LogicalOperator.AND, Arrays.stream(criteria).toList(), null);
     }
 
     /**
@@ -43,7 +45,7 @@ public record Criteria(
     public static Criteria and(
         @Nonnull final List<SqlFragment> criteria
     ) {
-        return new Criteria(LogicalOperator.AND, List.copyOf(criteria));
+        return new Criteria(LogicalOperator.AND, List.copyOf(criteria), null);
     }
 
     // or --------------------------------------------------------------------------------------------------------------
@@ -58,7 +60,7 @@ public record Criteria(
     public static Criteria or(
         @Nonnull final SqlFragment... criteria
     ) {
-        return new Criteria(LogicalOperator.OR, Arrays.stream(criteria).toList());
+        return new Criteria(LogicalOperator.OR, Arrays.stream(criteria).toList(), null);
     }
 
     /**
@@ -71,6 +73,14 @@ public record Criteria(
     public static Criteria or(
         @Nonnull final List<SqlFragment> criteria
     ) {
-        return new Criteria(LogicalOperator.OR, List.copyOf(criteria));
+        return new Criteria(LogicalOperator.OR, List.copyOf(criteria), null);
+    }
+
+    // aliasable -------------------------------------------------------------------------------------------------------
+
+    @Nonnull
+    @Override
+    public Criteria as(@Nonnull String alias) {
+        return new Criteria(operator, criteria, alias);
     }
 }

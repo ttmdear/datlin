@@ -2,17 +2,17 @@ package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.Aliasable;
 import io.datlin.sql.ast.ColumnReference;
-import io.datlin.sql.ast.ComparisonCriterion;
+import io.datlin.sql.ast.Comparison;
 import io.datlin.sql.ast.ComparisonOperator;
-import io.datlin.sql.ast.DeleteNode;
-import io.datlin.sql.ast.InsertNode;
 import io.datlin.sql.ast.Criteria;
+import io.datlin.sql.ast.Delete;
+import io.datlin.sql.ast.Insert;
 import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
-import io.datlin.sql.ast.UpdateNode;
+import io.datlin.sql.ast.Update;
 import io.datlin.sql.ast.UpdateSetNode;
-import io.datlin.sql.ast.ValueNode;
+import io.datlin.sql.ast.Value;
 import io.datlin.sql.exc.FromIsNotSetException;
 import io.datlin.sql.exc.InsertColumnsNotSetException;
 import io.datlin.sql.exc.InsertValuesNumberIsDifferentThenColumnsException;
@@ -43,7 +43,7 @@ public class GenericSqlBuilder implements SqlBuilder {
     private final char iqc = '"';
 
     public void build(
-        @Nonnull final SqlFragment fragment,
+        @Nonnull final Object fragment,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
@@ -51,12 +51,14 @@ public class GenericSqlBuilder implements SqlBuilder {
             build((Select) fragment, sql, context);
         } else if (fragment instanceof Criteria) {
             build((Criteria) fragment, sql, context);
-        } else if (fragment instanceof ComparisonCriterion) {
-            build((ComparisonCriterion) fragment, sql, context);
-        } else if (fragment instanceof ValueNode) {
-            build((ValueNode) fragment, sql, context);
+        } else if (fragment instanceof Comparison) {
+            build((Comparison) fragment, sql, context);
+        } else if (fragment instanceof Value) {
+            build((Value) fragment, sql, context);
         } else if (fragment instanceof ColumnReference) {
             build((ColumnReference) fragment, sql, context);
+        } else {
+
         }
     }
 
@@ -129,7 +131,7 @@ public class GenericSqlBuilder implements SqlBuilder {
 
     @Override
     public void build(
-        @Nonnull final InsertNode insert,
+        @Nonnull final Insert insert,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
@@ -190,7 +192,7 @@ public class GenericSqlBuilder implements SqlBuilder {
 
     @Override
     public void build(
-        @Nonnull final UpdateNode update,
+        @Nonnull final Update update,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
@@ -237,7 +239,7 @@ public class GenericSqlBuilder implements SqlBuilder {
 
     @Override
     public void build(
-        @Nonnull final DeleteNode delete,
+        @Nonnull final Delete delete,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
@@ -274,21 +276,21 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     public void build(
-        @Nonnull final ComparisonCriterion comparisonCriterion,
+        @Nonnull final Comparison comparison,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        build(comparisonCriterion.left(), sql, context);
-        sql.append(" ").append(getBinaryOperatorSymbol(comparisonCriterion.operator())).append(" ");
-        build(comparisonCriterion.right(), sql, context);
+        build(comparison.left(), sql, context);
+        sql.append(" ").append(resolveComparisonOperator(comparison.operator())).append(" ");
+        build(comparison.right(), sql, context);
     }
 
     public void build(
-        @Nonnull final ValueNode valueNode,
+        @Nonnull final Value value,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        context.addStatementObjects(valueNode.value());
+        context.addStatementObjects(value.value());
         sql.append("?");
     }
 
@@ -319,7 +321,7 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     @Nonnull
-    private String getBinaryOperatorSymbol(@Nonnull final ComparisonOperator operator) {
+    private String resolveComparisonOperator(@Nonnull final ComparisonOperator operator) {
         return switch (operator) {
             case EQ -> "=";
             case NEQ -> "<>"; // Lub "!="
@@ -378,7 +380,7 @@ public class GenericSqlBuilder implements SqlBuilder {
         @Nonnull final StringBuilder sql,
         @Nonnull final Aliasable<?> aliasable
     ) {
-        final String as = aliasable.as();
+        final String as = aliasable.alias();
 
         if (as == null || as.isEmpty()) {
             return;

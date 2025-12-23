@@ -6,12 +6,12 @@ import jakarta.annotation.Nullable;
 public record ColumnReference(
     @Nullable String from,
     @Nonnull String column,
-    @Nullable String as
+    @Nullable String alias
 ) implements SqlFragment, Aliasable<ColumnReference> {
 
     @Nonnull
     public ColumnReference from(@Nonnull final String table) {
-        return new ColumnReference(table, column, as);
+        return new ColumnReference(table, column, alias);
     }
 
     @Nonnull

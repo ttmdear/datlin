@@ -27,7 +27,7 @@ public interface Aliasable<T> {
      * it should return an empty string or a default identifier.
      */
     @Nullable
-    String as();
+    String alias();
 
     /**
      * Creates a new instance of the element with the specified alias.

@@ -4,7 +4,7 @@ import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
-public record InsertNode(
+public record Insert(
     @Nonnull List<String> columns,
     @Nonnull List<List<Object>> values,
     @Nonnull TableReference into

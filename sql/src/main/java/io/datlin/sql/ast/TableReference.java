@@ -6,7 +6,7 @@ import jakarta.annotation.Nullable;
 public record TableReference(
     @Nullable String schema,
     @Nonnull String name,
-    @Nullable String as
+    @Nullable String alias
 ) implements SqlFragment, Aliasable<TableReference> {
 
     @Nonnull
@@ -20,7 +20,7 @@ public record TableReference(
     public TableReference schema(
         @Nonnull final String schema
     ) {
-        return new TableReference(schema, name, as);
+        return new TableReference(schema, name, alias);
     }
 
     @Nonnull

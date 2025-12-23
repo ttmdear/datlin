@@ -6,6 +6,8 @@ import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 
 import static io.datlin.sql.ast.ColumnReference.column;
+import static io.datlin.sql.ast.Comparison.eq;
+import static io.datlin.sql.ast.Criteria.and;
 import static io.datlin.sql.ast.TableReference.table;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,14 +22,15 @@ class SelectGenericSqlBuilderTest {
             .columns(
                 column("column1").from("p").as("column_2"),
                 column("column2").from("p"),
-                column("column3").as("column_2")
-                column("column2").gte(select())
+                column("column3").as("column_2"),
+                eq(column("column3"), column("column_1")).as("column_4"),
+                and(
+                    eq(column("column_10"), column("column_11")).as("column_12")
+                )
             )
             .from(
                 table("pls_plan").schema("public").as("p")
-            ).where(
-                Criteria.
-            )
+            );
 
         final StringBuilder sql = new StringBuilder();
         final BuildContext buildContext = new BuildContext();

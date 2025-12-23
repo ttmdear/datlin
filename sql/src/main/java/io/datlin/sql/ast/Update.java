@@ -5,10 +5,10 @@ import jakarta.annotation.Nullable;
 
 import java.util.List;
 
-public record FromNode(
-    @Nonnull SqlFragment source,
-    @Nullable String alias,
-    @Nonnull List<JoinNode> joins
+public record Update(
+    @Nonnull TableReference table,
+    @Nonnull List<UpdateSetNode> sets,
+    @Nullable Criteria where
 ) implements SqlFragment {
 
 }

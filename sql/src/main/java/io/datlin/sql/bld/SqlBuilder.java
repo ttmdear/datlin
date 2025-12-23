@@ -1,15 +1,15 @@
 package io.datlin.sql.bld;
 
-import io.datlin.sql.ast.DeleteNode;
-import io.datlin.sql.ast.InsertNode;
+import io.datlin.sql.ast.Delete;
+import io.datlin.sql.ast.Insert;
 import io.datlin.sql.ast.Select;
-import io.datlin.sql.ast.UpdateNode;
+import io.datlin.sql.ast.Update;
 import jakarta.annotation.Nonnull;
 
 public interface SqlBuilder {
 
     void build(
-        @Nonnull final InsertNode insertNode,
+        @Nonnull final Insert insert,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     );
@@ -21,13 +21,13 @@ public interface SqlBuilder {
     );
 
     void build(
-        @Nonnull final UpdateNode updateNode,
+        @Nonnull final Update update,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     );
 
     void build(
-        @Nonnull final DeleteNode deleteNode,
+        @Nonnull final Delete delete,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     );
