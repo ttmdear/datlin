@@ -32,16 +32,16 @@
 
     <xs:simpleType name="ConnectionDriverType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="postgres"/>
-            <xs:enumeration value="mysql"/>
-            <xs:enumeration value="oracle"/>
+            <xs:enumeration valueReference="postgres"/>
+            <xs:enumeration valueReference="mysql"/>
+            <xs:enumeration valueReference="oracle"/>
         </xs:restriction>
     </xs:simpleType>
 
     <xs:simpleType name="GenerateTableStrategy">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="all"/>
-            <xs:enumeration value="only-defined"/>
+            <xs:enumeration valueReference="all"/>
+            <xs:enumeration valueReference="only-defined"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -80,9 +80,9 @@
 
     <xs:simpleType name="ColumnDataType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="string"/>
-            <xs:enumeration value="integer"/>
-            <xs:enumeration value="uuid"/>
+            <xs:enumeration valueReference="string"/>
+            <xs:enumeration valueReference="integer"/>
+            <xs:enumeration valueReference="uuid"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -99,9 +99,9 @@
         <xs:attribute name="type" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:enumeration value="string"/>
-                    <xs:enumeration value="int"/>
-                    <xs:enumeration value="list"/>
+                    <xs:enumeration valueReference="string"/>
+                    <xs:enumeration valueReference="int"/>
+                    <xs:enumeration valueReference="list"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>

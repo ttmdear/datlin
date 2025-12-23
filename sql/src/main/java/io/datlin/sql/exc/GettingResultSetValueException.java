@@ -8,7 +8,7 @@ public class GettingResultSetValueException extends RuntimeException {
         @Nonnull final String column,
         @Nonnull final Exception cause
     ) {
-        super("Error during getting '%s' value from result set for `%s`".formatted(table, column), cause);
+        super("Error during getting '%s' reference from result set for `%s`".formatted(table, column), cause);
     }
 
 }

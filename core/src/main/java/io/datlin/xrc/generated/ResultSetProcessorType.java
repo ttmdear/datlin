@@ -54,7 +54,7 @@ public class ResultSetProcessorType {
     protected List<ResultSetProcessorType.TypeBinding> typeBindings;
 
     /**
-     * Gets the value of the typeBindings property.
+     * Gets the reference of the typeBindings property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -76,7 +76,7 @@ public class ResultSetProcessorType {
      * 
      * 
      * @return
-     *     The value of the typeBindings property.
+     *     The reference of the typeBindings property.
      */
     public List<ResultSetProcessorType.TypeBinding> getTypeBindings() {
         if (typeBindings == null) {
@@ -114,7 +114,7 @@ public class ResultSetProcessorType {
         protected String javaType;
 
         /**
-         * Gets the value of the databaseType property.
+         * Gets the reference of the databaseType property.
          * 
          * @return
          *     possible object is
@@ -126,7 +126,7 @@ public class ResultSetProcessorType {
         }
 
         /**
-         * Sets the value of the databaseType property.
+         * Sets the reference of the databaseType property.
          * 
          * @param value
          *     allowed object is
@@ -138,7 +138,7 @@ public class ResultSetProcessorType {
         }
 
         /**
-         * Gets the value of the javaType property.
+         * Gets the reference of the javaType property.
          * 
          * @return
          *     possible object is
@@ -150,7 +150,7 @@ public class ResultSetProcessorType {
         }
 
         /**
-         * Sets the value of the javaType property.
+         * Sets the reference of the javaType property.
          * 
          * @param value
          *     allowed object is

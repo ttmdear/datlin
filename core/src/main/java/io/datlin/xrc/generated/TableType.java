@@ -66,7 +66,7 @@ public class TableType {
     protected Boolean exclude;
 
     /**
-     * Gets the value of the columns property.
+     * Gets the reference of the columns property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -88,7 +88,7 @@ public class TableType {
      * 
      * 
      * @return
-     *     The value of the columns property.
+     *     The reference of the columns property.
      */
     public List<ColumnType> getColumns() {
         if (columns == null) {
@@ -98,7 +98,7 @@ public class TableType {
     }
 
     /**
-     * Gets the value of the name property.
+     * Gets the reference of the name property.
      * 
      * @return
      *     possible object is
@@ -110,7 +110,7 @@ public class TableType {
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the reference of the name property.
      * 
      * @param value
      *     allowed object is
@@ -122,7 +122,7 @@ public class TableType {
     }
 
     /**
-     * Gets the value of the resultSetProcessor property.
+     * Gets the reference of the resultSetProcessor property.
      * 
      * @return
      *     possible object is
@@ -134,7 +134,7 @@ public class TableType {
     }
 
     /**
-     * Sets the value of the resultSetProcessor property.
+     * Sets the reference of the resultSetProcessor property.
      * 
      * @param value
      *     allowed object is
@@ -146,7 +146,7 @@ public class TableType {
     }
 
     /**
-     * Gets the value of the insert property.
+     * Gets the reference of the insert property.
      * 
      * @return
      *     possible object is
@@ -162,7 +162,7 @@ public class TableType {
     }
 
     /**
-     * Sets the value of the insert property.
+     * Sets the reference of the insert property.
      * 
      * @param value
      *     allowed object is
@@ -174,7 +174,7 @@ public class TableType {
     }
 
     /**
-     * Gets the value of the select property.
+     * Gets the reference of the select property.
      * 
      * @return
      *     possible object is
@@ -190,7 +190,7 @@ public class TableType {
     }
 
     /**
-     * Sets the value of the select property.
+     * Sets the reference of the select property.
      * 
      * @param value
      *     allowed object is
@@ -202,7 +202,7 @@ public class TableType {
     }
 
     /**
-     * Gets the value of the delete property.
+     * Gets the reference of the delete property.
      * 
      * @return
      *     possible object is
@@ -218,7 +218,7 @@ public class TableType {
     }
 
     /**
-     * Sets the value of the delete property.
+     * Sets the reference of the delete property.
      * 
      * @param value
      *     allowed object is
@@ -230,7 +230,7 @@ public class TableType {
     }
 
     /**
-     * Gets the value of the update property.
+     * Gets the reference of the update property.
      * 
      * @return
      *     possible object is
@@ -246,7 +246,7 @@ public class TableType {
     }
 
     /**
-     * Sets the value of the update property.
+     * Sets the reference of the update property.
      * 
      * @param value
      *     allowed object is
@@ -258,7 +258,7 @@ public class TableType {
     }
 
     /**
-     * Gets the value of the exclude property.
+     * Gets the reference of the exclude property.
      * 
      * @return
      *     possible object is
@@ -274,7 +274,7 @@ public class TableType {
     }
 
     /**
-     * Sets the value of the exclude property.
+     * Sets the reference of the exclude property.
      * 
      * @param value
      *     allowed object is

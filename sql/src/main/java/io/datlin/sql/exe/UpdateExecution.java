@@ -55,9 +55,9 @@ public class UpdateExecution {
 //    @Nonnull
 //    public UpdateExecution set(
 //        @Nonnull final String column,
-//        @Nullable final Object value
+//        @Nullable final Object reference
 //    ) {
-//        builder.set(column, value);
+//        builder.set(column, reference);
 //        return this;
 //    }
 //

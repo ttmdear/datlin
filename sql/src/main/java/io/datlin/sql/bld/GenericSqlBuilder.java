@@ -12,7 +12,7 @@ import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.ast.Update;
 import io.datlin.sql.ast.UpdateSetNode;
-import io.datlin.sql.ast.Value;
+import io.datlin.sql.ast.ValueReference;
 import io.datlin.sql.exc.FromIsNotSetException;
 import io.datlin.sql.exc.InsertColumnsNotSetException;
 import io.datlin.sql.exc.InsertValuesNumberIsDifferentThenColumnsException;
@@ -53,8 +53,8 @@ public class GenericSqlBuilder implements SqlBuilder {
             build((Criteria) fragment, sql, context);
         } else if (fragment instanceof Comparison) {
             build((Comparison) fragment, sql, context);
-        } else if (fragment instanceof Value) {
-            build((Value) fragment, sql, context);
+        } else if (fragment instanceof ValueReference) {
+            build((ValueReference) fragment, sql, context);
         } else if (fragment instanceof ColumnReference) {
             build((ColumnReference) fragment, sql, context);
         } else {
@@ -308,11 +308,11 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     public void build(
-        @Nonnull final Value value,
+        @Nonnull final ValueReference valueReference,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        context.addStatementObjects(value.value());
+        context.addStatementObjects(valueReference.reference());
         sql.append("?");
     }
 
@@ -355,15 +355,15 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     /**
-     * Appends a string value to the {@link StringBuilder} wrapped in the Identifier Quote Character (IQC).
+     * Appends a string reference to the {@link StringBuilder} wrapped in the Identifier Quote Character (IQC).
      * <p>
      * This helper method is used to safely add database identifiers (such as table or column names)
-     * to a dynamic SQL query. By wrapping the value in {@link #iqc}, it ensures that the identifier
+     * to a dynamic SQL query. By wrapping the reference in {@link #iqc}, it ensures that the identifier
      * is correctly interpreted by the database engine, even if it is a reserved keyword or
      * contains special characters.
      * </p>
      * * <p><b>Example:</b></p>
-     * If {@code iqc} is {@code '"'} and {@code value} is {@code "user_table"},
+     * If {@code iqc} is {@code '"'} and {@code reference} is {@code "user_table"},
      * it appends {@code "user_table"} (including quotes) to the SQL buffer.
      *
      * @param sql   The {@link StringBuilder} buffer where the quoted identifier will be appended.

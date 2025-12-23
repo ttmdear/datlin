@@ -53,7 +53,7 @@ public class ColumnType {
     protected Boolean nullable;
 
     /**
-     * Gets the value of the name property.
+     * Gets the reference of the name property.
      * 
      * @return
      *     possible object is
@@ -65,7 +65,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the reference of the name property.
      * 
      * @param value
      *     allowed object is
@@ -77,7 +77,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the primaryKey property.
+     * Gets the reference of the primaryKey property.
      * 
      * @return
      *     possible object is
@@ -89,7 +89,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the primaryKey property.
+     * Sets the reference of the primaryKey property.
      * 
      * @param value
      *     allowed object is
@@ -101,7 +101,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the autoincrement property.
+     * Gets the reference of the autoincrement property.
      * 
      * @return
      *     possible object is
@@ -117,7 +117,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the autoincrement property.
+     * Sets the reference of the autoincrement property.
      * 
      * @param value
      *     allowed object is
@@ -129,7 +129,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the databaseType property.
+     * Gets the reference of the databaseType property.
      * 
      * @return
      *     possible object is
@@ -141,7 +141,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the databaseType property.
+     * Sets the reference of the databaseType property.
      * 
      * @param value
      *     allowed object is
@@ -153,7 +153,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the javaType property.
+     * Gets the reference of the javaType property.
      * 
      * @return
      *     possible object is
@@ -165,7 +165,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the javaType property.
+     * Sets the reference of the javaType property.
      * 
      * @param value
      *     allowed object is
@@ -177,7 +177,7 @@ public class ColumnType {
     }
 
     /**
-     * Gets the value of the nullable property.
+     * Gets the reference of the nullable property.
      * 
      * @return
      *     possible object is
@@ -193,7 +193,7 @@ public class ColumnType {
     }
 
     /**
-     * Sets the value of the nullable property.
+     * Sets the reference of the nullable property.
      * 
      * @param value
      *     allowed object is

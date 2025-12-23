@@ -45,7 +45,7 @@ public class ProcedureType {
     protected List<Object> any;
 
     /**
-     * Gets the value of the any property.
+     * Gets the reference of the any property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -68,7 +68,7 @@ public class ProcedureType {
      * 
      * 
      * @return
-     *     The value of the any property.
+     *     The reference of the any property.
      */
     public List<Object> getAny() {
         if (any == null) {
