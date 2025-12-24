@@ -1,47 +1,43 @@
 package io.datlin.sql.bld;
 
-import io.datlin.sql.ast.Criteria;
+import io.datlin.sql.ast.ColumnReference;
 import io.datlin.sql.ast.Select;
+import io.datlin.sql.ast.TableReference;
 import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 
-import static io.datlin.sql.ast.ColumnReference.column;
-import static io.datlin.sql.ast.Comparison.eq;
+import static io.datlin.sql.SqlAssertions.assertSql;
 import static io.datlin.sql.ast.Criteria.or;
 import static io.datlin.sql.ast.TableReference.table;
+import static io.datlin.sql.ast.ValueReference.value;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ValueReferenceGenericSqlBuilderTest
-{
+class ValueReferenceGenericSqlBuilderTest {
 
     @Nonnull
     private final GenericSqlBuilder sqlBuilder = new GenericSqlBuilder();
 
     @Test
     void build() {
-        final Select select = Select.select()
+        assertSql("20", sqlBuilder, value(20L));
+        assertSql("20.2", sqlBuilder, value(20.20d));
+        assertSql("30.2", sqlBuilder, value(30.20f));
+        assertSql("40", sqlBuilder, value(40));
+        assertSql("50", sqlBuilder, value((short) 50));
+        assertSql("20", sqlBuilder, value(20));
+        assertSql("?", sqlBuilder, value(new Object()));
+    }
+
+    @Test
+    void buildComparison() {
+        final Select select30 = Select.select()
             .columns(
-                column("c1").from("c1_from").as("c1_as"),
-                column("c2").from("c2_from"),
-                column("c3").as("c3_as"),
-                column("c4")
+                ColumnReference.column("user_id")
             )
-            .from(table("t1").schema("public").as("t1_as"))
-            .where(
-                Criteria.and(
-                    or(
-                        eq(column("cr1"), column("cr2").from("cr2_from")),
-                        eq(column("cr3"), column("cr4"))
-                    ),
-                    eq(column("cr5"), column("cr6"))
-                )
-            );
+            .from(table("plans"));
 
-        final StringBuilder sql = new StringBuilder();
-        final BuildContext buildContext = new BuildContext();
-        sqlBuilder.build(select, sql, buildContext);
+        assertSql("20 = (SELECT \"user_id\" FROM \"plans\")", sqlBuilder, value(20L).eq(select30));
 
-        assertEquals("SELECT \"c1_from\".\"c1\" AS \"c1_as\", \"c2_from\".\"c2\", \"c3\" AS \"c3_as\", \"c4\" FROM \"public\".\"t1\" AS \"t1_as\" WHERE (\"cr1\" = \"cr2_from\".\"cr2\" OR \"cr3\" = \"cr4\") AND \"cr5\" = \"cr6\"", sql.toString());
-        assertEquals(0, buildContext.getStatementObjects().size());
+        assertSql("20 = 30", sqlBuilder, value(20L).eq(30));
     }
 }

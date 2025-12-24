@@ -21,6 +21,22 @@ import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
+import static io.datlin.sql.ast.ValueReference.value;
+
+/**
+ * A versatile implementation of the {@link SqlBuilder} interface designed to handle
+ * various SQL fragments.
+ * <p>
+ * This builder acts as a central dispatcher that translates high-level objects
+ * (such as criteria, tokens, or expressions) into their corresponding SQL representations.
+ * It manages the recursive traversal of complex expression trees and ensures that
+ * the build state is correctly maintained within the {@link BuildContext}.
+ * </p>
+ *
+ * @see SqlBuilder
+ * @see BuildContext
+ * @since 1.0.0
+ */
 public class GenericSqlBuilder implements SqlBuilder {
 
     /**
@@ -302,9 +318,23 @@ public class GenericSqlBuilder implements SqlBuilder {
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        build(comparison.left(), sql, context);
+        if (comparison.left() instanceof ValueReference valueReference) {
+            build(valueReference, sql, context);
+        } else if (comparison.left() instanceof SqlFragment sqlFragment) {
+            appendInBrackets(sql, sqlFragment, context);
+        } else {
+            build(value(comparison.left()), sql, context);
+        }
+
         sql.append(" ").append(resolveComparisonOperator(comparison.operator())).append(" ");
-        build(comparison.right(), sql, context);
+
+        if (comparison.right() instanceof ValueReference valueReference) {
+            build(valueReference, sql, context);
+        } else if (comparison.right() instanceof SqlFragment sqlFragment) {
+            appendInBrackets(sql, sqlFragment, context);
+        } else {
+            build(value(comparison.right()), sql, context);
+        }
     }
 
     public void build(
@@ -312,8 +342,20 @@ public class GenericSqlBuilder implements SqlBuilder {
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        context.addStatementObjects(valueReference.reference());
-        sql.append("?");
+        if (valueReference.reference() instanceof Long longReference) {
+            sql.append(longReference);
+        } else if (valueReference.reference() instanceof Double doubleReference) {
+            sql.append(doubleReference);
+        } else if (valueReference.reference() instanceof Float floatReference) {
+            sql.append(floatReference);
+        } else if (valueReference.reference() instanceof Integer integerReference) {
+            sql.append(integerReference);
+        } else if (valueReference.reference() instanceof Short shortReference) {
+            sql.append(shortReference);
+        } else {
+            context.addStatementObjects(valueReference.reference());
+            sql.append("?");
+        }
     }
 
     public void build(
@@ -410,5 +452,31 @@ public class GenericSqlBuilder implements SqlBuilder {
 
         sql.append(" AS ");
         appendInIqc(sql, as);
+    }
+
+    /**
+     * Wraps the translation of a {@link SqlFragment} in parentheses and appends it to the buffer.
+     * <p>
+     * This helper method ensures consistent formatting for nested expressions, such as
+     * subqueries or grouped logical conditions (e.g., {@code (a AND b)}). It handles the
+     * opening bracket, delegates the recursive build process for the fragment,
+     * and ensures the closing bracket is appended.
+     * </p>
+     *
+     * @param sql         the buffer to which the bracketed SQL will be appended;
+     *                    must not be {@code null}
+     * @param sqlFragment the fragment to be built inside the brackets;
+     *                    must not be {@code null}
+     * @param context     the current build context for parameter tracking and dialect
+     *                    settings; must not be {@code null}
+     */
+    private void appendInBrackets(
+        @Nonnull final StringBuilder sql,
+        @Nonnull final SqlFragment sqlFragment,
+        @Nonnull final BuildContext context
+    ) {
+        sql.append("(");
+        build(sqlFragment, sql, context);
+        sql.append(")");
     }
 }

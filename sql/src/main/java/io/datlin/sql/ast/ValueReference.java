@@ -8,8 +8,9 @@ public record ValueReference(
     @Nullable String alias
 ) implements SqlFragment, Aliasable<ValueReference>, ComparisonSupport {
 
-    public static ValueReference value() {
-
+    @Nonnull
+    public static ValueReference value(@Nonnull final Object reference) {
+        return new ValueReference(reference, null);
     }
 
     @Nonnull
