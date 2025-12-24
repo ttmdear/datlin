@@ -33,9 +33,9 @@ import jakarta.xml.bind.annotation.XmlType;
  *           <element name="package" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="output" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *           <element name="connection" type="{http://www.datlin.com/datlin}ConnectionType"/>
- *           <element name="generate-from-strategy" type="{http://www.datlin.com/datlin}GenerateTableStrategy"/>
+ *           <element name="generate-table-strategy" type="{http://www.datlin.com/datlin}GenerateTableStrategy"/>
  *           <element name="result-set-processor" type="{http://www.datlin.com/datlin}ResultSetProcessorType" minOccurs="0"/>
- *           <element name="from" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
+ *           <element name="table" type="{http://www.datlin.com/datlin}TableType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="query" type="{http://www.datlin.com/datlin}QueryType" maxOccurs="unbounded" minOccurs="0"/>
  *           <element name="procedure" type="{http://www.datlin.com/datlin}ProcedureType" maxOccurs="unbounded" minOccurs="0"/>
  *         </sequence>
@@ -73,12 +73,12 @@ public class XmlRepositoryConfiguration {
     protected String output;
     @XmlElement(required = true)
     protected ConnectionType connection;
-    @XmlElement(name = "generate-from-strategy", required = true, defaultValue = "all")
+    @XmlElement(name = "generate-table-strategy", required = true, defaultValue = "all")
     @XmlSchemaType(name = "string")
     protected GenerateTableStrategy generateTableStrategy;
     @XmlElement(name = "result-set-processor")
     protected ResultSetProcessorType resultSetProcessor;
-    @XmlElement(name = "from")
+    @XmlElement(name = "table")
     protected List<TableType> tables;
     @XmlElement(name = "query")
     protected List<QueryType> queries;
@@ -86,7 +86,7 @@ public class XmlRepositoryConfiguration {
     protected List<ProcedureType> procedures;
 
     /**
-     * Gets the reference of the name property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
@@ -98,7 +98,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the reference of the name property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
@@ -110,7 +110,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the simpleName property.
+     * Gets the value of the simpleName property.
      * 
      * @return
      *     possible object is
@@ -122,7 +122,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the reference of the simpleName property.
+     * Sets the value of the simpleName property.
      * 
      * @param value
      *     allowed object is
@@ -134,7 +134,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the package property.
+     * Gets the value of the package property.
      * 
      * @return
      *     possible object is
@@ -146,7 +146,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the reference of the package property.
+     * Sets the value of the package property.
      * 
      * @param value
      *     allowed object is
@@ -158,7 +158,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the output property.
+     * Gets the value of the output property.
      * 
      * @return
      *     possible object is
@@ -170,7 +170,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the reference of the output property.
+     * Sets the value of the output property.
      * 
      * @param value
      *     allowed object is
@@ -182,7 +182,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the connection property.
+     * Gets the value of the connection property.
      * 
      * @return
      *     possible object is
@@ -194,7 +194,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the reference of the connection property.
+     * Sets the value of the connection property.
      * 
      * @param value
      *     allowed object is
@@ -206,7 +206,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the generateTableStrategy property.
+     * Gets the value of the generateTableStrategy property.
      * 
      * @return
      *     possible object is
@@ -218,7 +218,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the reference of the generateTableStrategy property.
+     * Sets the value of the generateTableStrategy property.
      * 
      * @param value
      *     allowed object is
@@ -230,7 +230,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the resultSetProcessor property.
+     * Gets the value of the resultSetProcessor property.
      * 
      * @return
      *     possible object is
@@ -242,7 +242,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Sets the reference of the resultSetProcessor property.
+     * Sets the value of the resultSetProcessor property.
      * 
      * @param value
      *     allowed object is
@@ -254,7 +254,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the tables property.
+     * Gets the value of the tables property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -276,7 +276,7 @@ public class XmlRepositoryConfiguration {
      * 
      * 
      * @return
-     *     The reference of the tables property.
+     *     The value of the tables property.
      */
     public List<TableType> getTables() {
         if (tables == null) {
@@ -286,7 +286,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the queries property.
+     * Gets the value of the queries property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -308,7 +308,7 @@ public class XmlRepositoryConfiguration {
      * 
      * 
      * @return
-     *     The reference of the queries property.
+     *     The value of the queries property.
      */
     public List<QueryType> getQueries() {
         if (queries == null) {
@@ -318,7 +318,7 @@ public class XmlRepositoryConfiguration {
     }
 
     /**
-     * Gets the reference of the procedures property.
+     * Gets the value of the procedures property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
@@ -340,7 +340,7 @@ public class XmlRepositoryConfiguration {
      * 
      * 
      * @return
-     *     The reference of the procedures property.
+     *     The value of the procedures property.
      */
     public List<ProcedureType> getProcedures() {
         if (procedures == null) {

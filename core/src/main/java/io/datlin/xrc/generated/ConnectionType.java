@@ -50,7 +50,7 @@ public class ConnectionType {
     protected String schema;
 
     /**
-     * Gets the reference of the driver property.
+     * Gets the value of the driver property.
      * 
      * @return
      *     possible object is
@@ -62,7 +62,7 @@ public class ConnectionType {
     }
 
     /**
-     * Sets the reference of the driver property.
+     * Sets the value of the driver property.
      * 
      * @param value
      *     allowed object is
@@ -74,7 +74,7 @@ public class ConnectionType {
     }
 
     /**
-     * Gets the reference of the url property.
+     * Gets the value of the url property.
      * 
      * @return
      *     possible object is
@@ -86,7 +86,7 @@ public class ConnectionType {
     }
 
     /**
-     * Sets the reference of the url property.
+     * Sets the value of the url property.
      * 
      * @param value
      *     allowed object is
@@ -98,7 +98,7 @@ public class ConnectionType {
     }
 
     /**
-     * Gets the reference of the username property.
+     * Gets the value of the username property.
      * 
      * @return
      *     possible object is
@@ -110,7 +110,7 @@ public class ConnectionType {
     }
 
     /**
-     * Sets the reference of the username property.
+     * Sets the value of the username property.
      * 
      * @param value
      *     allowed object is
@@ -122,7 +122,7 @@ public class ConnectionType {
     }
 
     /**
-     * Gets the reference of the password property.
+     * Gets the value of the password property.
      * 
      * @return
      *     possible object is
@@ -134,7 +134,7 @@ public class ConnectionType {
     }
 
     /**
-     * Sets the reference of the password property.
+     * Sets the value of the password property.
      * 
      * @param value
      *     allowed object is
@@ -146,7 +146,7 @@ public class ConnectionType {
     }
 
     /**
-     * Gets the reference of the schema property.
+     * Gets the value of the schema property.
      * 
      * @return
      *     possible object is
@@ -158,7 +158,7 @@ public class ConnectionType {
     }
 
     /**
-     * Sets the reference of the schema property.
+     * Sets the value of the schema property.
      * 
      * @param value
      *     allowed object is

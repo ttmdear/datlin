@@ -1,6 +1,8 @@
 package io.datlin.rcm;
 
+import io.datlin.sql.mtd.ColumnMetadata;
 import io.datlin.sql.mtd.DatabaseMetadata;
+import io.datlin.sql.mtd.TableMetadata;
 import io.datlin.sql.rsp.DefaultResultSetProcessor;
 import io.datlin.xrc.generated.ColumnType;
 import io.datlin.xrc.generated.GenerateTableStrategy;
@@ -42,28 +44,30 @@ public class RepositoryCodeModelFactory {
         final List<RecordCodeModel> records = new ArrayList<>();
         final List<ExecutionCodeModel> executions = new ArrayList<>();
 
-        for (final DatabaseMetadata.Table table : databaseMetadata.tables()) {
-            if (isTableExcluded(table, xrc)) {
+        for (final TableMetadata tableMetadata : databaseMetadata.tables()) {
+            if (isTableExcluded(tableMetadata, xrc)) {
                 continue;
             }
 
-            tables.add(createTableCodeModel(tablesPackageName, table));
+            final TableCodeModel tableCodeModel = createTableCodeModel(tablesPackageName, tableMetadata);
+            tables.add(tableCodeModel);
 
             // create record code model --------------------------------------------------------------------------------
             final RecordCodeModel recordCodeModel = createRecordCodeModel(
                 recordsPackageName,
-                table,
+                tableMetadata,
                 xrc
             );
 
             records.add(recordCodeModel);
 
-            final String resultSetProcessor = resolveTableResultSetProcessor(table, xrc);
+            final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
 
             // create execution code model -----------------------------------------------------------------------------
             final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
                 executionsPackageName,
-                table,
+                tableCodeModel,
+                tableMetadata,
                 resultSetProcessor,
                 recordCodeModel
             );
@@ -94,7 +98,7 @@ public class RepositoryCodeModelFactory {
     }
 
     private boolean isTableExcluded(
-        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final TableMetadata table,
         @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
     ) {
         if (xmlRepositoryConfiguration.getGenerateTableStrategy().equals(GenerateTableStrategy.ALL)) {
@@ -121,7 +125,7 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private TableCodeModel createTableCodeModel(
         @Nonnull final String tablesPackageName,
-        @Nonnull final DatabaseMetadata.Table table
+        @Nonnull final TableMetadata table
     ) {
         final String simpleName = toPascalCase(table.name()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
@@ -132,7 +136,7 @@ public class RepositoryCodeModelFactory {
             )).toList();
 
         return new TableCodeModel(
-            table.name(),
+            table,
             simpleName,
             canonicalName,
             tablesPackageName,
@@ -143,11 +147,11 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private RecordCodeModel createRecordCodeModel(
         @Nonnull final String recordsPackageName,
-        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final TableMetadata table,
         @Nonnull final XmlRepositoryConfiguration xrc
     ) {
         final List<RecordFieldCodeModel> primaryKeys = table.columns().stream()
-            .filter(DatabaseMetadata.Column::primaryKey)
+            .filter(ColumnMetadata::primaryKey)
             .map(column -> createRecordFieldCodeModel(column, table))
             .collect(Collectors.toCollection(ArrayList::new));
 
@@ -171,16 +175,17 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private ExecutionCodeModel createExecutionCodeModel(
         @Nonnull final String executionsPackageName,
-        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final TableCodeModel tableCodeModel,
+        @Nonnull final TableMetadata tableMetadata,
         @Nonnull final String resultSetProcessor,
         @Nonnull final RecordCodeModel recordCodeModel
     ) {
-        final String simpleName = toPascalCase(table.name()) + "Execution";
-        final String methodName = toCamelCase(table.name());
+        final String simpleName = toPascalCase(tableMetadata.name()) + "Execution";
+        final String methodName = toCamelCase(tableMetadata.name());
         final String canonicalName = executionsPackageName + "." + simpleName;
 
         return new ExecutionCodeModel(
-            table.name(),
+            tableCodeModel,
             simpleName,
             methodName,
             canonicalName,
@@ -391,8 +396,8 @@ public class RepositoryCodeModelFactory {
      */
     @Nonnull
     private RecordFieldCodeModel createRecordFieldCodeModel(
-        @Nonnull final DatabaseMetadata.Column column,
-        @Nonnull final DatabaseMetadata.Table table
+        @Nonnull final ColumnMetadata column,
+        @Nonnull final TableMetadata table
     ) {
         final ColumnType cc = resolveColumnConfiguration(table, column, xrc);
         final String databaseType = (cc != null && cc.getDatabaseType() != null) ? cc.getDatabaseType() : column.type();
@@ -410,8 +415,8 @@ public class RepositoryCodeModelFactory {
 
     @Nullable
     private ColumnType resolveColumnConfiguration(
-        @Nonnull final DatabaseMetadata.Table table,
-        @Nonnull final DatabaseMetadata.Column column,
+        @Nonnull final TableMetadata table,
+        @Nonnull final ColumnMetadata column,
         @Nonnull final XmlRepositoryConfiguration xrc
     ) {
         for (final TableType tableConfiguration : xrc.getTables()) {
@@ -431,7 +436,7 @@ public class RepositoryCodeModelFactory {
 
     @Nonnull
     private String resolveTableResultSetProcessor(
-        @Nonnull final DatabaseMetadata.Table table,
+        @Nonnull final TableMetadata table,
         @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration
     ) {
         final TableType tableType = xmlRepositoryConfiguration.getTables().stream()

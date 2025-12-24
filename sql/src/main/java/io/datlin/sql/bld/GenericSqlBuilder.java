@@ -11,7 +11,7 @@ import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.ast.Update;
-import io.datlin.sql.ast.UpdateSetNode;
+import io.datlin.sql.ast.Assignment;
 import io.datlin.sql.ast.ValueReference;
 import io.datlin.sql.exc.FromIsNotSetException;
 import io.datlin.sql.exc.InsertColumnsNotSetException;
@@ -223,7 +223,7 @@ public class GenericSqlBuilder implements SqlBuilder {
         // set ---------------------------------------------------------------------------------------------------------
         sql.append(" SET ");
         for (int i = 0; i < update.sets().size(); i++) {
-            final UpdateSetNode set = update.sets().get(i);
+            final Assignment set = update.sets().get(i);
             sql.append("\"").append(set.column()).append("\"").append(" = ");
 
             if (set.value() == null) {

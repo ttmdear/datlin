@@ -4,29 +4,29 @@
               xmlns:xs="http://www.w3.org/2001/XMLSchema"
               schemaLocation="xml-schemas/datlin/repository-configuration.xsd"
 >
-    <jxb:bindings sqlFragment="//xs:schema">
+    <jxb:bindings node="//xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="io.datlin.xrc.generated"/>
         </jxb:schemaBindings>
     </jxb:bindings>
 
-    <jxb:bindings sqlFragment="//xs:element[@name='repository-configuration']">
+    <jxb:bindings node="//xs:element[@name='repository-configuration']">
         <jxb:class name="XmlRepositoryConfiguration"/>
     </jxb:bindings>
-    <jxb:bindings sqlFragment="//xs:element[@name='repository-configuration']//xs:element[@name='table']">
+    <jxb:bindings node="//xs:element[@name='repository-configuration']//xs:element[@name='table']">
         <jxb:property name="tables"/>
     </jxb:bindings>
-    <jxb:bindings sqlFragment="//xs:complexType[@name='TableType']//xs:element[@name='column']">
+    <jxb:bindings node="//xs:complexType[@name='TableType']//xs:element[@name='column']">
         <jxb:property name="columns"/>
     </jxb:bindings>
 
-    <jxb:bindings sqlFragment="//xs:element[@name='repository-configuration']//xs:element[@name='query']">
+    <jxb:bindings node="//xs:element[@name='repository-configuration']//xs:element[@name='query']">
         <jxb:property name="queries"/>
     </jxb:bindings>
-    <jxb:bindings sqlFragment="//xs:element[@name='repository-configuration']//xs:element[@name='procedure']">
+    <jxb:bindings node="//xs:element[@name='repository-configuration']//xs:element[@name='procedure']">
         <jxb:property name="procedures"/>
     </jxb:bindings>
-    <jxb:bindings sqlFragment="//xs:complexType[@name='ResultSetProcessorType']//xs:element[@name='type-binding']">
+    <jxb:bindings node="//xs:complexType[@name='ResultSetProcessorType']//xs:element[@name='type-binding']">
         <jxb:property name="typeBindings"/>
     </jxb:bindings>
 </jxb:bindings>

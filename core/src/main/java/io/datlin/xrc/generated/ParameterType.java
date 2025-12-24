@@ -26,9 +26,9 @@ import jakarta.xml.bind.annotation.XmlType;
  *       <attribute name="type" use="required">
  *         <simpleType>
  *           <restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             <enumeration reference="string"/>
- *             <enumeration reference="int"/>
- *             <enumeration reference="list"/>
+ *             <enumeration value="string"/>
+ *             <enumeration value="int"/>
+ *             <enumeration value="list"/>
  *           </restriction>
  *         </simpleType>
  *       </attribute>
@@ -49,7 +49,7 @@ public class ParameterType {
     protected String type;
 
     /**
-     * Gets the reference of the id property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
@@ -61,7 +61,7 @@ public class ParameterType {
     }
 
     /**
-     * Sets the reference of the id property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
@@ -73,7 +73,7 @@ public class ParameterType {
     }
 
     /**
-     * Gets the reference of the type property.
+     * Gets the value of the type property.
      * 
      * @return
      *     possible object is
@@ -85,7 +85,7 @@ public class ParameterType {
     }
 
     /**
-     * Sets the reference of the type property.
+     * Sets the value of the type property.
      * 
      * @param value
      *     allowed object is

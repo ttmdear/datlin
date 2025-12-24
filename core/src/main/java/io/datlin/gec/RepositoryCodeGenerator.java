@@ -60,35 +60,35 @@ public class RepositoryCodeGenerator {
         for (final TableCodeModel table : repositoryCodeModel.tables()) {
             templateProcessor.process(
                 Map.of(
-                    "from", table
+                    "table", table
                 ),
-                "from.ftlh",
+                "table.ftlh",
                 tablesOutput + "/" + table.simpleName() + ".java"
             );
         }
 
         // generate records code ---------------------------------------------------------------------------------------
         final String recordsOutput = getRecordsOutput(repositoryCodeModel);
-        for (final RecordCodeModel record : repositoryCodeModel.records()) {
+        for (final RecordCodeModel recordCodeModel : repositoryCodeModel.records()) {
             templateProcessor.process(
                 Map.of(
-                    "record", record
+                    "recordCodeModel", recordCodeModel
                 ),
                 "record.ftlh",
-                recordsOutput + "/" + record.simpleName() + ".java"
+                recordsOutput + "/" + recordCodeModel.simpleName() + ".java"
             );
         }
 
         // generate executions code ------------------------------------------------------------------------------------
         final String executionsOutput = getExecutionsOutput(repositoryCodeModel);
 
-        for (final ExecutionCodeModel execution : repositoryCodeModel.executions()) {
+        for (final ExecutionCodeModel executionCodeModel : repositoryCodeModel.executions()) {
             templateProcessor.process(
                 Map.of(
-                    "execution", execution
+                    "executionCodeModel", executionCodeModel
                 ),
                 "execution.ftlh",
-                executionsOutput + "/" + execution.simpleName() + ".java"
+                executionsOutput + "/" + executionCodeModel.simpleName() + ".java"
             );
         }
     }

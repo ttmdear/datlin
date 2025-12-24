@@ -3,13 +3,13 @@ package io.datlin.rcm;
 import jakarta.annotation.Nonnull;
 
 public record ExecutionCodeModel(
-    @Nonnull String table,
+    @Nonnull TableCodeModel tableCodeModel,
     @Nonnull String simpleName,
     @Nonnull String methodName,
     @Nonnull String canonicalName,
     @Nonnull String packageName,
     @Nonnull String resultSetProcessor,
-    @Nonnull RecordCodeModel record
+    @Nonnull RecordCodeModel recordCodeModel
 ) {
 
 }

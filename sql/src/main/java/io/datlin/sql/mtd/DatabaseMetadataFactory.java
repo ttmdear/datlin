@@ -1,7 +1,5 @@
 package io.datlin.sql.mtd;
 
-import io.datlin.sql.mtd.DatabaseMetadata.Column;
-import io.datlin.sql.mtd.DatabaseMetadata.Table;
 import jakarta.annotation.Nonnull;
 
 import java.sql.Connection;
@@ -23,7 +21,7 @@ public class DatabaseMetadataFactory {
         );
     }
 
-    private @Nonnull List<Table> getTables(
+    private @Nonnull List<TableMetadata> getTables(
         @Nonnull final Connection connection
     ) throws SQLException {
         final DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -34,17 +32,17 @@ public class DatabaseMetadataFactory {
             new String[]{"TABLE"}
         );
 
-        final List<Table> tables = new ArrayList<>();
+        final List<TableMetadata> tables = new ArrayList<>();
         while (tablesResultSet.next()) {
             final String tableName = tablesResultSet.getString("TABLE_NAME");
-            final List<Column> columns = getColumns(tableName, databaseMetaData);
-            tables.add(new Table(tableName, Collections.unmodifiableList(columns)));
+            final List<ColumnMetadata> columns = getColumns(tableName, databaseMetaData);
+            tables.add(new TableMetadata(tableName, Collections.unmodifiableList(columns)));
         }
 
         return tables;
     }
 
-    private @Nonnull List<Column> getColumns(
+    private @Nonnull List<ColumnMetadata> getColumns(
         @Nonnull final String tableName,
         @Nonnull final DatabaseMetaData databaseMetaData
     ) throws SQLException {
@@ -55,7 +53,7 @@ public class DatabaseMetadataFactory {
             null
         );
 
-        final List<Column> columns = new ArrayList<>();
+        final List<ColumnMetadata> columns = new ArrayList<>();
         final Set<String> primaryKeys = getPrimaryKeys(tableName, databaseMetaData);
 
         while (columnsResultSet.next()) {
@@ -64,7 +62,7 @@ public class DatabaseMetadataFactory {
             final boolean primaryKey = primaryKeys.contains(name);
             final boolean isNullable = columnsResultSet.getInt("NULLABLE") == DatabaseMetaData.columnNullable;
 
-            columns.add(new Column(name, primaryKey, type, isNullable));
+            columns.add(new ColumnMetadata(name, primaryKey, type, isNullable));
         }
 
         return columns;

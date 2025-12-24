@@ -1,13 +1,12 @@
 package io.datlin.rcm;
 
+import io.datlin.sql.mtd.TableMetadata;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
-import static java.util.Collections.unmodifiableList;
-
 public record TableCodeModel(
-    @Nonnull String table,
+    @Nonnull TableMetadata tableMetadata,
     @Nonnull String simpleName,
     @Nonnull String canonicalName,
     @Nonnull String packageName,
