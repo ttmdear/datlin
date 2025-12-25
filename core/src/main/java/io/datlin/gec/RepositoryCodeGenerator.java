@@ -57,13 +57,13 @@ public class RepositoryCodeGenerator {
 
         // generate tables code ----------------------------------------------------------------------------------------
         final String tablesOutput = getTablesOutput(repositoryCodeModel);
-        for (final TableCodeModel table : repositoryCodeModel.tables()) {
+        for (final TableCodeModel tableCodeModel : repositoryCodeModel.tables()) {
             templateProcessor.process(
                 Map.of(
-                    "table", table
+                    "tableCodeModel", tableCodeModel
                 ),
                 "table.ftlh",
-                tablesOutput + "/" + table.simpleName() + ".java"
+                tablesOutput + "/" + tableCodeModel.simpleName() + ".java"
             );
         }
 

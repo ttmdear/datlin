@@ -6,11 +6,12 @@ import jakarta.annotation.Nonnull;
 import java.util.List;
 
 public record TableCodeModel(
-    @Nonnull TableMetadata tableMetadata,
     @Nonnull String simpleName,
     @Nonnull String canonicalName,
     @Nonnull String packageName,
-    @Nonnull List<TableColumnCodeModel> columns
+    @Nonnull String field,
+    @Nonnull TableMetadata tableMetadata,
+    @Nonnull List<TableColumnCodeModel> columnCodeModels
 ) {
 
 }

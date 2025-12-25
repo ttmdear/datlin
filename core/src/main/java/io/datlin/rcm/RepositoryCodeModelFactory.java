@@ -49,7 +49,11 @@ public class RepositoryCodeModelFactory {
                 continue;
             }
 
-            final TableCodeModel tableCodeModel = createTableCodeModel(tablesPackageName, tableMetadata);
+            final TableCodeModel tableCodeModel = createTableCodeModel(
+                tablesPackageName,
+                tableMetadata
+            );
+
             tables.add(tableCodeModel);
 
             // create record code model --------------------------------------------------------------------------------
@@ -125,21 +129,22 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private TableCodeModel createTableCodeModel(
         @Nonnull final String tablesPackageName,
-        @Nonnull final TableMetadata table
+        @Nonnull final TableMetadata tableMaMetadata
     ) {
-        final String simpleName = toPascalCase(table.name()) + "Table";
+        final String simpleName = toPascalCase(tableMaMetadata.name()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
-        final List<TableColumnCodeModel> columns = table.columns().stream()
+        final List<TableColumnCodeModel> columns = tableMaMetadata.columns().stream()
             .map(column -> new TableColumnCodeModel(
                 column.name(),
                 column.nullable()
             )).toList();
 
         return new TableCodeModel(
-            table,
             simpleName,
             canonicalName,
             tablesPackageName,
+            tableMaMetadata.name(),
+            tableMaMetadata,
             columns
         );
     }
