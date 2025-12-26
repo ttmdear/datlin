@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.unmodifiableList;
@@ -24,7 +23,7 @@ public class DatabaseCodeModel {
     final String packageName;
 
     @Nonnull
-    final RepositoryCodeModel repositoryCodeModel;
+    final RepositoryCodeModel repository;
 
     @Nonnull
     final List<ExecutionCodeModel> executions = new ArrayList<>();

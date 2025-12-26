@@ -79,18 +79,18 @@ public class RepositoryCodeGenerator {
             );
         }
 
-        // // generate executions code ------------------------------------------------------------------------------------
-        // final String executionsOutput = getExecutionsOutput(repository);
+        // generate executions code ------------------------------------------------------------------------------------
+        final String executionsOutput = getExecutionsOutput(repository);
 
-        // for (final ExecutionCodeModel executionCodeModel : repository.executions()) {
-        //     templateProcessor.process(
-        //         Map.of(
-        //             "executionCodeModel", executionCodeModel
-        //         ),
-        //         "execution.ftlh",
-        //         executionsOutput + "/" + executionCodeModel.simpleName() + ".java"
-        //     );
-        // }
+        for (final ExecutionCodeModel execution : repository.getExecutions()) {
+            templateProcessor.process(
+                Map.of(
+                    "execution", execution
+                ),
+                "execution.ftlh",
+                executionsOutput + "/" + execution.getSimpleName() + ".java"
+            );
+        }
     }
 
     private @Nonnull DatabaseMetadata createDatabaseMetadata() {

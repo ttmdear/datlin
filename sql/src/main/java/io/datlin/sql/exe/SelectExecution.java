@@ -6,13 +6,18 @@ import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exc.FetchSQLException;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class SelectExecution<T> {
 
@@ -91,7 +96,7 @@ public class SelectExecution<T> {
     // -----------------------------------------------------------------------------------------------------------------
 
     @Nonnull
-    public List<T> fetch() {
+    public List<T> fetchAll() {
         final List<T> result = new ArrayList<>();
         final BuildContext buildContext = new BuildContext();
         final StringBuilder sql = new StringBuilder();
@@ -111,5 +116,88 @@ public class SelectExecution<T> {
         } catch (SQLException e) {
             throw new FetchSQLException(sql.toString(), e);
         }
+    }
+
+    @Nonnull
+    public T fetchOne() {
+        final List<T> result = fetchAll();
+
+        if (result.isEmpty()) {
+            throw new NoSuchElementException("No one element found.");
+        } else if (result.size() == 1) {
+            return result.get(0);
+        } else {
+            throw new IllegalStateException("More than one element found.");
+        }
+    }
+
+    @Nonnull
+    public Optional<T> find() {
+        final List<T> result = fetchAll();
+
+        if (result.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(result.get(0));
+        }
+    }
+
+    @Nonnull
+    public Optional<T> findOne() {
+        final List<T> result = fetchAll();
+
+        if (result.isEmpty()) {
+            return Optional.empty();
+        } else if (result.size() == 1) {
+            return Optional.of(result.get(0));
+        } else {
+            throw new IllegalStateException("More than one element found.");
+        }
+    }
+
+    @Nonnull
+    public Stream<T> stream() {
+        return fetchAll().stream();
+    }
+
+    /**
+     * Returns the total number of records matching the criteria.
+     *
+     * @return the count of records.
+     */
+    public long count() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Checks if any record exists that matches the criteria.
+     *
+     * @return true if at least one record exists, false otherwise.
+     */
+    public boolean exists() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Fetches results and maps them into a Map using the provided key mapper.
+     */
+    public <K> Map<K, T> fetchMap(@Nonnull Function<? super T, ? extends K> keyMapper) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Fetches a single value (e.g., from SELECT MAX(age)).
+     *
+     * @return an Optional containing the scalar value.
+     */
+    public <S> Optional<S> fetchScalar(@Nonnull Class<S> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Executes the query and maps the results directly to a DTO class.
+     */
+    public <R> List<R> fetchAs(@Nonnull Class<R> dtoClass) {
+        throw new UnsupportedOperationException();
     }
 }

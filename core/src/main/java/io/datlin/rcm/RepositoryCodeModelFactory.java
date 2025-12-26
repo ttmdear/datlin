@@ -59,7 +59,7 @@ public class RepositoryCodeModelFactory {
                 continue;
             }
 
-            final TableCodeModel table = createTableCodeModel(
+            final TableCodeModel table = createTable(
                 tablesPackageName,
                 database,
                 tableMetadata
@@ -68,7 +68,7 @@ public class RepositoryCodeModelFactory {
             repository.tables.add(table);
 
             // create record code model --------------------------------------------------------------------------------
-            final RecordCodeModel record = createRecordCodeModel(
+            final RecordCodeModel record = createRecord(
                 recordsPackageName,
                 tableMetadata,
                 table
@@ -78,27 +78,18 @@ public class RepositoryCodeModelFactory {
 
             final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
 
-//             // create execution code model -----------------------------------------------------------------------------
-//             final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
-//                 executionsPackageName,
-//                 table,
-//                 tableMetadata,
-//                 resultSetProcessor,
-//                 record
-//             );
-//
-//             executions.add(executionCodeModel);
+            // create execution code model -----------------------------------------------------------------------------
+            final ExecutionCodeModel execution = createExecution(
+                executionsPackageName,
+                table,
+                tableMetadata,
+                resultSetProcessor,
+                record
+            );
+
+            repository.executions.add(execution);
+            repository.database.executions.add(execution);
         }
-
-        // // database code model -----------------------------------------------------------------------------------------
-        // final String simpleName = xrc.getSimpleName();
-
-        // final DatabaseCodeModel database = new DatabaseCodeModel(
-        //     simpleName,
-        //     xrc.getPackage() + "." + simpleName,
-        //     xrc.getPackage(),
-        //     executions
-        // );
 
         return repository;
     }
@@ -129,18 +120,20 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nonnull
-    private TableCodeModel createTableCodeModel(
+    private TableCodeModel createTable(
         @Nonnull final String tablesPackageName,
         @Nonnull final DatabaseCodeModel database,
         @Nonnull final TableMetadata metadata
     ) {
         final String simpleName = toPascalCase(metadata.name()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
+        final String tableReferenceField = metadata.name();
 
         final TableCodeModel table = new TableCodeModel(
             simpleName,
             canonicalName,
             tablesPackageName,
+            tableReferenceField,
             metadata,
             database
         );
@@ -160,7 +153,7 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nonnull
-    private RecordCodeModel createRecordCodeModel(
+    private RecordCodeModel createRecord(
         @Nonnull final String recordsPackageName,
         @Nonnull final TableMetadata tableMetadata,
         @Nonnull final TableCodeModel table
@@ -191,20 +184,25 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nonnull
-    private ExecutionCodeModel createExecutionCodeModel(
+    private ExecutionCodeModel createExecution(
         @Nonnull final String executionsPackageName,
-        @Nonnull final TableCodeModel tableCodeModel,
+        @Nonnull final TableCodeModel table,
         @Nonnull final TableMetadata tableMetadata,
         @Nonnull final String resultSetProcessor,
-        @Nonnull final RecordCodeModel recordCodeModel
+        @Nonnull final RecordCodeModel record
     ) {
         final String simpleName = toPascalCase(tableMetadata.name()) + "Execution";
         final String methodName = toCamelCase(tableMetadata.name());
         final String canonicalName = executionsPackageName + "." + simpleName;
 
         return new ExecutionCodeModel(
-            simpleName, canonicalName, executionsPackageName, methodName, resultSetProcessor, tableCodeModel,
-            recordCodeModel
+            simpleName,
+            canonicalName,
+            executionsPackageName,
+            methodName,
+            resultSetProcessor,
+            table,
+            record
         );
     }
 

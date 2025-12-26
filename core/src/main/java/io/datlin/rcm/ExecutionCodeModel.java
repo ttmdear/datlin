@@ -1,15 +1,32 @@
 package io.datlin.rcm;
 
 import jakarta.annotation.Nonnull;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-public record ExecutionCodeModel(
-    @Nonnull String simpleName,
-    @Nonnull String canonicalName,
-    @Nonnull String packageName,
-    @Nonnull String methodName,
-    @Nonnull String resultSetProcessor,
-    @Nonnull TableCodeModel tableCodeModel,
-    @Nonnull RecordCodeModel recordCodeModel
-) {
+@SuppressWarnings("ClassCanBeRecord")
+@RequiredArgsConstructor
+@Getter
+public class ExecutionCodeModel {
 
+    @Nonnull
+    final String simpleName;
+
+    @Nonnull
+    final String canonicalName;
+
+    @Nonnull
+    final String packageName;
+
+    @Nonnull
+    final String methodName;
+
+    @Nonnull
+    final String resultSetProcessor;
+
+    @Nonnull
+    final TableCodeModel table;
+
+    @Nonnull
+    final RecordCodeModel record;
 }

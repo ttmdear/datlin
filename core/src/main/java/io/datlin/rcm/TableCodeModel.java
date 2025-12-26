@@ -5,6 +5,7 @@ import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,9 @@ public class TableCodeModel {
 
     @Nonnull
     final String packageName;
+
+    @Nonnull
+    final String tableReferenceField;
 
     @Nonnull
     final TableMetadata metadata;
