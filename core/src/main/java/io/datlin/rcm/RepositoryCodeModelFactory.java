@@ -14,7 +14,6 @@ import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableList;
 
@@ -49,18 +48,14 @@ public class RepositoryCodeModelFactory {
                 continue;
             }
 
-            final TableCodeModel tableCodeModel = createTableCodeModel(
-                tablesPackageName,
-                tableMetadata
-            );
-
+            final TableCodeModel tableCodeModel = createTableCodeModel(tablesPackageName, tableMetadata);
             tables.add(tableCodeModel);
 
             // create record code model --------------------------------------------------------------------------------
             final RecordCodeModel recordCodeModel = createRecordCodeModel(
                 recordsPackageName,
                 tableMetadata,
-                xrc
+                tableCodeModel
             );
 
             records.add(recordCodeModel);
@@ -129,22 +124,23 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private TableCodeModel createTableCodeModel(
         @Nonnull final String tablesPackageName,
-        @Nonnull final TableMetadata tableMaMetadata
+        @Nonnull final TableMetadata tableMetadata
     ) {
-        final String simpleName = toPascalCase(tableMaMetadata.name()) + "Table";
+        final String simpleName = toPascalCase(tableMetadata.name()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
-        final List<TableColumnCodeModel> columns = tableMaMetadata.columns().stream()
-            .map(column -> new TableColumnCodeModel(
-                column.name(),
-                column.nullable()
+        final List<TableColumnCodeModel> columns = tableMetadata.columns().stream()
+            .map(columnMetadata -> new TableColumnCodeModel(
+                columnMetadata.name(),
+                columnMetadata.nullable(),
+                columnMetadata
             )).toList();
 
         return new TableCodeModel(
             simpleName,
             canonicalName,
             tablesPackageName,
-            tableMaMetadata.name(),
-            tableMaMetadata,
+            tableMetadata.name(),
+            tableMetadata,
             columns
         );
     }
@@ -152,27 +148,41 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private RecordCodeModel createRecordCodeModel(
         @Nonnull final String recordsPackageName,
-        @Nonnull final TableMetadata table,
-        @Nonnull final XmlRepositoryConfiguration xrc
+        @Nonnull final TableMetadata tableMetadata,
+        @Nonnull final TableCodeModel tableCodeModel
     ) {
-        final List<RecordFieldCodeModel> primaryKeys = table.columns().stream()
-            .filter(ColumnMetadata::primaryKey)
-            .map(column -> createRecordFieldCodeModel(column, table))
-            .collect(Collectors.toCollection(ArrayList::new));
+        final List<RecordFieldCodeModel> fields = new ArrayList<>();
 
-        final List<RecordFieldCodeModel> fields = table.columns().stream()
-            .map(column -> createRecordFieldCodeModel(column, table))
-            .collect(Collectors.toCollection(ArrayList::new));
+        for (final TableColumnCodeModel columnCodeModel : tableCodeModel.columns()) {
+            fields.add(createRecordFieldCodeModel(
+               columnCodeModel.columnMetadata(),
+               tableMetadata
+            ));
+        }
 
-        final String simpleName = toPascalCase(table.name()) + "Record";
+        final List<RecordFieldCodeModel> primaryKeys = fields.stream()
+            .filter(RecordFieldCodeModel::primaryKey)
+            .toList();
+
+        // todo clean
+        // final List<RecordFieldCodeModel> primaryKeys = tableMetadata.columns().stream()
+        //     .filter(ColumnMetadata::primaryKey)
+        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
+        //     .collect(Collectors.toCollection(ArrayList::new));
+
+        // final List<RecordFieldCodeModel> fields = tableMetadata.columns().stream()
+        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
+        //     .collect(Collectors.toCollection(ArrayList::new));
+
+        final String simpleName = toPascalCase(tableMetadata.name()) + "Record";
         final String canonicalName = recordsPackageName + "." + simpleName;
 
         return new RecordCodeModel(
-            table.name(),
+            tableMetadata.name(),
             simpleName,
             canonicalName,
             recordsPackageName,
-            unmodifiableList(primaryKeys),
+            primaryKeys,
             unmodifiableList(fields)
         );
     }
@@ -190,12 +200,7 @@ public class RepositoryCodeModelFactory {
         final String canonicalName = executionsPackageName + "." + simpleName;
 
         return new ExecutionCodeModel(
-            tableCodeModel,
-            simpleName,
-            methodName,
-            canonicalName,
-            executionsPackageName,
-            resultSetProcessor,
+            simpleName, canonicalName, executionsPackageName, methodName, resultSetProcessor, tableCodeModel,
             recordCodeModel
         );
     }
@@ -395,26 +400,26 @@ public class RepositoryCodeModelFactory {
     /**
      * Create {@link RecordCodeModel} for given column.
      *
-     * @param column the column from {@link DatabaseMetadata}.
-     * @param table  the from from {{@link DatabaseMetadata}.
+     * @param columnMetadata the column from {@link DatabaseMetadata}.
+     * @param tableMetadata  the form {@link DatabaseMetadata}.
      * @return the {@link RecordCodeModel}.
      */
     @Nonnull
     private RecordFieldCodeModel createRecordFieldCodeModel(
-        @Nonnull final ColumnMetadata column,
-        @Nonnull final TableMetadata table
+        @Nonnull final ColumnMetadata columnMetadata,
+        @Nonnull final TableMetadata tableMetadata
     ) {
-        final ColumnType cc = resolveColumnConfiguration(table, column, xrc);
-        final String databaseType = (cc != null && cc.getDatabaseType() != null) ? cc.getDatabaseType() : column.type();
+        final ColumnType cc = resolveColumnConfiguration(tableMetadata, columnMetadata, xrc);
+        final String databaseType = (cc != null && cc.getDatabaseType() != null) ? cc.getDatabaseType() : columnMetadata.type();
         final String javaType = resolveJavaType(databaseType, cc != null ? cc.getJavaType() : null);
-        final String name = toCamelCase(column.name());
+        final String name = toCamelCase(columnMetadata.name());
 
         return new RecordFieldCodeModel(
             name,
-            column.name(),
             javaType,
-            column.nullable(),
-            column.primaryKey()
+            columnMetadata.nullable(),
+            columnMetadata.primaryKey(),
+            columnMetadata
         );
     }
 

@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="recordCodeModel" type="io.datlin.rcm.RecordCodeModel" -->
 package ${recordCodeModel.packageName};
 
 import jakarta.annotation.Nonnull;
@@ -12,7 +13,7 @@ import jakarta.persistence.Table;
 public record ${recordCodeModel.simpleName}(
 <#list recordCodeModel.fields as field>
     <#if field.primaryKey>@Id</#if>
-    <#if field.nullable>@Column(name = "${field.columnName}")<#else>@Column(name = "${field.columnName}", nullable = false)</#if>
+    <#if field.nullable>@Column(name = "${field.columnMetadata.name}")<#else>@Column(name = "${field.columnMetadata.name}", nullable = false)</#if>
     <#if field.nullable>@Nullable<#else>@Nonnull</#if> ${field.type} ${field.name}<#if field?has_next>,</#if>
 </#list>
 ) {

@@ -11,7 +11,7 @@ public record TableCodeModel(
     @Nonnull String packageName,
     @Nonnull String field,
     @Nonnull TableMetadata tableMetadata,
-    @Nonnull List<TableColumnCodeModel> columnCodeModels
+    @Nonnull List<TableColumnCodeModel> columns
 ) {
 
 }
