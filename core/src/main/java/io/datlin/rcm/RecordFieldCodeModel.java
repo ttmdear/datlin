@@ -2,13 +2,28 @@ package io.datlin.rcm;
 
 import io.datlin.sql.mtd.ColumnMetadata;
 import jakarta.annotation.Nonnull;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-public record RecordFieldCodeModel(
-    @Nonnull String name,
-    @Nonnull String type,
-    @Nonnull Boolean nullable,
-    @Nonnull Boolean primaryKey,
-    @Nonnull ColumnMetadata columnMetadata
-) {
+@Getter
+@RequiredArgsConstructor
+public class RecordFieldCodeModel {
 
+    @Nonnull
+    final String name;
+
+    @Nonnull
+    final String type;
+
+    @Nonnull
+    final Boolean nullable;
+
+    @Nonnull
+    final Boolean primaryKey;
+
+    @Nonnull
+    final RecordCodeModel record;
+
+    @Nonnull
+    final ColumnMetadata metadata;
 }

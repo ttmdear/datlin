@@ -12,11 +12,6 @@ import io.datlin.xrc.generated.XmlRepositoryConfiguration;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Collections.unmodifiableList;
-
 public class RepositoryCodeModelFactory {
 
     @Nonnull
@@ -72,26 +67,24 @@ public class RepositoryCodeModelFactory {
 
             repository.tables.add(table);
 
-            // tables.add(table);
+            // create record code model --------------------------------------------------------------------------------
+            final RecordCodeModel record = createRecordCodeModel(
+                recordsPackageName,
+                tableMetadata,
+                table
+            );
 
-//             // create record code model --------------------------------------------------------------------------------
-//             final RecordCodeModel recordCodeModel = createRecordCodeModel(
-//                 recordsPackageName,
-//                 tableMetadata,
-//                 table
-//             );
-//
-//             records.add(recordCodeModel);
-//
-//             final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
-//
+            repository.records.add(record);
+
+            final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
+
 //             // create execution code model -----------------------------------------------------------------------------
 //             final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
 //                 executionsPackageName,
 //                 table,
 //                 tableMetadata,
 //                 resultSetProcessor,
-//                 recordCodeModel
+//                 record
 //             );
 //
 //             executions.add(executionCodeModel);
@@ -170,43 +163,31 @@ public class RepositoryCodeModelFactory {
     private RecordCodeModel createRecordCodeModel(
         @Nonnull final String recordsPackageName,
         @Nonnull final TableMetadata tableMetadata,
-        @Nonnull final TableCodeModel tableCodeModel
+        @Nonnull final TableCodeModel table
     ) {
-//        final List<RecordFieldCodeModel> fields = new ArrayList<>();
-//
-//        for (final TableColumnCodeModel columnCodeModel : tableCodeModel.columns()) {
-//            fields.add(createRecordFieldCodeModel(
-//                columnCodeModel.columnMetadata(),
-//                tableMetadata
-//            ));
-//        }
-//
-//        final List<RecordFieldCodeModel> primaryKeys = fields.stream()
-//            .filter(RecordFieldCodeModel::primaryKey)
-//            .toList();
-//
-//        // todo clean
-//        // final List<RecordFieldCodeModel> primaryKeys = tableMetadata.columns().stream()
-//        //     .filter(ColumnMetadata::primaryKey)
-//        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
-//        //     .collect(Collectors.toCollection(ArrayList::new));
-//
-//        // final List<RecordFieldCodeModel> fields = tableMetadata.columns().stream()
-//        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
-//        //     .collect(Collectors.toCollection(ArrayList::new));
-//
-//        final String simpleName = toPascalCase(tableMetadata.name()) + "Record";
-//        final String canonicalName = recordsPackageName + "." + simpleName;
-//
-//        return new RecordCodeModel(
-//            tableMetadata.name(),
-//            simpleName,
-//            canonicalName,
-//            recordsPackageName,
-//            primaryKeys,
-//            unmodifiableList(fields)
-//        );
-        return null;
+        final String simpleName = toPascalCase(tableMetadata.name()) + "Record";
+        final String canonicalName = recordsPackageName + "." + simpleName;
+
+        final RecordCodeModel record = new RecordCodeModel(
+            simpleName,
+            canonicalName,
+            recordsPackageName,
+            table
+        );
+
+        for (final TableColumnCodeModel column : table.getColumns()) {
+            record.fields.add(createRecordField(
+                record,
+                column.metadata,
+                tableMetadata
+            ));
+        }
+
+        record.fields.stream()
+            .filter(field -> field.primaryKey)
+            .forEach(record.primaryKeys::add);
+
+        return record;
     }
 
     @Nonnull
@@ -427,7 +408,8 @@ public class RepositoryCodeModelFactory {
      * @return the {@link RecordCodeModel}.
      */
     @Nonnull
-    private RecordFieldCodeModel createRecordFieldCodeModel(
+    private RecordFieldCodeModel createRecordField(
+        @Nonnull final RecordCodeModel record,
         @Nonnull final ColumnMetadata columnMetadata,
         @Nonnull final TableMetadata tableMetadata
     ) {
@@ -441,6 +423,7 @@ public class RepositoryCodeModelFactory {
             javaType,
             columnMetadata.nullable(),
             columnMetadata.primaryKey(),
+            record,
             columnMetadata
         );
     }

@@ -67,17 +67,17 @@ public class RepositoryCodeGenerator {
             );
         }
 
-        // // generate records code ---------------------------------------------------------------------------------------
-        // final String recordsOutput = getRecordsOutput(repository);
-        // for (final RecordCodeModel recordCodeModel : repository.records()) {
-        //     templateProcessor.process(
-        //         Map.of(
-        //             "recordCodeModel", recordCodeModel
-        //         ),
-        //         "record.ftlh",
-        //         recordsOutput + "/" + recordCodeModel.simpleName() + ".java"
-        //     );
-        // }
+        // generate records code ---------------------------------------------------------------------------------------
+        final String recordsOutput = getRecordsOutput(repository);
+        for (final RecordCodeModel record : repository.getRecords()) {
+            templateProcessor.process(
+                Map.of(
+                    "record", record
+                ),
+                "record.ftlh",
+                recordsOutput + "/" + record.getSimpleName() + ".java"
+            );
+        }
 
         // // generate executions code ------------------------------------------------------------------------------------
         // final String executionsOutput = getExecutionsOutput(repository);
