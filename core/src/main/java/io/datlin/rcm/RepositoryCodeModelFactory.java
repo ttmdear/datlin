@@ -39,61 +39,75 @@ public class RepositoryCodeModelFactory {
         final String recordsPackageName = repositoryPackageName + ".records";
         final String tablesPackageName = repositoryPackageName + ".tables";
         final String executionsPackageName = repositoryPackageName + ".executions";
-        final List<TableCodeModel> tables = new ArrayList<>();
-        final List<RecordCodeModel> records = new ArrayList<>();
-        final List<ExecutionCodeModel> executions = new ArrayList<>();
+
+        final RepositoryCodeModel repository = new RepositoryCodeModel(
+            repositoryPackageName,
+            recordsPackageName,
+            tablesPackageName,
+            executionsPackageName
+        );
+
+        // database code model -----------------------------------------------------------------------------------------
+        final String simpleName = xrc.getSimpleName();
+
+        final DatabaseCodeModel database = new DatabaseCodeModel(
+            simpleName,
+            xrc.getPackage() + "." + simpleName,
+            xrc.getPackage(),
+            repository
+        );
+
+        repository.database = database;
 
         for (final TableMetadata tableMetadata : databaseMetadata.tables()) {
             if (isTableExcluded(tableMetadata, xrc)) {
                 continue;
             }
 
-            final TableCodeModel tableCodeModel = createTableCodeModel(tablesPackageName, tableMetadata);
-            tables.add(tableCodeModel);
-
-            // create record code model --------------------------------------------------------------------------------
-            final RecordCodeModel recordCodeModel = createRecordCodeModel(
-                recordsPackageName,
-                tableMetadata,
-                tableCodeModel
+            final TableCodeModel table = createTableCodeModel(
+                tablesPackageName,
+                database,
+                tableMetadata
             );
 
-            records.add(recordCodeModel);
+            repository.tables.add(table);
 
-            final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
+            // tables.add(table);
 
-            // create execution code model -----------------------------------------------------------------------------
-            final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
-                executionsPackageName,
-                tableCodeModel,
-                tableMetadata,
-                resultSetProcessor,
-                recordCodeModel
-            );
-
-            executions.add(executionCodeModel);
+//             // create record code model --------------------------------------------------------------------------------
+//             final RecordCodeModel recordCodeModel = createRecordCodeModel(
+//                 recordsPackageName,
+//                 tableMetadata,
+//                 table
+//             );
+//
+//             records.add(recordCodeModel);
+//
+//             final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
+//
+//             // create execution code model -----------------------------------------------------------------------------
+//             final ExecutionCodeModel executionCodeModel = createExecutionCodeModel(
+//                 executionsPackageName,
+//                 table,
+//                 tableMetadata,
+//                 resultSetProcessor,
+//                 recordCodeModel
+//             );
+//
+//             executions.add(executionCodeModel);
         }
 
-        // database code model -----------------------------------------------------------------------------------------
-        final String simpleName = xrc.getSimpleName();
+        // // database code model -----------------------------------------------------------------------------------------
+        // final String simpleName = xrc.getSimpleName();
 
-        final DatabaseCodeModel databaseCodeModel = new DatabaseCodeModel(
-            simpleName,
-            xrc.getPackage() + "." + simpleName,
-            xrc.getPackage(),
-            executions
-        );
+        // final DatabaseCodeModel database = new DatabaseCodeModel(
+        //     simpleName,
+        //     xrc.getPackage() + "." + simpleName,
+        //     xrc.getPackage(),
+        //     executions
+        // );
 
-        return new RepositoryCodeModel(
-            repositoryPackageName,
-            recordsPackageName,
-            tablesPackageName,
-            executionsPackageName,
-            databaseCodeModel,
-            unmodifiableList(tables),
-            unmodifiableList(records),
-            unmodifiableList(executions)
-        );
+        return repository;
     }
 
     private boolean isTableExcluded(
@@ -124,25 +138,32 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private TableCodeModel createTableCodeModel(
         @Nonnull final String tablesPackageName,
-        @Nonnull final TableMetadata tableMetadata
+        @Nonnull final DatabaseCodeModel database,
+        @Nonnull final TableMetadata metadata
     ) {
-        final String simpleName = toPascalCase(tableMetadata.name()) + "Table";
+        final String simpleName = toPascalCase(metadata.name()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
-        final List<TableColumnCodeModel> columns = tableMetadata.columns().stream()
-            .map(columnMetadata -> new TableColumnCodeModel(
-                columnMetadata.name(),
-                columnMetadata.nullable(),
-                columnMetadata
-            )).toList();
 
-        return new TableCodeModel(
+        final TableCodeModel table = new TableCodeModel(
             simpleName,
             canonicalName,
             tablesPackageName,
-            tableMetadata.name(),
-            tableMetadata,
-            columns
+            metadata,
+            database
         );
+
+        for (final ColumnMetadata columnMetadata : metadata.columns()) {
+            final TableColumnCodeModel column = new TableColumnCodeModel(
+                columnMetadata.name(),
+                columnMetadata.nullable(),
+                columnMetadata,
+                table
+            );
+
+            table.columns.add(column);
+        }
+
+        return table;
     }
 
     @Nonnull
@@ -151,40 +172,41 @@ public class RepositoryCodeModelFactory {
         @Nonnull final TableMetadata tableMetadata,
         @Nonnull final TableCodeModel tableCodeModel
     ) {
-        final List<RecordFieldCodeModel> fields = new ArrayList<>();
-
-        for (final TableColumnCodeModel columnCodeModel : tableCodeModel.columns()) {
-            fields.add(createRecordFieldCodeModel(
-               columnCodeModel.columnMetadata(),
-               tableMetadata
-            ));
-        }
-
-        final List<RecordFieldCodeModel> primaryKeys = fields.stream()
-            .filter(RecordFieldCodeModel::primaryKey)
-            .toList();
-
-        // todo clean
-        // final List<RecordFieldCodeModel> primaryKeys = tableMetadata.columns().stream()
-        //     .filter(ColumnMetadata::primaryKey)
-        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
-        //     .collect(Collectors.toCollection(ArrayList::new));
-
-        // final List<RecordFieldCodeModel> fields = tableMetadata.columns().stream()
-        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
-        //     .collect(Collectors.toCollection(ArrayList::new));
-
-        final String simpleName = toPascalCase(tableMetadata.name()) + "Record";
-        final String canonicalName = recordsPackageName + "." + simpleName;
-
-        return new RecordCodeModel(
-            tableMetadata.name(),
-            simpleName,
-            canonicalName,
-            recordsPackageName,
-            primaryKeys,
-            unmodifiableList(fields)
-        );
+//        final List<RecordFieldCodeModel> fields = new ArrayList<>();
+//
+//        for (final TableColumnCodeModel columnCodeModel : tableCodeModel.columns()) {
+//            fields.add(createRecordFieldCodeModel(
+//                columnCodeModel.columnMetadata(),
+//                tableMetadata
+//            ));
+//        }
+//
+//        final List<RecordFieldCodeModel> primaryKeys = fields.stream()
+//            .filter(RecordFieldCodeModel::primaryKey)
+//            .toList();
+//
+//        // todo clean
+//        // final List<RecordFieldCodeModel> primaryKeys = tableMetadata.columns().stream()
+//        //     .filter(ColumnMetadata::primaryKey)
+//        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
+//        //     .collect(Collectors.toCollection(ArrayList::new));
+//
+//        // final List<RecordFieldCodeModel> fields = tableMetadata.columns().stream()
+//        //     .map(column -> createRecordFieldCodeModel(column, tableMetadata))
+//        //     .collect(Collectors.toCollection(ArrayList::new));
+//
+//        final String simpleName = toPascalCase(tableMetadata.name()) + "Record";
+//        final String canonicalName = recordsPackageName + "." + simpleName;
+//
+//        return new RecordCodeModel(
+//            tableMetadata.name(),
+//            simpleName,
+//            canonicalName,
+//            recordsPackageName,
+//            primaryKeys,
+//            unmodifiableList(fields)
+//        );
+        return null;
     }
 
     @Nonnull

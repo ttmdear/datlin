@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="database" type="io.datlin.rcm.DatabaseCodeModel" -->
 package ${database.packageName};
 
 import io.datlin.sql.bld.GenericSqlBuilder;

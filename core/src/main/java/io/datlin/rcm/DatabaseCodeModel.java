@@ -1,14 +1,36 @@
 package io.datlin.rcm;
 
 import jakarta.annotation.Nonnull;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public record DatabaseCodeModel(
-    @Nonnull String simpleName,
-    @Nonnull String canonicalName,
-    @Nonnull String packageName,
-    @Nonnull List<ExecutionCodeModel> executions
-) {
+import static java.util.Collections.unmodifiableList;
 
+@Getter
+@RequiredArgsConstructor
+public class DatabaseCodeModel {
+
+    @Nonnull
+    final String simpleName;
+
+    @Nonnull
+    final String canonicalName;
+
+    @Nonnull
+    final String packageName;
+
+    @Nonnull
+    final RepositoryCodeModel repositoryCodeModel;
+
+    @Nonnull
+    final List<ExecutionCodeModel> executions = new ArrayList<>();
+
+    @Nonnull
+    public List<ExecutionCodeModel> getExecutions() {
+        return unmodifiableList(executions);
+    }
 }

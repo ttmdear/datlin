@@ -1,17 +1,47 @@
 package io.datlin.rcm;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public record RepositoryCodeModel(
-    @Nonnull String packageName,
-    @Nonnull String recordsPackageName,
-    @Nonnull String tablesPackageName,
-    @Nonnull String executionsPackageName,
-    @Nonnull DatabaseCodeModel database,
-    @Nonnull List<TableCodeModel> tables,
-    @Nonnull List<RecordCodeModel> records,
-    @Nonnull List<ExecutionCodeModel> executions
-) {
+@Getter
+@RequiredArgsConstructor
+public class RepositoryCodeModel {
+
+    @Nonnull
+    final String packageName;
+
+    @Nonnull
+    final String recordsPackageName;
+
+    @Nonnull
+    final String tablesPackageName;
+
+    @Nonnull
+    final String executionsPackageName;
+
+    @Nullable
+    DatabaseCodeModel database;
+
+    @Nonnull
+    final List<TableCodeModel> tables = new ArrayList<>();
+
+    @Nonnull
+    final List<RecordCodeModel> records = new ArrayList<>();
+
+    @Nonnull
+    final List<ExecutionCodeModel> executions = new ArrayList<>();
+
+    @Nonnull
+    public DatabaseCodeModel getDatabase() {
+        if (this.database == null) {
+            throw new IllegalStateException("Database code model has not been initialized");
+        }
+
+        return database;
+    }
 }

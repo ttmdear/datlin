@@ -40,57 +40,57 @@ public class RepositoryCodeGenerator {
 
     public void generate() {
         final DatabaseMetadata databaseMetadata = createDatabaseMetadata();
-        final RepositoryCodeModel repositoryCodeModel = new RepositoryCodeModelFactory(xmlRepositoryConfiguration,
+        final RepositoryCodeModel repository = new RepositoryCodeModelFactory(xmlRepositoryConfiguration,
             databaseMetadata).create();
 
         final String output = getOutput();
 
         // generate database code --------------------------------------------------------------------------------------
-        final String databaseOutput = getDatabaseOutput(repositoryCodeModel);
+        final String databaseOutput = getDatabaseOutput(repository);
         templateProcessor.process(
             Map.of(
-                "database", repositoryCodeModel.database()
+                "database", repository.getDatabase()
             ),
             "database.ftlh",
-            databaseOutput + "/" + repositoryCodeModel.database().simpleName() + ".java"
+            databaseOutput + "/" + repository.getDatabase().getSimpleName() + ".java"
         );
 
         // generate tables code ----------------------------------------------------------------------------------------
-        final String tablesOutput = getTablesOutput(repositoryCodeModel);
-        for (final TableCodeModel tableCodeModel : repositoryCodeModel.tables()) {
+        final String tablesOutput = getTablesOutput(repository);
+        for (final TableCodeModel table : repository.getTables()) {
             templateProcessor.process(
                 Map.of(
-                    "tableCodeModel", tableCodeModel
+                    "table", table
                 ),
                 "table.ftlh",
-                tablesOutput + "/" + tableCodeModel.simpleName() + ".java"
+                tablesOutput + "/" + table.getSimpleName() + ".java"
             );
         }
 
-        // generate records code ---------------------------------------------------------------------------------------
-        final String recordsOutput = getRecordsOutput(repositoryCodeModel);
-        for (final RecordCodeModel recordCodeModel : repositoryCodeModel.records()) {
-            templateProcessor.process(
-                Map.of(
-                    "recordCodeModel", recordCodeModel
-                ),
-                "record.ftlh",
-                recordsOutput + "/" + recordCodeModel.simpleName() + ".java"
-            );
-        }
+        // // generate records code ---------------------------------------------------------------------------------------
+        // final String recordsOutput = getRecordsOutput(repository);
+        // for (final RecordCodeModel recordCodeModel : repository.records()) {
+        //     templateProcessor.process(
+        //         Map.of(
+        //             "recordCodeModel", recordCodeModel
+        //         ),
+        //         "record.ftlh",
+        //         recordsOutput + "/" + recordCodeModel.simpleName() + ".java"
+        //     );
+        // }
 
-        // generate executions code ------------------------------------------------------------------------------------
-        final String executionsOutput = getExecutionsOutput(repositoryCodeModel);
+        // // generate executions code ------------------------------------------------------------------------------------
+        // final String executionsOutput = getExecutionsOutput(repository);
 
-        for (final ExecutionCodeModel executionCodeModel : repositoryCodeModel.executions()) {
-            templateProcessor.process(
-                Map.of(
-                    "executionCodeModel", executionCodeModel
-                ),
-                "execution.ftlh",
-                executionsOutput + "/" + executionCodeModel.simpleName() + ".java"
-            );
-        }
+        // for (final ExecutionCodeModel executionCodeModel : repository.executions()) {
+        //     templateProcessor.process(
+        //         Map.of(
+        //             "executionCodeModel", executionCodeModel
+        //         ),
+        //         "execution.ftlh",
+        //         executionsOutput + "/" + executionCodeModel.simpleName() + ".java"
+        //     );
+        // }
     }
 
     private @Nonnull DatabaseMetadata createDatabaseMetadata() {
@@ -117,9 +117,9 @@ public class RepositoryCodeGenerator {
 
     @Nonnull
     private String getDatabaseOutput(
-        @Nonnull final RepositoryCodeModel repositoryCodeModel
+        @Nonnull final RepositoryCodeModel repository
     ) {
-        final String databasePath = repositoryCodeModel.packageName()
+        final String databasePath = repository.getPackageName()
             .replace(".", "/");
 
         if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
@@ -135,7 +135,7 @@ public class RepositoryCodeGenerator {
     private String getTablesOutput(
         @Nonnull final RepositoryCodeModel repositoryCodeModel
     ) {
-        final String tablesPackagePath = repositoryCodeModel.tablesPackageName()
+        final String tablesPackagePath = repositoryCodeModel.getTablesPackageName()
             .replace(".", "/");
 
         if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
@@ -151,7 +151,7 @@ public class RepositoryCodeGenerator {
     private String getRecordsOutput(
         @Nonnull final RepositoryCodeModel repositoryCodeModel
     ) {
-        final String recordsPackagePath = repositoryCodeModel.recordsPackageName()
+        final String recordsPackagePath = repositoryCodeModel.getRecordsPackageName()
             .replace(".", "/");
 
         if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
@@ -167,7 +167,7 @@ public class RepositoryCodeGenerator {
     private String getExecutionsOutput(
         @Nonnull final RepositoryCodeModel repositoryCodeModel
     ) {
-        final String executionsPackagePath = repositoryCodeModel.executionsPackageName()
+        final String executionsPackagePath = repositoryCodeModel.getExecutionsPackageName()
             .replace(".", "/");
 
         if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
