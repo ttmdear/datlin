@@ -129,14 +129,8 @@ public class RepositoryCodeModelFactory {
         final String canonicalName = tablesPackageName + "." + simpleName;
         final String tableReferenceField = metadata.name();
 
-        final TableCodeModel table = new TableCodeModel(
-            simpleName,
-            canonicalName,
-            tablesPackageName,
-            tableReferenceField,
-            metadata,
-            database
-        );
+        final TableCodeModel table = new TableCodeModel(simpleName, canonicalName, tablesPackageName,
+            tableReferenceField, metadata, database);
 
         for (final ColumnMetadata columnMetadata : metadata.columns()) {
             final TableColumnCodeModel column = new TableColumnCodeModel(

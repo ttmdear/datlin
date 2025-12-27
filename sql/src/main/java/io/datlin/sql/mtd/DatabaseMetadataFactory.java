@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Set;
 
 public class DatabaseMetadataFactory {
-    public @Nonnull DatabaseMetadata create(
+
+    @Nonnull
+    public DatabaseMetadata create(
         @Nonnull final Connection connection
     ) throws SQLException {
         return new DatabaseMetadata(
@@ -21,7 +23,8 @@ public class DatabaseMetadataFactory {
         );
     }
 
-    private @Nonnull List<TableMetadata> getTables(
+    @Nonnull
+    private List<TableMetadata> getTables(
         @Nonnull final Connection connection
     ) throws SQLException {
         final DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -42,17 +45,12 @@ public class DatabaseMetadataFactory {
         return tables;
     }
 
-    private @Nonnull List<ColumnMetadata> getColumns(
+    @Nonnull
+    private List<ColumnMetadata> getColumns(
         @Nonnull final String tableName,
         @Nonnull final DatabaseMetaData databaseMetaData
     ) throws SQLException {
-        final ResultSet columnsResultSet = databaseMetaData.getColumns(
-            null,
-            null,
-            tableName,
-            null
-        );
-
+        final ResultSet columnsResultSet = databaseMetaData.getColumns(null, null, tableName, null);
         final List<ColumnMetadata> columns = new ArrayList<>();
         final Set<String> primaryKeys = getPrimaryKeys(tableName, databaseMetaData);
 
@@ -60,15 +58,52 @@ public class DatabaseMetadataFactory {
             final String name = columnsResultSet.getString("COLUMN_NAME");
             final String type = columnsResultSet.getString("TYPE_NAME");
             final boolean primaryKey = primaryKeys.contains(name);
-            final boolean isNullable = columnsResultSet.getInt("NULLABLE") == DatabaseMetaData.columnNullable;
+            final boolean nullable = columnsResultSet.getInt("NULLABLE") == DatabaseMetaData.columnNullable;
+            final int size = columnsResultSet.getInt("COLUMN_SIZE");
+            final int decimalDigits = columnsResultSet.getInt("DECIMAL_DIGITS");
 
-            columns.add(new ColumnMetadata(name, primaryKey, type, isNullable));
+            Integer length = null;
+            Integer precision = null;
+            Integer scale = null;
+
+            final ColumnAttributeType columnAttributeType = getColumnAttributeType(type);
+
+            if (columnAttributeType.equals(ColumnAttributeType.LENGTH)) {
+                length = size;
+            } else if (columnAttributeType.equals(ColumnAttributeType.PRECISION_SCALE)) {
+                precision = size;
+                scale = decimalDigits;
+            }
+
+            columns.add(new ColumnMetadata(name, primaryKey, type, nullable, size, decimalDigits, length, precision,
+                scale));
         }
 
         return columns;
     }
 
-    private @Nonnull Set<String> getPrimaryKeys(
+    public enum ColumnAttributeType {
+        LENGTH, PRECISION_SCALE, NONE
+    }
+
+    @Nonnull
+    public static ColumnAttributeType getColumnAttributeType(@Nonnull final String typeName) {
+        final String type = typeName.toUpperCase();
+
+        if (type.contains("VARCHAR") || type.equals("CHAR") || type.equals("TEXT")) {
+            return ColumnAttributeType.LENGTH;
+        }
+
+        if (type.equals("DECIMAL") || type.equals("NUMERIC") ||
+            type.equals("DOUBLE") || type.equals("FLOAT") || type.equals("REAL")) {
+            return ColumnAttributeType.PRECISION_SCALE;
+        }
+
+        return ColumnAttributeType.NONE;
+    }
+
+    @Nonnull
+    private Set<String> getPrimaryKeys(
         @Nonnull final String tableName,
         @Nonnull final DatabaseMetaData metaData
     ) throws SQLException {

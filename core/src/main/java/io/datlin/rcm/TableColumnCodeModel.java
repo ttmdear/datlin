@@ -2,6 +2,7 @@ package io.datlin.rcm;
 
 import io.datlin.sql.mtd.ColumnMetadata;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
