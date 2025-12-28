@@ -203,7 +203,7 @@ public class RepositoryCodeModelFactory {
     /**
      * Converts a string (e.g., snake_case, kebab-case, camelCase)
      * into PascalCase (e.g., "my_data" -> "MyData").
-     * * @param name The input string to convert.
+     * @param name The input string to convert.
      *
      * @return The converted string in PascalCase format.
      */

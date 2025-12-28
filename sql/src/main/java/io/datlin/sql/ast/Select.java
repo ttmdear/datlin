@@ -10,12 +10,19 @@ public record Select(
     @Nonnull List<SqlFragment> columns,
     @Nullable SqlFragment from,
     @Nonnull List<SqlFragment> joins,
-    @Nullable Criteria where
-) implements SqlFragment {
+    @Nullable Criteria where,
+    @Nullable String alias
+) implements SqlFragment, Aliasable<Select> {
+
+    @Nonnull
+    @Override
+    public Select as(@Nonnull final String alias) {
+        return new Select(columns, from, joins, where, alias);
+    }
 
     @Nonnull
     public static Select select() {
-        return new Select(List.of(), null, List.of(), null);
+        return new Select(List.of(), null, List.of(), null, null);
     }
 
     // columns ---------------------------------------------------------------------------------------------------------
@@ -28,7 +35,8 @@ public record Select(
             Arrays.stream(columns).toList(),
             from,
             joins,
-            where
+            where,
+            alias
         );
     }
 
@@ -36,7 +44,7 @@ public record Select(
     public Select columns(
         @Nonnull final List<SqlFragment> columns
     ) {
-        return new Select(columns, from, joins, where);
+        return new Select(columns, from, joins, where, alias);
     }
 
     // from ------------------------------------------------------------------------------------------------------------
@@ -47,7 +55,8 @@ public record Select(
             columns,
             from,
             joins,
-            where
+            where,
+            alias
         );
     }
 
@@ -59,7 +68,8 @@ public record Select(
             columns,
             from,
             Arrays.stream(joins).toList(),
-            where
+            where,
+            alias
         );
     }
 
@@ -69,7 +79,8 @@ public record Select(
             columns,
             from,
             joins,
-            where
+            where,
+            alias
         );
     }
 
@@ -81,7 +92,8 @@ public record Select(
             columns,
             from,
             joins,
-            criteria instanceof Criteria ? (Criteria) criteria : Criteria.and(criteria)
+            criteria instanceof Criteria ? (Criteria) criteria : Criteria.and(criteria),
+            alias
         );
     }
 
@@ -91,7 +103,8 @@ public record Select(
             columns,
             from,
             joins,
-            Criteria.and(criteria)
+            Criteria.and(criteria),
+            alias
         );
     }
 
@@ -101,7 +114,8 @@ public record Select(
             columns,
             from,
             joins,
-            Criteria.and(criteria)
+            Criteria.and(criteria),
+            alias
         );
     }
 }

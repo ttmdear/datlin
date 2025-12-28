@@ -6,7 +6,9 @@ import io.datlin.sql.ast.Comparison;
 import io.datlin.sql.ast.ComparisonOperator;
 import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Delete;
+import io.datlin.sql.ast.FunctionCall;
 import io.datlin.sql.ast.Insert;
+import io.datlin.sql.ast.RawValue;
 import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
@@ -73,6 +75,10 @@ public class GenericSqlBuilder implements SqlBuilder {
             build((ValueReference) fragment, sql, context);
         } else if (fragment instanceof ColumnReference) {
             build((ColumnReference) fragment, sql, context);
+        } else if (fragment instanceof RawValue) {
+            build((RawValue) fragment, sql, context);
+        } else if (fragment instanceof FunctionCall) {
+            build((FunctionCall) fragment, sql, context);
         } else {
 
         }
@@ -274,6 +280,38 @@ public class GenericSqlBuilder implements SqlBuilder {
         }
     }
 
+    public void build(
+        @Nonnull final FunctionCall functionCall,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        sql.append(functionCall.function()).append("(");
+
+        for (int i = 0; i < functionCall.arguments().size(); i++) {
+            final SqlFragment argument = functionCall.arguments().get(i);
+
+            if (argument instanceof RawValue rawValue) {
+                build(rawValue, sql, context);
+            } else if (argument instanceof ValueReference valueReference) {
+                build(valueReference, sql, context);
+            } else if (argument instanceof TableReference tableReference) {
+                build(tableReference, sql, context);
+            } else if (argument instanceof ColumnReference columnReference) {
+                build(columnReference, sql, context);
+            } else {
+                sql.append("(");
+                build(argument, sql, context);
+                sql.append(")");
+            }
+
+            if (i < functionCall.arguments().size() - 1) {
+                sql.append(", ");
+            }
+        }
+
+        sql.append(")");
+    }
+
     /**
      * Translates the given criteria into a SQL fragment and appends it to the query buffer.
      * <p>
@@ -356,6 +394,14 @@ public class GenericSqlBuilder implements SqlBuilder {
             context.addStatementObjects(valueReference.reference());
             sql.append("?");
         }
+    }
+
+    public void build(
+        @Nonnull final RawValue value,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        sql.append(value.value());
     }
 
     public void build(

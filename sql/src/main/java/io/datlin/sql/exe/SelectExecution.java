@@ -1,12 +1,14 @@
 package io.datlin.sql.exe;
 
+import io.datlin.sql.ast.FunctionCall;
 import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.SqlBuilder;
-import io.datlin.sql.exc.FetchSQLException;
+import io.datlin.sql.exc.DatlinSQLException;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +21,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+@Slf4j
+@RequiredArgsConstructor
 public class SelectExecution<T> {
 
     @Nonnull
@@ -32,16 +36,6 @@ public class SelectExecution<T> {
 
     @Nonnull
     private final Function<ResultSet, T> resultMapper;
-
-    public SelectExecution(
-        @Nonnull final ExecutionConnection executionConnection,
-        @Nonnull final SqlBuilder builder,
-        @Nonnull final Function<ResultSet, T> resultMapper
-    ) {
-        this.executionConnection = executionConnection;
-        this.builder = builder;
-        this.resultMapper = resultMapper;
-    }
 
     // select ----------------------------------------------------------------------------------------------------------
 
@@ -114,7 +108,9 @@ public class SelectExecution<T> {
 
             return result;
         } catch (SQLException e) {
-            throw new FetchSQLException(sql.toString(), e);
+            logSQLException(e, sql.toString());
+
+            throw new DatlinSQLException(sql.toString(), e);
         }
     }
 
@@ -166,7 +162,42 @@ public class SelectExecution<T> {
      * @return the count of records.
      */
     public long count() {
-        throw new UnsupportedOperationException();
+        final Select selectCount = Select.select()
+            .columns(
+                FunctionCall.countAll()
+            ).from(select.as("count"));
+
+        final List<T> result = new ArrayList<>();
+        final BuildContext buildContext = new BuildContext();
+        final StringBuilder sql = new StringBuilder();
+
+        builder.build(selectCount, sql, buildContext);
+
+        try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            logSQLException(e, sql.toString());
+
+            throw new DatlinSQLException(sql.toString(), e);
+        }
+
+        return 0;
+    }
+
+    private void logSQLException(
+        @Nonnull final SQLException e,
+        @Nonnull final String sql
+    ) throws DatlinSQLException {
+        log.error("SQL Execution failed!\n" +
+                "Query: {}\n" +
+                "SQL State: {}\n" +
+                "Error Code: {}\n" +
+                "Message: {}",
+            sql, e.getSQLState(), e.getErrorCode(), e.getMessage(), e);
     }
 
     /**

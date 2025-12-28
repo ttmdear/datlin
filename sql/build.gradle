@@ -8,9 +8,20 @@ dependencies {
     // Jakarta Annotation Api
     implementation "jakarta.annotation:jakarta.annotation-api:3.0.0"
 
+    // junit
     testImplementation platform("org.junit:junit-bom:5.10.0")
     testImplementation "org.junit.jupiter:junit-jupiter"
     testImplementation "org.junit.platform:junit-platform-launcher"
+
+    // lombok
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.42")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
+
+    // slf4j
+    implementation 'org.slf4j:slf4j-api:2.0.17'
 }
 
 test {
