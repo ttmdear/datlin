@@ -358,6 +358,8 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         if (comparison.left() instanceof ValueReference valueReference) {
             build(valueReference, sql, context);
+        } else if (comparison.left() instanceof ColumnReference columnReference) {
+            build(columnReference, sql, context);
         } else if (comparison.left() instanceof SqlFragment sqlFragment) {
             appendInBrackets(sql, sqlFragment, context);
         } else {
@@ -368,6 +370,8 @@ public class GenericSqlBuilder implements SqlBuilder {
 
         if (comparison.right() instanceof ValueReference valueReference) {
             build(valueReference, sql, context);
+        } else if (comparison.right() instanceof ColumnReference columnReference) {
+            build(columnReference, sql, context);
         } else if (comparison.right() instanceof SqlFragment sqlFragment) {
             appendInBrackets(sql, sqlFragment, context);
         } else {

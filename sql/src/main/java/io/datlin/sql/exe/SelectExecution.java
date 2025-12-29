@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -174,7 +175,9 @@ public class SelectExecution<T> {
         builder.build(selectCount, sql, buildContext);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            try (ResultSet rs = statement.executeQuery()) {
+            buildContext.prepareStatement(statement);
+
+            try (final ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     return rs.getLong(1);
                 }
@@ -186,18 +189,6 @@ public class SelectExecution<T> {
         }
 
         return 0;
-    }
-
-    private void logSQLException(
-        @Nonnull final SQLException e,
-        @Nonnull final String sql
-    ) throws DatlinSQLException {
-        log.error("SQL Execution failed!\n" +
-                "Query: {}\n" +
-                "SQL State: {}\n" +
-                "Error Code: {}\n" +
-                "Message: {}",
-            sql, e.getSQLState(), e.getErrorCode(), e.getMessage(), e);
     }
 
     /**
@@ -230,5 +221,27 @@ public class SelectExecution<T> {
      */
     public <R> List<R> fetchAs(@Nonnull Class<R> dtoClass) {
         throw new UnsupportedOperationException();
+    }
+
+    public <U> U mapOne(Function<? super T, ? extends U> mapper) {
+        return mapper.apply(fetchOne());
+    }
+
+    public <U> List<U> mapAll(Function<? super T, ? extends U> mapper) {
+        return fetchAll().stream()
+            .map(mapper)
+            .collect(Collectors.toList());
+    }
+
+    private void logSQLException(
+        @Nonnull final SQLException e,
+        @Nonnull final String sql
+    ) throws DatlinSQLException {
+        log.error("SQL Execution failed!\n" +
+                "Query: {}\n" +
+                "SQL State: {}\n" +
+                "Error Code: {}\n" +
+                "Message: {}",
+            sql, e.getSQLState(), e.getErrorCode(), e.getMessage(), e);
     }
 }

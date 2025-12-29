@@ -4,6 +4,8 @@ import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.GenericSqlBuilder;
 import jakarta.annotation.Nonnull;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -48,5 +50,23 @@ public class SqlAssertions {
         sqlBuilder.build(sqlFragment, sql, buildContext);
 
         assertEquals(expected, sql.toString());
+    }
+
+    public static void assertSql(
+        @Nonnull final String expectedSql,
+        @Nonnull final List<?> expectedBinds,
+        @Nonnull final GenericSqlBuilder sqlBuilder,
+        @Nonnull final Object sqlFragment
+    ) {
+        final StringBuilder sql = new StringBuilder();
+        final BuildContext buildContext = new BuildContext();
+        sqlBuilder.build(sqlFragment, sql, buildContext);
+        assertEquals(expectedSql, sql.toString());
+
+        assertEquals(expectedBinds.size(), buildContext.getStatementObjects().size());
+
+        for (int i = 0; i < expectedBinds.size(); i++) {
+            assertEquals(expectedBinds.get(i), buildContext.getStatementObjects().get(i));
+        }
     }
 }
