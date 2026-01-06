@@ -39,6 +39,17 @@ public class DatlinSQLException extends RuntimeException {
     }
 
     /**
+     * Constructs a new DatlinSQLException with a custom message and an underlying cause.
+     *
+     * @param message the detail message
+     */
+    public DatlinSQLException(
+        @Nonnull final String message
+    ) {
+        super(message);
+    }
+
+    /**
      * Constructs a new DatlinSQLException with only an underlying cause.
      *
      * @param cause the underlying exception that caused the failure

@@ -110,7 +110,7 @@ public class ${execution.simpleName} {
 
         update.where(
             <#list execution.record.primaryKeys as field>
-            eq("${field.metadata.name}", record.${field.name}())
+            eq(column("${field.metadata.name}"), record.${field.name}())
             </#list>
         );
 

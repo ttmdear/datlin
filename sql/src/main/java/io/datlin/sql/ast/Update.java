@@ -3,6 +3,7 @@ package io.datlin.sql.ast;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.List.copyOf;
@@ -54,6 +55,23 @@ public record Update(
     @Nonnull
     public Update sets(@Nonnull final List<Assignment> sets) {
         return new Update(table, copyOf(sets), where);
+    }
+
+    /**
+     * Defines the assignments for the update operation.
+     * <p>
+     * This method specifies the columns and their new values (the {@code SET} clause in SQL).
+     * It creates a new instance of {@link Update} with the provided list of assignments
+     * while preserving the current table and filtering conditions.
+     *
+     * @param sets a variable number of {@link Assignment} objects representing
+     *             column-value pairs to be updated
+     * @return a new {@code Update} instance containing the specified assignments
+     * @throws NullPointerException if the sets array or any of its elements are null
+     */
+    @Nonnull
+    public Update sets(@Nonnull final Assignment... sets) {
+        return new Update(table, Arrays.stream(sets).toList(), where);
     }
 
     /**

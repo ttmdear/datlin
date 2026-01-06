@@ -15,6 +15,7 @@ import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.ast.Update;
 import io.datlin.sql.ast.Assignment;
 import io.datlin.sql.ast.ValueReference;
+import io.datlin.sql.exc.DatlinSQLException;
 import io.datlin.sql.exc.FromIsNotSetException;
 import io.datlin.sql.exc.InsertColumnsNotSetException;
 import io.datlin.sql.exc.InsertValuesNumberIsDifferentThenColumnsException;
@@ -67,6 +68,8 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         if (fragment instanceof Select) {
             build((Select) fragment, sql, context);
+        } else if (fragment instanceof Update) {
+            build((Update) fragment, sql, context);
         } else if (fragment instanceof Criteria) {
             build((Criteria) fragment, sql, context);
         } else if (fragment instanceof Comparison) {
@@ -220,17 +223,25 @@ public class GenericSqlBuilder implements SqlBuilder {
     ) {
         // update ------------------------------------------------------------------------------------------------------
         sql.append("UPDATE ");
-        build(update.table(), sql, context);
+
+        final TableReference table = update.table();
+
+        if (table == null) {
+            throw new DatlinSQLException("Update table is not set");
+        }
+
+        sql.append("\"").append(table.name()).append("\"");
 
         if (update.sets().isEmpty()) {
-            throw new UpdateSetIsNotSetException(update.table().name());
+            throw new DatlinSQLException("Update set is not set");
         }
 
         // set ---------------------------------------------------------------------------------------------------------
         sql.append(" SET ");
         for (int i = 0; i < update.sets().size(); i++) {
             final Assignment set = update.sets().get(i);
-            sql.append("\"").append(set.column()).append("\"").append(" = ");
+
+            sql.append("\"").append(set.column().column()).append("\"").append(" = ");
 
             if (set.value() == null) {
                 sql.append("NULL");
