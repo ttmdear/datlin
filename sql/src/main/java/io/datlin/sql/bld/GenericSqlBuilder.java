@@ -1,6 +1,7 @@
 package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.Aliasable;
+import io.datlin.sql.ast.Assignment;
 import io.datlin.sql.ast.ColumnReference;
 import io.datlin.sql.ast.Comparison;
 import io.datlin.sql.ast.ComparisonOperator;
@@ -13,13 +14,8 @@ import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.ast.Update;
-import io.datlin.sql.ast.Assignment;
 import io.datlin.sql.ast.ValueReference;
-import io.datlin.sql.exc.DatlinSQLException;
-import io.datlin.sql.exc.FromIsNotSetException;
-import io.datlin.sql.exc.InsertColumnsNotSetException;
-import io.datlin.sql.exc.InsertValuesNumberIsDifferentThenColumnsException;
-import io.datlin.sql.exc.UpdateSetIsNotSetException;
+import io.datlin.sql.exc.DatlinSqlPrepareException;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;
@@ -125,7 +121,7 @@ public class GenericSqlBuilder implements SqlBuilder {
         // from --------------------------------------------------------------------------------------------------------
         final SqlFragment from = select.from();
         if (from == null) {
-            throw new FromIsNotSetException();
+            throw new DatlinSqlPrepareException("FROM for SELECT statement is not set", sql.toString());
         }
 
         sql.append(" FROM");
@@ -164,7 +160,10 @@ public class GenericSqlBuilder implements SqlBuilder {
         build(insert.into(), sql, context);
 
         if (insert.columns().isEmpty()) {
-            throw new InsertColumnsNotSetException(insert.into().name());
+            throw new DatlinSqlPrepareException(
+                "No columns set for INSERT INTO '%s'".formatted(insert.into().name()),
+                sql.toString()
+            );
         }
 
         sql.append(" (");
@@ -178,7 +177,10 @@ public class GenericSqlBuilder implements SqlBuilder {
         sql.append(")");
 
         if (insert.values().isEmpty()) {
-            throw new InsertColumnsNotSetException(insert.into().name());
+            throw new DatlinSqlPrepareException(
+                "No values set for INSERT INTO '%s'".formatted(insert.into().name()),
+                sql.toString()
+            );
         }
 
         sql.append(" VALUES");
@@ -187,7 +189,10 @@ public class GenericSqlBuilder implements SqlBuilder {
             final List<Object> values = insert.values().get(i);
 
             if (values.size() != insert.columns().size()) {
-                throw new InsertValuesNumberIsDifferentThenColumnsException();
+                throw new DatlinSqlPrepareException(
+                    "Incorrect number of columns and values for INSERT INTO '%s'".formatted(insert.into().name()),
+                    sql.toString()
+                );
             }
 
             sql.append(" (");
@@ -227,13 +232,16 @@ public class GenericSqlBuilder implements SqlBuilder {
         final TableReference table = update.table();
 
         if (table == null) {
-            throw new DatlinSQLException("Update table is not set");
+            throw new DatlinSqlPrepareException("No table set for UPDATE", sql.toString());
         }
 
         sql.append("\"").append(table.name()).append("\"");
 
         if (update.sets().isEmpty()) {
-            throw new DatlinSQLException("Update set is not set");
+            throw new DatlinSqlPrepareException(
+                "No SET's for UPDATE table '%s'".formatted(table.name()),
+                sql.toString()
+            );
         }
 
         // set ---------------------------------------------------------------------------------------------------------

@@ -5,7 +5,8 @@ import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.SqlBuilder;
-import io.datlin.sql.exc.DatlinSQLException;
+import io.datlin.sql.exc.DatlinSqlExecuteException;
+import io.datlin.sql.logger.DatlinLogger;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -109,9 +110,11 @@ public class SelectExecution<T> {
 
             return result;
         } catch (SQLException e) {
-            logSQLException(e, sql.toString());
-
-            throw new DatlinSQLException(sql.toString(), e);
+            throw DatlinLogger.logAndReturn(
+                new DatlinSqlExecuteException("Error during fetching all records", sql.toString(), e),
+                log,
+                sql.toString()
+            );
         }
     }
 
@@ -183,9 +186,11 @@ public class SelectExecution<T> {
                 }
             }
         } catch (SQLException e) {
-            logSQLException(e, sql.toString());
-
-            throw new DatlinSQLException(sql.toString(), e);
+            throw DatlinLogger.logAndReturn(
+                new DatlinSqlExecuteException("Error during counting records", sql.toString(), e),
+                log,
+                sql.toString()
+            );
         }
 
         return 0;
@@ -231,17 +236,5 @@ public class SelectExecution<T> {
         return fetchAll().stream()
             .map(mapper)
             .collect(Collectors.toList());
-    }
-
-    private void logSQLException(
-        @Nonnull final SQLException e,
-        @Nonnull final String sql
-    ) throws DatlinSQLException {
-        log.error("SQL Execution failed!\n" +
-                "Query: {}\n" +
-                "SQL State: {}\n" +
-                "Error Code: {}\n" +
-                "Message: {}",
-            sql, e.getSQLState(), e.getErrorCode(), e.getMessage(), e);
     }
 }

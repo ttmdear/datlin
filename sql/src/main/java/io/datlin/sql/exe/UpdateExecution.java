@@ -1,20 +1,24 @@
 package io.datlin.sql.exe;
 
 import io.datlin.sql.ast.Assignment;
-import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.ast.Update;
 import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.SqlBuilder;
-import io.datlin.sql.exc.InsertExecutionException;
+import io.datlin.sql.exc.DatlinSqlExecuteException;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import static io.datlin.sql.logger.DatlinLogger.logAndReturn;
+
+@Slf4j
+@RequiredArgsConstructor
 public class UpdateExecution {
 
     @Nonnull
@@ -25,14 +29,6 @@ public class UpdateExecution {
 
     @Nonnull
     private Update update = Update.update();
-
-    public UpdateExecution(
-        @Nonnull final ExecutionConnection executionConnection,
-        @Nonnull final SqlBuilder sqlBuilder
-    ) {
-        this.executionConnection = executionConnection;
-        this.sqlBuilder = sqlBuilder;
-    }
 
     // delegated update ------------------------------------------------------------------------------------------------
 
@@ -77,7 +73,11 @@ public class UpdateExecution {
             context.prepareStatement(statement);
             statement.execute();
         } catch (SQLException e) {
-            throw new InsertExecutionException(sql.toString(), e);
+            throw logAndReturn(
+                new DatlinSqlExecuteException("Error during executing UPDATE", sql.toString(), e),
+                log,
+                sql.toString()
+            );
         }
     }
 }

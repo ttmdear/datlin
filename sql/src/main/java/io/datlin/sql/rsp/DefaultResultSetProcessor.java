@@ -1,6 +1,6 @@
 package io.datlin.sql.rsp;
 
-import io.datlin.sql.exc.GettingResultSetValueException;
+import io.datlin.sql.exc.DatlinSqlExecuteException;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -29,7 +29,7 @@ public class DefaultResultSetProcessor implements ResultSetProcessor {
         try {
             value = resultSet.getObject(column);
         } catch (SQLException e) {
-            throw new GettingResultSetValueException(table, column, e);
+            throw new DatlinSqlExecuteException("Error during getting result set value of column '%s'.".formatted(column), e);
         }
 
         if (value == null) {

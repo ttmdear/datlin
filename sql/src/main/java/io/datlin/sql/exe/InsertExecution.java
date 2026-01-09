@@ -4,14 +4,18 @@ import io.datlin.sql.ast.Insert;
 import io.datlin.sql.ast.TableReference;
 import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.SqlBuilder;
-import io.datlin.sql.exc.InsertExecutionException;
+import io.datlin.sql.exc.DatlinSqlExecuteException;
+import io.datlin.sql.logger.DatlinLogger;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+@Slf4j
+@RequiredArgsConstructor
 public class InsertExecution {
 
     @Nonnull
@@ -22,14 +26,6 @@ public class InsertExecution {
 
     @Nonnull
     private Insert insert = Insert.insert();
-
-    public InsertExecution(
-        @Nonnull final ExecutionConnection executionConnection,
-        @Nonnull final SqlBuilder sqlBuilder
-    ) {
-        this.executionConnection = executionConnection;
-        this.sqlBuilder = sqlBuilder;
-    }
 
     // delegated from insert -------------------------------------------------------------------------------------------
 
@@ -62,7 +58,11 @@ public class InsertExecution {
             context.prepareStatement(statement);
             statement.execute();
         } catch (SQLException e) {
-            throw new InsertExecutionException(sql.toString(), e);
+            throw DatlinLogger.logAndReturn(
+                new DatlinSqlExecuteException("Error during executing INSERT", sql.toString(), e),
+                log,
+                sql.toString()
+            );
         }
     }
 }
