@@ -5,7 +5,7 @@ import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 
 import static io.datlin.sql.ast.ColumnReference.column;
-import static io.datlin.sql.ast.Comparison.eq;
+import static io.datlin.sql.ast.BinaryExpression.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CriteriaGenericSqlBuilderTest {

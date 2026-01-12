@@ -1,6 +1,5 @@
 package io.datlin.sql.bld;
 
-import io.datlin.sql.SqlAssertions;
 import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Select;
 import jakarta.annotation.Nonnull;
@@ -10,7 +9,7 @@ import java.util.List;
 
 import static io.datlin.sql.SqlAssertions.assertSql;
 import static io.datlin.sql.ast.ColumnReference.column;
-import static io.datlin.sql.ast.Comparison.eq;
+import static io.datlin.sql.ast.BinaryExpression.eq;
 import static io.datlin.sql.ast.Criteria.or;
 import static io.datlin.sql.ast.TableReference.table;
 import static org.junit.jupiter.api.Assertions.assertEquals;

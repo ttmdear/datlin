@@ -1,21 +1,13 @@
 package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.Assignment;
-import io.datlin.sql.ast.ColumnReference;
-import io.datlin.sql.ast.Comparison;
-import io.datlin.sql.ast.Criteria;
-import io.datlin.sql.ast.Select;
-import io.datlin.sql.ast.TableReference;
+import io.datlin.sql.ast.BinaryExpression;
 import io.datlin.sql.ast.Update;
 import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static io.datlin.sql.SqlAssertions.assertSql;
-import static io.datlin.sql.ast.ColumnReference.*;
 import static io.datlin.sql.ast.ColumnReference.column;
-import static io.datlin.sql.ast.Comparison.eq;
 import static io.datlin.sql.ast.Criteria.or;
 import static io.datlin.sql.ast.TableReference.table;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +25,7 @@ class UpdateGenericSqlBuilderTest {
                 Assignment.set(column("name"), "plan")
             )
             .where(
-                Comparison.eq(column("id"), 100)
+                BinaryExpression.eq(column("id"), 100)
             );
 
         assertSql(

@@ -5,7 +5,7 @@ import jakarta.annotation.Nonnull;
 public interface ComparisonSupport {
 
     @Nonnull
-    default Comparison eq(@Nonnull final Object right) {
-        return new Comparison(this, ComparisonOperator.EQ, right, null);
+    default BinaryExpression eq(@Nonnull final Object right) {
+        return new BinaryExpression(this, BinaryOperator.EQ, right, null);
     }
 }

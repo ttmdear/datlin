@@ -2,17 +2,20 @@ package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.Aliasable;
 import io.datlin.sql.ast.Assignment;
+import io.datlin.sql.ast.BinaryExpression;
+import io.datlin.sql.ast.BinaryOperator;
 import io.datlin.sql.ast.ColumnReference;
-import io.datlin.sql.ast.Comparison;
-import io.datlin.sql.ast.ComparisonOperator;
 import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Delete;
 import io.datlin.sql.ast.FunctionCall;
+import io.datlin.sql.ast.InExpression;
 import io.datlin.sql.ast.Insert;
 import io.datlin.sql.ast.RawValue;
 import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.TableReference;
+import io.datlin.sql.ast.UnaryExpression;
+import io.datlin.sql.ast.UnaryOperator;
 import io.datlin.sql.ast.Update;
 import io.datlin.sql.ast.ValueReference;
 import io.datlin.sql.exc.DatlinSqlPrepareException;
@@ -62,24 +65,28 @@ public class GenericSqlBuilder implements SqlBuilder {
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        if (fragment instanceof Select) {
-            build((Select) fragment, sql, context);
-        } else if (fragment instanceof Update) {
-            build((Update) fragment, sql, context);
-        } else if (fragment instanceof Criteria) {
-            build((Criteria) fragment, sql, context);
-        } else if (fragment instanceof Comparison) {
-            build((Comparison) fragment, sql, context);
-        } else if (fragment instanceof ValueReference) {
-            build((ValueReference) fragment, sql, context);
-        } else if (fragment instanceof ColumnReference) {
-            build((ColumnReference) fragment, sql, context);
-        } else if (fragment instanceof RawValue) {
-            build((RawValue) fragment, sql, context);
-        } else if (fragment instanceof FunctionCall) {
-            build((FunctionCall) fragment, sql, context);
+        if (fragment instanceof Select select) {
+            build(select, sql, context);
+        } else if (fragment instanceof Update update) {
+            build(update, sql, context);
+        } else if (fragment instanceof Criteria criteria) {
+            build(criteria, sql, context);
+        } else if (fragment instanceof BinaryExpression binaryExpression) {
+            build(binaryExpression, sql, context);
+        } else if (fragment instanceof InExpression inExpression) {
+            build(inExpression, sql, context);
+        } else if (fragment instanceof UnaryExpression unaryExpression) {
+            build(unaryExpression, sql, context);
+        } else if (fragment instanceof ValueReference valueReference) {
+            build(valueReference, sql, context);
+        } else if (fragment instanceof ColumnReference columnReference) {
+            build(columnReference, sql, context);
+        } else if (fragment instanceof RawValue rawValue) {
+            build(rawValue, sql, context);
+        } else if (fragment instanceof FunctionCall functionCall) {
+            build(functionCall, sql, context);
         } else {
-
+            throw new DatlinSqlPrepareException("Unknown type of sql fragment '%s'".formatted(fragment.getClass().getSimpleName()));
         }
     }
 
@@ -356,8 +363,8 @@ public class GenericSqlBuilder implements SqlBuilder {
 
             if (criterion instanceof ColumnReference columnReference) {
                 build(columnReference, sql, context);
-            } else if (criterion instanceof Comparison comparison) {
-                build(comparison, sql, context);
+            } else if (criterion instanceof BinaryExpression binaryExpression) {
+                build(binaryExpression, sql, context);
             } else {
                 sql.append("(");
                 build(criterion, sql, context);
@@ -371,31 +378,95 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     public void build(
-        @Nonnull final Comparison comparison,
+        @Nonnull final BinaryExpression binaryExpression,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     ) {
-        if (comparison.left() instanceof ValueReference valueReference) {
+        if (binaryExpression.left() instanceof ValueReference valueReference) {
             build(valueReference, sql, context);
-        } else if (comparison.left() instanceof ColumnReference columnReference) {
+        } else if (binaryExpression.left() instanceof ColumnReference columnReference) {
             build(columnReference, sql, context);
-        } else if (comparison.left() instanceof SqlFragment sqlFragment) {
+        } else if (binaryExpression.left() instanceof SqlFragment sqlFragment) {
             appendInBrackets(sql, sqlFragment, context);
         } else {
-            build(value(comparison.left()), sql, context);
+            build(value(binaryExpression.left()), sql, context);
         }
 
-        sql.append(" ").append(resolveComparisonOperator(comparison.operator())).append(" ");
+        sql.append(" ").append(resolveComparisonOperator(binaryExpression.operator())).append(" ");
 
-        if (comparison.right() instanceof ValueReference valueReference) {
+        if (binaryExpression.right() instanceof ValueReference valueReference) {
             build(valueReference, sql, context);
-        } else if (comparison.right() instanceof ColumnReference columnReference) {
+        } else if (binaryExpression.right() instanceof ColumnReference columnReference) {
             build(columnReference, sql, context);
-        } else if (comparison.right() instanceof SqlFragment sqlFragment) {
+        } else if (binaryExpression.right() instanceof SqlFragment sqlFragment) {
             appendInBrackets(sql, sqlFragment, context);
         } else {
-            build(value(comparison.right()), sql, context);
+            build(value(binaryExpression.right()), sql, context);
         }
+    }
+
+    public void build(
+        @Nonnull final UnaryExpression expression,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        if (expression.operator().equals(UnaryOperator.NOT) ||
+            expression.operator().equals(UnaryOperator.EXISTS)
+        ) {
+            sql.append(resolveUnaryOperator(expression.operator()));
+            sql.append(" ");
+        }
+
+        if (expression.value() instanceof ValueReference valueReference) {
+            build(valueReference, sql, context);
+        } else if (expression.value() instanceof ColumnReference columnReference) {
+            build(columnReference, sql, context);
+        } else if (expression.value() instanceof SqlFragment sqlFragment) {
+            appendInBrackets(sql, sqlFragment, context);
+        } else {
+            build(value(expression.value()), sql, context);
+        }
+
+        if (expression.operator().equals(UnaryOperator.IS_NULL) ||
+            expression.operator().equals(UnaryOperator.IS_NOT_NULL)
+        ) {
+            sql.append(" ");
+            sql.append(resolveUnaryOperator(expression.operator()));
+        }
+    }
+
+    public void build(
+        @Nonnull final InExpression expression,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        if (expression.left() instanceof ValueReference valueReference) {
+            build(valueReference, sql, context);
+        } else if (expression.left() instanceof ColumnReference columnReference) {
+            build(columnReference, sql, context);
+        } else if (expression.left() instanceof SqlFragment sqlFragment) {
+            appendInBrackets(sql, sqlFragment, context);
+        } else {
+            build(value(expression.left()), sql, context);
+        }
+
+        sql.append(" IN (");
+
+        if (expression.values() instanceof List<?> valueList) {
+            for (int i = 0; i < valueList.size(); i++) {
+                build(value(valueList.get(i)), sql, context);
+
+                if (i < valueList.size() - 1) {
+                    sql.append(", ");
+                }
+            }
+        } else if (expression.values() instanceof Select valueSelect) {
+            build(valueSelect, sql, context);
+        } else {
+            throw new DatlinSqlPrepareException("Unsupported type of in values '%s'".formatted(expression.values().getClass().getSimpleName()));
+        }
+
+        sql.append(")");
     }
 
     public void build(
@@ -454,7 +525,7 @@ public class GenericSqlBuilder implements SqlBuilder {
     }
 
     @Nonnull
-    private String resolveComparisonOperator(@Nonnull final ComparisonOperator operator) {
+    private String resolveComparisonOperator(@Nonnull final BinaryOperator operator) {
         return switch (operator) {
             case EQ -> "=";
             case NEQ -> "<>"; // Lub "!="
@@ -462,6 +533,16 @@ public class GenericSqlBuilder implements SqlBuilder {
             case GTE -> ">=";
             case LT -> "<";
             case LTE -> "<=";
+        };
+    }
+
+    @Nonnull
+    private String resolveUnaryOperator(@Nonnull final UnaryOperator operator) {
+        return switch (operator) {
+            case IS_NULL -> "IS NULL";
+            case IS_NOT_NULL -> "IS NOT NULL";
+            case NOT -> "NOT";
+            case EXISTS -> "EXISTS";
         };
     }
 

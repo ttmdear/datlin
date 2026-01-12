@@ -20,7 +20,7 @@ import ${execution.record.canonicalName};
 
 import static io.datlin.sql.ast.Assignment.set;
 import static io.datlin.sql.ast.ColumnReference.column;
-import static io.datlin.sql.ast.Comparison.eq;
+import static io.datlin.sql.ast.BinaryExpression.eq;
 
 public class ${execution.simpleName} {
 
