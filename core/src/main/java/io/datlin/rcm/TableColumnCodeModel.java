@@ -5,7 +5,6 @@ import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@SuppressWarnings("ClassCanBeRecord")
 @RequiredArgsConstructor
 @Getter
 public class TableColumnCodeModel {
@@ -20,5 +19,5 @@ public class TableColumnCodeModel {
     final ColumnMetadata metadata;
 
     @Nonnull
-    final TableCodeModelV1 table;
+    final TableCodeModel table;
 }

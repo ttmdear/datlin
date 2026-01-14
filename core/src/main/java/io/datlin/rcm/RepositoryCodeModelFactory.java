@@ -30,7 +30,7 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nonnull
-    public RepositoryCodeModelV1 create() {
+    public RepositoryCodeModel create() {
         final String repositoryPackageName = xrc.getPackage();
         final String tablesPackageName = repositoryPackageName + ".tables";
 
@@ -140,53 +140,67 @@ public class RepositoryCodeModelFactory {
         @Nonnull final DatabaseCodeModel database,
         @Nonnull final TableMetadata metadata
     ) {
-        final String tablePackageName = toPackageName(tableXrc.getName());
+        final String tablePackageName = tablesPackageName + "." + toPackageName(tableXrc.getName());
         final String simpleName = toPascalCase(metadata.name()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
-        final String tableReferenceField = metadata.name();
+        // final String tableReferenceField = metadata.name();
 
         System.out.printf("test");
 
-        // final TableCodeModelV1 table = new TableCodeModelV1(simpleName, canonicalName, tablesPackageName,
-        //     tableReferenceField, metadata, database);
+        final TableCodeModel table = new TableCodeModel(simpleName, canonicalName, tablePackageName, metadata, database);
 
-        // for (final ColumnMetadata columnMetadata : metadata.columns()) {
-        //     final TableColumnCodeModel column = new TableColumnCodeModel(
-        //         columnMetadata.name(),
-        //         columnMetadata.nullable(),
-        //         columnMetadata,
-        //         table
-        //     );
+        if (tableXrc.getColumns().isEmpty()) {
+            for (final ColumnMetadata columnMetadata : metadata.columns()) {
+                final TableColumnCodeModel column = new TableColumnCodeModel(
+                    columnMetadata.name(),
+                    columnMetadata.nullable(),
+                    columnMetadata,
+                    table
+                );
 
-        //     table.columns.add(column);
-        // }
+                table.columns.add(column);
+            }
+        } else {
+            for (final ColumnType columnXrc : tableXrc.getColumns()) {
+                ColumnMetadata columnMetadata = metadata.columns().stream()
+                    .filter(columnMetadata1 -> columnMetadata1.name().equals(columnXrc.getName()))
+                    .findFirst()
+                    .orElseThrow(() -> new DatlinGenerateException("Cannot find column '%s'".formatted(columnXrc.getName())));
 
-        // return table;
-        return null;
+                final TableColumnCodeModel column = new TableColumnCodeModel(
+                    columnMetadata.name(),
+                    columnMetadata.nullable(),
+                    columnMetadata,
+                    table
+                );
+
+                table.columns.add(column);
+            }
+        }
+
+        table.record = createRecord(tablePackageName, table);
+        createExecution()
+
+        return table;
     }
 
     @Nonnull
     private RecordCodeModel createRecord(
-        @Nonnull final String recordsPackageName,
-        @Nonnull final TableMetadata tableMetadata,
-        @Nonnull final TableCodeModelV1 table
+        @Nonnull final String tablePackageName,
+        @Nonnull final TableCodeModel table
     ) {
-        final String simpleName = toPascalCase(tableMetadata.name()) + "Record";
-        final String canonicalName = recordsPackageName + "." + simpleName;
+        final String simpleName = toPascalCase(table.metadata.name()) + "Record";
+        final String canonicalName = tablePackageName + "." + simpleName;
 
         final RecordCodeModel record = new RecordCodeModel(
             simpleName,
             canonicalName,
-            recordsPackageName,
+            tablePackageName,
             table
         );
 
-        for (final TableColumnCodeModel column : table.getColumns()) {
-            record.fields.add(createRecordField(
-                record,
-                column.metadata,
-                tableMetadata
-            ));
+        for (final TableColumnCodeModel column : table.columns) {
+            record.fields.add(createRecordField(record, column.metadata, table.metadata));
         }
 
         record.fields.stream()
@@ -198,20 +212,19 @@ public class RepositoryCodeModelFactory {
 
     @Nonnull
     private ExecutionCodeModel createExecution(
-        @Nonnull final String executionsPackageName,
-        @Nonnull final TableCodeModelV1 table,
-        @Nonnull final TableMetadata tableMetadata,
+        @Nonnull final String tablePackageName,
+        @Nonnull final TableCodeModel table,
         @Nonnull final String resultSetProcessor,
         @Nonnull final RecordCodeModel record
     ) {
-        final String simpleName = toPascalCase(tableMetadata.name()) + "Execution";
-        final String methodName = toCamelCase(tableMetadata.name());
-        final String canonicalName = executionsPackageName + "." + simpleName;
+        final String simpleName = toPascalCase(table.metadata.name()) + "Execution";
+        final String methodName = toCamelCase(table.metadata.name());
+        final String canonicalName = tablePackageName + "." + simpleName;
 
         return new ExecutionCodeModel(
             simpleName,
             canonicalName,
-            executionsPackageName,
+            tablePackageName,
             methodName,
             resultSetProcessor,
             table,

@@ -23,7 +23,7 @@ public class RecordCodeModel {
     final String packageName;
 
     @Nonnull
-    final TableCodeModelV1 table;
+    final TableCodeModel table;
 
     @Nonnull
     final List<RecordFieldCodeModel> primaryKeys = new ArrayList<>();

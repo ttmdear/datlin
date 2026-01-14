@@ -7,14 +7,14 @@ import java.util.List;
 
 import jakarta.annotation.Nonnull;
 
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import io.datlin.sql.mtd.TableMetadata;
 
 @Getter
 @RequiredArgsConstructor
-public class TableCodeModel
-{
+public class TableCodeModel {
 
     @Nonnull
     final String simpleName;
@@ -37,14 +37,32 @@ public class TableCodeModel
     @Nonnull
     final List<TableColumnCodeModel> columns = new ArrayList<>();
 
-    @Nonnull
-    final List<RecordCodeModel> records = new ArrayList<>();
+    @Nullable
+    RecordCodeModel record = null;
 
-    @Nonnull
-    final List<ExecutionCodeModel> executions = new ArrayList<>();
+    @Nullable
+    ExecutionCodeModel execution = null;
 
     @Nonnull
     public List<TableColumnCodeModel> getColumns() {
         return unmodifiableList(columns);
+    }
+
+    @Nonnull
+    public RecordCodeModel getRecord() {
+        if (record == null) {
+            throw new IllegalStateException("record is not set for table.");
+        }
+
+        return record;
+    }
+
+    @Nonnull
+    public ExecutionCodeModel getExecution() {
+        if (execution == null) {
+            throw new IllegalStateException("execution is not set for table.");
+        }
+
+        return execution;
     }
 }

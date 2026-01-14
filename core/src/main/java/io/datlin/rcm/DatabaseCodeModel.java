@@ -14,19 +14,19 @@ import static java.util.Collections.unmodifiableList;
 public class DatabaseCodeModel {
 
     @Nonnull
-    final String simpleName;
+    private final String simpleName;
 
     @Nonnull
-    final String canonicalName;
+    private final String canonicalName;
 
     @Nonnull
-    final String packageName;
+    private final String packageName;
 
     @Nonnull
-    final RepositoryCodeModel repository;
+    private final RepositoryCodeModel repository;
 
     @Nonnull
-    final List<ExecutionCodeModel> executions = new ArrayList<>();
+    private final List<ExecutionCodeModel> executions = new ArrayList<>();
 
     @Nonnull
     public List<ExecutionCodeModel> getExecutions() {
