@@ -1,20 +1,20 @@
 package io.datlin.rcm;
 
-import io.datlin.sql.mtd.TableMetadata;
-import jakarta.annotation.Nonnull;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import static java.util.Collections.unmodifiableList;
 
-import java.lang.ref.Reference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static java.util.Collections.unmodifiableList;
+import jakarta.annotation.Nonnull;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import io.datlin.sql.mtd.TableMetadata;
 
 @Getter
 @RequiredArgsConstructor
-public class TableCodeModel {
+public class TableCodeModel
+{
 
     @Nonnull
     final String simpleName;
@@ -25,8 +25,8 @@ public class TableCodeModel {
     @Nonnull
     final String packageName;
 
-    @Nonnull
-    final String tableReferenceField;
+    // @Nonnull
+    // final String tableReferenceField;
 
     @Nonnull
     final TableMetadata metadata;
@@ -36,6 +36,12 @@ public class TableCodeModel {
 
     @Nonnull
     final List<TableColumnCodeModel> columns = new ArrayList<>();
+
+    @Nonnull
+    final List<RecordCodeModel> records = new ArrayList<>();
+
+    @Nonnull
+    final List<ExecutionCodeModel> executions = new ArrayList<>();
 
     @Nonnull
     public List<TableColumnCodeModel> getColumns() {

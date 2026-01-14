@@ -61,6 +61,7 @@
             <xs:element name="column" type="ColumnType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="database-name" type="xs:string"/>
         <xs:attribute name="result-set-processor" type="xs:string"/>
         <xs:attribute name="insert" type="xs:boolean" default="true"/>
         <xs:attribute name="select" type="xs:boolean" default="true"/>

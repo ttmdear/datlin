@@ -3,9 +3,9 @@ package io.datlin.gec;
 import io.datlin.frm.TemplateProcessor;
 import io.datlin.rcm.ExecutionCodeModel;
 import io.datlin.rcm.RecordCodeModel;
-import io.datlin.rcm.RepositoryCodeModel;
+import io.datlin.rcm.RepositoryCodeModelV1;
 import io.datlin.rcm.RepositoryCodeModelFactory;
-import io.datlin.rcm.TableCodeModel;
+import io.datlin.rcm.TableCodeModelV1;
 import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.sql.mtd.DatabaseMetadataFactory;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
@@ -40,7 +40,7 @@ public class RepositoryCodeGenerator {
 
     public void generate() {
         final DatabaseMetadata databaseMetadata = createDatabaseMetadata();
-        final RepositoryCodeModel repository = new RepositoryCodeModelFactory(xmlRepositoryConfiguration,
+        final RepositoryCodeModelV1 repository = new RepositoryCodeModelFactory(xmlRepositoryConfiguration,
             databaseMetadata).create();
 
         final String output = getOutput();
@@ -57,7 +57,7 @@ public class RepositoryCodeGenerator {
 
         // generate tables code ----------------------------------------------------------------------------------------
         final String tablesOutput = getTablesOutput(repository);
-        for (final TableCodeModel table : repository.getTables()) {
+        for (final TableCodeModelV1 table : repository.getTables()) {
             templateProcessor.process(
                 Map.of(
                     "table", table
@@ -117,7 +117,7 @@ public class RepositoryCodeGenerator {
 
     @Nonnull
     private String getDatabaseOutput(
-        @Nonnull final RepositoryCodeModel repository
+        @Nonnull final RepositoryCodeModelV1 repository
     ) {
         final String databasePath = repository.getPackageName()
             .replace(".", "/");
@@ -133,7 +133,7 @@ public class RepositoryCodeGenerator {
 
     @Nonnull
     private String getTablesOutput(
-        @Nonnull final RepositoryCodeModel repositoryCodeModel
+        @Nonnull final RepositoryCodeModelV1 repositoryCodeModel
     ) {
         final String tablesPackagePath = repositoryCodeModel.getTablesPackageName()
             .replace(".", "/");
@@ -149,7 +149,7 @@ public class RepositoryCodeGenerator {
 
     @Nonnull
     private String getRecordsOutput(
-        @Nonnull final RepositoryCodeModel repositoryCodeModel
+        @Nonnull final RepositoryCodeModelV1 repositoryCodeModel
     ) {
         final String recordsPackagePath = repositoryCodeModel.getRecordsPackageName()
             .replace(".", "/");
@@ -165,7 +165,7 @@ public class RepositoryCodeGenerator {
 
     @Nonnull
     private String getExecutionsOutput(
-        @Nonnull final RepositoryCodeModel repositoryCodeModel
+        @Nonnull final RepositoryCodeModelV1 repositoryCodeModel
     ) {
         final String executionsPackagePath = repositoryCodeModel.getExecutionsPackageName()
             .replace(".", "/");

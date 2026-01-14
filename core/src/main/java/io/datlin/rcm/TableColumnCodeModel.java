@@ -2,7 +2,6 @@ package io.datlin.rcm;
 
 import io.datlin.sql.mtd.ColumnMetadata;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -21,5 +20,5 @@ public class TableColumnCodeModel {
     final ColumnMetadata metadata;
 
     @Nonnull
-    final TableCodeModel table;
+    final TableCodeModelV1 table;
 }

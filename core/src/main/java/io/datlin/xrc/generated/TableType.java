@@ -29,6 +29,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         <element name="column" type="{http://www.datlin.com/datlin}ColumnType" maxOccurs="unbounded" minOccurs="0"/>
  *       </sequence>
  *       <attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       <attribute name="database-name" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="result-set-processor" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       <attribute name="insert" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
  *       <attribute name="select" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" />
@@ -52,6 +53,8 @@ public class TableType {
     protected List<ColumnType> columns;
     @XmlAttribute(name = "name", required = true)
     protected String name;
+    @XmlAttribute(name = "database-name")
+    protected String databaseName;
     @XmlAttribute(name = "result-set-processor")
     protected String resultSetProcessor;
     @XmlAttribute(name = "insert")
@@ -119,6 +122,30 @@ public class TableType {
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    /**
+     * Gets the value of the databaseName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDatabaseName() {
+        return databaseName;
+    }
+
+    /**
+     * Sets the value of the databaseName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDatabaseName(String value) {
+        this.databaseName = value;
     }
 
     /**

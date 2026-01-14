@@ -1,5 +1,6 @@
 package io.datlin.rcm;
 
+import io.datlin.exc.DatlinGenerateException;
 import io.datlin.sql.mtd.ColumnMetadata;
 import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.sql.mtd.TableMetadata;
@@ -29,22 +30,17 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nonnull
-    public RepositoryCodeModel create() {
+    public RepositoryCodeModelV1 create() {
         final String repositoryPackageName = xrc.getPackage();
-        final String recordsPackageName = repositoryPackageName + ".records";
         final String tablesPackageName = repositoryPackageName + ".tables";
-        final String executionsPackageName = repositoryPackageName + ".executions";
 
-        final RepositoryCodeModel repository = new RepositoryCodeModel(
-            repositoryPackageName,
-            recordsPackageName,
-            tablesPackageName,
-            executionsPackageName
-        );
+        // final String recordsPackageName = repositoryPackageName + ".records";
+        // final String executionsPackageName = repositoryPackageName + ".executions";
+
+        final RepositoryCodeModel repository = new RepositoryCodeModel(repositoryPackageName, tablesPackageName);
 
         // database code model -----------------------------------------------------------------------------------------
         final String simpleName = xrc.getSimpleName();
-
         final DatabaseCodeModel database = new DatabaseCodeModel(
             simpleName,
             xrc.getPackage() + "." + simpleName,
@@ -54,44 +50,62 @@ public class RepositoryCodeModelFactory {
 
         repository.database = database;
 
-        for (final TableMetadata tableMetadata : databaseMetadata.tables()) {
-            if (isTableExcluded(tableMetadata, xrc)) {
-                continue;
-            }
+        for (final TableType tableXrc : xrc.getTables()) {
+            final String databaseName = resolveTableDatabaseName(tableXrc);
+            final TableMetadata tableMetadata = databaseMetadata.tables().stream()
+                .filter(tableMetadata1 -> databaseName.equals(tableMetadata1.name()))
+                .findFirst()
+                .orElseThrow(() -> new DatlinGenerateException("Cannot find database table '%s'".formatted(databaseName)));
 
-            final TableCodeModel table = createTable(
-                tablesPackageName,
-                database,
-                tableMetadata
-            );
+            final TableCodeModel table = createTable(tableXrc, tablesPackageName, database, tableMetadata);
 
-            repository.tables.add(table);
-
-            // create record code model --------------------------------------------------------------------------------
-            final RecordCodeModel record = createRecord(
-                recordsPackageName,
-                tableMetadata,
-                table
-            );
-
-            repository.records.add(record);
-
-            final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
-
-            // create execution code model -----------------------------------------------------------------------------
-            final ExecutionCodeModel execution = createExecution(
-                executionsPackageName,
-                table,
-                tableMetadata,
-                resultSetProcessor,
-                record
-            );
-
-            repository.executions.add(execution);
-            repository.database.executions.add(execution);
+            System.out.printf("test");
         }
 
-        return repository;
+        for (final TableMetadata tableMetadata : databaseMetadata.tables()) {
+            // if (isTableExcluded(tableMetadata, xrc)) {
+            //     continue;
+            // }
+
+            // final TableCodeModel table = createTable(
+            //     tablesPackageName,
+            //     database,
+            //     tableMetadata
+            // );
+
+            // repository.tables.add(table);
+
+            // // create record code model --------------------------------------------------------------------------------
+            // final RecordCodeModel record = createRecord(
+            //     recordsPackageName,
+            //     tableMetadata,
+            //     table
+            // );
+
+            // repository.records.add(record);
+
+            // final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
+
+            // // create execution code model -----------------------------------------------------------------------------
+            // final ExecutionCodeModel execution = createExecution(
+            //     executionsPackageName,
+            //     table,
+            //     tableMetadata,
+            //     resultSetProcessor,
+            //     record
+            // );
+
+            // repository.executions.add(execution);
+            // repository.database.executions.add(execution);
+        }
+
+        return null;
+        // return repository;
+    }
+
+    @Nonnull
+    private String resolveTableDatabaseName(@Nonnull final TableType tableXrc) {
+        return tableXrc.getDatabaseName() != null ? tableXrc.getDatabaseName() : tableXrc.getName();
     }
 
     private boolean isTableExcluded(
@@ -121,36 +135,41 @@ public class RepositoryCodeModelFactory {
 
     @Nonnull
     private TableCodeModel createTable(
+        @Nonnull final TableType tableXrc,
         @Nonnull final String tablesPackageName,
         @Nonnull final DatabaseCodeModel database,
         @Nonnull final TableMetadata metadata
     ) {
+        final String tablePackageName = toPackageName(tableXrc.getName());
         final String simpleName = toPascalCase(metadata.name()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
         final String tableReferenceField = metadata.name();
 
-        final TableCodeModel table = new TableCodeModel(simpleName, canonicalName, tablesPackageName,
-            tableReferenceField, metadata, database);
+        System.out.printf("test");
 
-        for (final ColumnMetadata columnMetadata : metadata.columns()) {
-            final TableColumnCodeModel column = new TableColumnCodeModel(
-                columnMetadata.name(),
-                columnMetadata.nullable(),
-                columnMetadata,
-                table
-            );
+        // final TableCodeModelV1 table = new TableCodeModelV1(simpleName, canonicalName, tablesPackageName,
+        //     tableReferenceField, metadata, database);
 
-            table.columns.add(column);
-        }
+        // for (final ColumnMetadata columnMetadata : metadata.columns()) {
+        //     final TableColumnCodeModel column = new TableColumnCodeModel(
+        //         columnMetadata.name(),
+        //         columnMetadata.nullable(),
+        //         columnMetadata,
+        //         table
+        //     );
 
-        return table;
+        //     table.columns.add(column);
+        // }
+
+        // return table;
+        return null;
     }
 
     @Nonnull
     private RecordCodeModel createRecord(
         @Nonnull final String recordsPackageName,
         @Nonnull final TableMetadata tableMetadata,
-        @Nonnull final TableCodeModel table
+        @Nonnull final TableCodeModelV1 table
     ) {
         final String simpleName = toPascalCase(tableMetadata.name()) + "Record";
         final String canonicalName = recordsPackageName + "." + simpleName;
@@ -180,7 +199,7 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private ExecutionCodeModel createExecution(
         @Nonnull final String executionsPackageName,
-        @Nonnull final TableCodeModel table,
+        @Nonnull final TableCodeModelV1 table,
         @Nonnull final TableMetadata tableMetadata,
         @Nonnull final String resultSetProcessor,
         @Nonnull final RecordCodeModel record
@@ -201,10 +220,32 @@ public class RepositoryCodeModelFactory {
     }
 
     /**
+     * Converts a given string into a valid Java package name format.
+     * <p>
+     * The transformation performs the following steps:
+     * <ul>
+     * <li>Inserts a separator between CamelCase transitions (e.g., "MyClass" becomes "my.class").</li>
+     * <li>Replaces all non-alphanumeric characters (underscores, hyphens, spaces) with dots.</li>
+     * <li>Converts all characters to lowercase.</li>
+     * <li>Removes leading/trailing dots and collapses multiple consecutive dots into a single one.</li>
+     * </ul>
+     *
+     * @param name The raw string to be converted (e.g., from a class name, file name, or database table).
+     * @return A sanitized, lower-case string suitable for use as a Java package name.
+     * Returns "defaultpackage" if the input is blank.
+     */
+    @Nonnull
+    private String toPackageName(@Nonnull final String name) {
+        return name.toLowerCase()
+            .replaceAll("_", "")
+            .strip();
+    }
+
+    /**
      * Converts a string (e.g., snake_case, kebab-case, camelCase)
      * into PascalCase (e.g., "my_data" -> "MyData").
-     * @param name The input string to convert.
      *
+     * @param name The input string to convert.
      * @return The converted string in PascalCase format.
      */
     @Nonnull

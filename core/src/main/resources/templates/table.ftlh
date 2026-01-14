@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="table" type="io.datlin.rcm.TableCodeModel" -->
+<#-- @ftlvariable name="table" type="io.datlin.rcm.TableCodeModelV1" -->
 package ${table.packageName};
 
 import io.datlin.sql.ast.ColumnReference;

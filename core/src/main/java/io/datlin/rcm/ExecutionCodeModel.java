@@ -25,7 +25,7 @@ public class ExecutionCodeModel {
     final String resultSetProcessor;
 
     @Nonnull
-    final TableCodeModel table;
+    final TableCodeModelV1 table;
 
     @Nonnull
     final RecordCodeModel record;

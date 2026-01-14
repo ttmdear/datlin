@@ -1,5 +1,6 @@
 package io.datlin.rcm;
 
+import io.datlin.sql.mtd.TableMetadata;
 import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,8 @@ import static java.util.Collections.unmodifiableList;
 
 @Getter
 @RequiredArgsConstructor
-public class RecordCodeModel {
+public class TableCodeModelV1
+{
 
     @Nonnull
     final String simpleName;
@@ -23,21 +25,19 @@ public class RecordCodeModel {
     final String packageName;
 
     @Nonnull
-    final TableCodeModelV1 table;
+    final String tableReferenceField;
 
     @Nonnull
-    final List<RecordFieldCodeModel> primaryKeys = new ArrayList<>();
+    final TableMetadata metadata;
 
     @Nonnull
-    final List<RecordFieldCodeModel> fields = new ArrayList<>();
+    final DatabaseCodeModel database;
 
     @Nonnull
-    public List<RecordFieldCodeModel> getPrimaryKeys() {
-        return unmodifiableList(primaryKeys);
-    }
+    final List<TableColumnCodeModel> columns = new ArrayList<>();
 
     @Nonnull
-    public List<RecordFieldCodeModel> getFields() {
-        return unmodifiableList(fields);
+    public List<TableColumnCodeModel> getColumns() {
+        return unmodifiableList(columns);
     }
 }
