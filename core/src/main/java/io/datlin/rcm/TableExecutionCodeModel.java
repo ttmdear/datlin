@@ -18,9 +18,8 @@ public class TableExecutionCodeModel {
     @Nonnull
     final String packageName;
 
-    // todo clean
-    // @Nonnull
-    // final String methodName;
+    @Nonnull
+    final String databaseMethodName;
 
     @Nonnull
     final TableCodeModel table;

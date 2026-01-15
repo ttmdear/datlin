@@ -21,19 +21,35 @@ public class ${database.simpleName} {
         this.sqlBuilder = new GenericSqlBuilder();
     }
 
-<#--<#list database.executions as execution>-->
-<#--    @Nonnull-->
-<#--    public ${execution.canonicalName} ${execution.methodName}() {-->
-<#--        return new ${execution.canonicalName}(-->
-<#--            new ExecutionConnection(connectionProvider::getDefaultConnection),-->
-<#--            sqlBuilder-->
-<#--        );-->
-<#--    }-->
 
-<#--</#list>-->
+    @Nonnull
+    public Tables tables() {
+        return new Tables();
+    }
+
     @Nonnull
     public TransactionExecution beginTransaction() {
         return new TransactionExecution();
+    }
+
+    public class Tables {
+
+        private Tables() {
+
+        }
+
+        <#list database.tables as table>
+        @Nonnull
+        public ${table.execution.canonicalName} ${table.execution.databaseMethodName}() {
+            return new ${table.execution.canonicalName}(
+                new ExecutionConnection(connectionProvider::getDefaultConnection),
+                sqlBuilder
+            );
+        }
+        <#sep>
+
+        </#sep>
+        </#list>
     }
 
     public class TransactionExecution {
@@ -42,15 +58,17 @@ public class ${database.simpleName} {
 
         }
 
-<#--    <#list database.executions as execution>-->
-<#--        @Nonnull-->
-<#--        public ${execution.canonicalName} ${execution.methodName}() {-->
-<#--            return new ${execution.canonicalName}(-->
-<#--                new ExecutionConnection(connectionProvider::getConnection),-->
-<#--                sqlBuilder-->
-<#--            );-->
-<#--        }-->
+        <#list database.tables as table>
+        @Nonnull
+        public ${table.execution.canonicalName} ${table.execution.databaseMethodName}() {
+            return new ${table.execution.canonicalName}(
+                new ExecutionConnection(connectionProvider::getConnection),
+                sqlBuilder
+            );
+        }
+        <#sep>
 
-<#--    </#list>-->
+        </#sep>
+        </#list>
     }
 }

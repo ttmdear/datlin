@@ -137,11 +137,12 @@ public class RepositoryCodeModelFactory {
             }
         }
 
-        table.record = createRecord(tablePackageName, table);
+        table.record = createRecord(tablePackageName, table, tableXrc);
         table.execution = createExecution(
             tablePackageName,
             table,
-            resolveTableResultSetProcessor(table.metadata, xrc)
+            resolveTableResultSetProcessor(table.metadata, xrc),
+            tableXrc
         );
 
         return table;
@@ -150,9 +151,10 @@ public class RepositoryCodeModelFactory {
     @Nonnull
     private RecordCodeModel createRecord(
         @Nonnull final String tablePackageName,
-        @Nonnull final TableCodeModel table
+        @Nonnull final TableCodeModel table,
+        @Nonnull final TableType tableXrc
     ) {
-        final String simpleName = toPascalCase(table.metadata.name()) + "Record";
+        final String simpleName = toPascalCase(tableXrc.getName()) + "Record";
         final String canonicalName = tablePackageName + "." + simpleName;
 
         final RecordCodeModel record = new RecordCodeModel(
@@ -177,15 +179,18 @@ public class RepositoryCodeModelFactory {
     private TableExecutionCodeModel createExecution(
         @Nonnull final String tablePackageName,
         @Nonnull final TableCodeModel table,
-        @Nonnull final String resultSetProcessor
+        @Nonnull final String resultSetProcessor,
+        @Nonnull final TableType tableXrc
     ) {
-        final String simpleName = toPascalCase(table.metadata.name()) + "Execution";
+        final String simpleName = toPascalCase(tableXrc.getName()) + "Execution";
         final String canonicalName = tablePackageName + "." + simpleName;
+        final String databaseMethodName = toCamelCase(tableXrc.getName());
 
         return new TableExecutionCodeModel(
             simpleName,
             canonicalName,
             tablePackageName,
+            databaseMethodName,
             table,
             resultSetProcessor
         );

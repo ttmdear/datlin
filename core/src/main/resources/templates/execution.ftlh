@@ -1,21 +1,24 @@
 <#-- @ftlvariable name="execution" type="io.datlin.rcm.TableExecutionCodeModel" -->
 package ${execution.packageName};
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.datlin.sql.ast.Assignment;
+import io.datlin.sql.ast.Delete;
+import io.datlin.sql.ast.RawValue;
+import io.datlin.sql.ast.Update;
 import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exe.DeleteExecution;
 import io.datlin.sql.exe.ExecutionConnection;
 import io.datlin.sql.exe.InsertExecution;
+import io.datlin.sql.exe.ListUpdateExecution;
 import io.datlin.sql.exe.SelectExecution;
 import io.datlin.sql.exe.UpdateExecution;
 import io.datlin.sql.rsp.ResultSetProcessor;
 import jakarta.annotation.Nonnull;
-
-import ${execution.table.canonicalName};
-import ${execution.table.record.canonicalName};
 
 import static io.datlin.sql.ast.Assignment.set;
 import static io.datlin.sql.ast.ColumnReference.column;
@@ -64,7 +67,7 @@ public class ${execution.simpleName} {
             }
         );
 
-        execution.from(${execution.table.canonicalName}.__table__);
+        execution.from(${execution.table.simpleName}.__table__);
 
         return execution;
     }
@@ -72,13 +75,13 @@ public class ${execution.simpleName} {
     @Nonnull
     public InsertExecution insert() {
         return new InsertExecution(executionConnection, sqlBuilder)
-            .into(${execution.table.canonicalName}.__table__);
+            .into(${execution.table.simpleName}.__table__);
     }
 
     @Nonnull
     public InsertExecution insert(@Nonnull final ${execution.table.record.simpleName} record) {
         final InsertExecution insert = new InsertExecution(executionConnection, sqlBuilder)
-            .into(${execution.table.canonicalName}.__table__)
+            .into(${execution.table.simpleName}.__table__)
             .columns(INSERT_FIELDS);
 
         final List<Object> values = new ArrayList<>();
@@ -93,13 +96,13 @@ public class ${execution.simpleName} {
     @Nonnull
     public UpdateExecution update() {
         return new UpdateExecution(executionConnection, sqlBuilder)
-            .table(${execution.table.canonicalName}.__table__);
+            .table(${execution.table.simpleName}.__table__);
     }
 
     @Nonnull
     public UpdateExecution update(@Nonnull final ${execution.table.record.simpleName} record) {
         final UpdateExecution update = new UpdateExecution(executionConnection, sqlBuilder)
-            .table(${execution.table.canonicalName}.__table__);
+            .table(${execution.table.simpleName}.__table__);
 
         final List<Assignment> assignments = new ArrayList<>();
         <#list execution.table.record.fields as field>
@@ -117,15 +120,65 @@ public class ${execution.simpleName} {
     }
 
     @Nonnull
+    public ListUpdateExecution<${execution.table.record.simpleName}> update(@Nonnull final List<${execution.table.record.simpleName}> records) {
+        return new ListUpdateExecution<>(
+            executionConnection,
+            sqlBuilder,
+            records,
+            new ListUpdateExecution.Preprocess<>() {
+
+                @Nonnull
+                @Override
+                public Update createUpdate() {
+                    final List<Assignment> sets = new ArrayList<>(${execution.table.record.fields?size + execution.table.record.primaryKeys?size});
+                    <#list execution.table.record.fields as field>
+                    sets.add(set(column("${field.metadata.name}"), RawValue.rawValue("?")));
+                    </#list>
+
+                    return Update.update()
+                        .table(${execution.table.simpleName}.__table__)
+                        .sets(sets)
+                        .where(
+                        <#list execution.table.record.primaryKeys as field>
+                            eq(column("${field.metadata.name}"), RawValue.rawValue("?"))
+                        </#list>
+                        );
+                }
+
+                @Nonnull
+                @Override
+                public Delete createDelete() {
+                    return Delete.delete()
+                        .from(${execution.table.simpleName}.__table__);
+                }
+
+                @Override
+                public void setStatementObjects(
+                    @Nonnull PreparedStatement preparedStatement,
+                    @Nonnull ${execution.table.record.simpleName} record
+                ) throws SQLException {
+                    <#list execution.table.record.fields as field>
+                    preparedStatement.setObject(${field?index + 1}, record.${field.name}());
+                    </#list>
+                    <#assign offset = execution.table.record.fields?size>
+                    <#list execution.table.record.primaryKeys as field>
+                    preparedStatement.setObject(${offset + field?index + 1}, record.${field.name}());
+                    </#list>
+                }
+            }
+        );
+    }
+
+    @Nonnull
     public DeleteExecution delete() {
         return new DeleteExecution(executionConnection, sqlBuilder)
-            .from(${execution.table.canonicalName}.__table__);
+            .from(${execution.table.simpleName}.__table__);
     }
 
     @Nonnull
     public DeleteExecution delete(@Nonnull final ${execution.table.record.simpleName} record) {
         return new DeleteExecution(executionConnection, sqlBuilder)
-            .from(${execution.table.canonicalName}.__table__)
+            .from(${execution.table.simpleName}.__table__)
             .where(
             <#list execution.table.record.primaryKeys as field>
                 eq("${field.metadata.name}", record.${field.name}())
