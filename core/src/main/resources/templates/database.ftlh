@@ -21,16 +21,16 @@ public class ${database.simpleName} {
         this.sqlBuilder = new GenericSqlBuilder();
     }
 
-<#list database.executions as execution>
-    @Nonnull
-    public ${execution.canonicalName} ${execution.methodName}() {
-        return new ${execution.canonicalName}(
-            new ExecutionConnection(connectionProvider::getDefaultConnection),
-            sqlBuilder
-        );
-    }
+<#--<#list database.executions as execution>-->
+<#--    @Nonnull-->
+<#--    public ${execution.canonicalName} ${execution.methodName}() {-->
+<#--        return new ${execution.canonicalName}(-->
+<#--            new ExecutionConnection(connectionProvider::getDefaultConnection),-->
+<#--            sqlBuilder-->
+<#--        );-->
+<#--    }-->
 
-</#list>
+<#--</#list>-->
     @Nonnull
     public TransactionExecution beginTransaction() {
         return new TransactionExecution();
@@ -42,15 +42,15 @@ public class ${database.simpleName} {
 
         }
 
-    <#list database.executions as execution>
-        @Nonnull
-        public ${execution.canonicalName} ${execution.methodName}() {
-            return new ${execution.canonicalName}(
-                new ExecutionConnection(connectionProvider::getConnection),
-                sqlBuilder
-            );
-        }
+<#--    <#list database.executions as execution>-->
+<#--        @Nonnull-->
+<#--        public ${execution.canonicalName} ${execution.methodName}() {-->
+<#--            return new ${execution.canonicalName}(-->
+<#--                new ExecutionConnection(connectionProvider::getConnection),-->
+<#--                sqlBuilder-->
+<#--            );-->
+<#--        }-->
 
-    </#list>
+<#--    </#list>-->
     }
 }

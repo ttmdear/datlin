@@ -35,7 +35,7 @@ public class RepositoryCodeModelV1
     final List<RecordCodeModel> records = new ArrayList<>();
 
     @Nonnull
-    final List<ExecutionCodeModel> executions = new ArrayList<>();
+    final List<TableExecutionCodeModel> executions = new ArrayList<>();
 
     @Nonnull
     public DatabaseCodeModel getDatabase() {

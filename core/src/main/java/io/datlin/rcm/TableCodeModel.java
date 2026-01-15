@@ -41,7 +41,7 @@ public class TableCodeModel {
     RecordCodeModel record = null;
 
     @Nullable
-    ExecutionCodeModel execution = null;
+    TableExecutionCodeModel execution = null;
 
     @Nonnull
     public List<TableColumnCodeModel> getColumns() {
@@ -58,7 +58,7 @@ public class TableCodeModel {
     }
 
     @Nonnull
-    public ExecutionCodeModel getExecution() {
+    public TableExecutionCodeModel getExecution() {
         if (execution == null) {
             throw new IllegalStateException("execution is not set for table.");
         }

@@ -57,50 +57,17 @@ public class RepositoryCodeModelFactory {
                 .findFirst()
                 .orElseThrow(() -> new DatlinGenerateException("Cannot find database table '%s'".formatted(databaseName)));
 
-            final TableCodeModel table = createTable(tableXrc, tablesPackageName, database, tableMetadata);
+            final TableCodeModel table = createTable(
+                tableXrc,
+                tablesPackageName,
+                database,
+                tableMetadata
+            );
 
-            System.out.printf("test");
+            database.tables.add(table);
         }
 
-        for (final TableMetadata tableMetadata : databaseMetadata.tables()) {
-            // if (isTableExcluded(tableMetadata, xrc)) {
-            //     continue;
-            // }
-
-            // final TableCodeModel table = createTable(
-            //     tablesPackageName,
-            //     database,
-            //     tableMetadata
-            // );
-
-            // repository.tables.add(table);
-
-            // // create record code model --------------------------------------------------------------------------------
-            // final RecordCodeModel record = createRecord(
-            //     recordsPackageName,
-            //     tableMetadata,
-            //     table
-            // );
-
-            // repository.records.add(record);
-
-            // final String resultSetProcessor = resolveTableResultSetProcessor(tableMetadata, xrc);
-
-            // // create execution code model -----------------------------------------------------------------------------
-            // final ExecutionCodeModel execution = createExecution(
-            //     executionsPackageName,
-            //     table,
-            //     tableMetadata,
-            //     resultSetProcessor,
-            //     record
-            // );
-
-            // repository.executions.add(execution);
-            // repository.database.executions.add(execution);
-        }
-
-        return null;
-        // return repository;
+        return repository;
     }
 
     @Nonnull
@@ -141,11 +108,8 @@ public class RepositoryCodeModelFactory {
         @Nonnull final TableMetadata metadata
     ) {
         final String tablePackageName = tablesPackageName + "." + toPackageName(tableXrc.getName());
-        final String simpleName = toPascalCase(metadata.name()) + "Table";
+        final String simpleName = toPascalCase(tableXrc.getName()) + "Table";
         final String canonicalName = tablesPackageName + "." + simpleName;
-        // final String tableReferenceField = metadata.name();
-
-        System.out.printf("test");
 
         final TableCodeModel table = new TableCodeModel(simpleName, canonicalName, tablePackageName, metadata, database);
 
@@ -179,7 +143,12 @@ public class RepositoryCodeModelFactory {
         }
 
         table.record = createRecord(tablePackageName, table);
-        createExecution()
+        table.execution = createExecution(
+            tablesPackageName,
+            table,
+            resolveTableResultSetProcessor(table.metadata, xrc),
+            table.record
+        );
 
         return table;
     }
@@ -211,24 +180,23 @@ public class RepositoryCodeModelFactory {
     }
 
     @Nonnull
-    private ExecutionCodeModel createExecution(
+    private TableExecutionCodeModel createExecution(
         @Nonnull final String tablePackageName,
         @Nonnull final TableCodeModel table,
         @Nonnull final String resultSetProcessor,
         @Nonnull final RecordCodeModel record
     ) {
         final String simpleName = toPascalCase(table.metadata.name()) + "Execution";
-        final String methodName = toCamelCase(table.metadata.name());
+        // todo clean
+        // final String methodName = toCamelCase(table.metadata.name());
         final String canonicalName = tablePackageName + "." + simpleName;
 
-        return new ExecutionCodeModel(
+        return new TableExecutionCodeModel(
             simpleName,
             canonicalName,
             tablePackageName,
-            methodName,
-            resultSetProcessor,
             table,
-            record
+            resultSetProcessor
         );
     }
 

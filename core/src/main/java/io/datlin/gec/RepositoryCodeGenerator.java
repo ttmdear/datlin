@@ -1,12 +1,10 @@
 package io.datlin.gec;
 
 import io.datlin.frm.TemplateProcessor;
-import io.datlin.rcm.ExecutionCodeModel;
-import io.datlin.rcm.RecordCodeModel;
 import io.datlin.rcm.RepositoryCodeModel;
-import io.datlin.rcm.RepositoryCodeModelV1;
 import io.datlin.rcm.RepositoryCodeModelFactory;
-import io.datlin.rcm.TableCodeModelV1;
+import io.datlin.rcm.RepositoryCodeModelV1;
+import io.datlin.rcm.TableCodeModel;
 import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.sql.mtd.DatabaseMetadataFactory;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
@@ -44,30 +42,29 @@ public class RepositoryCodeGenerator {
         final RepositoryCodeModel repository = new RepositoryCodeModelFactory(xmlRepositoryConfiguration,
             databaseMetadata).create();
 
-        throw new RuntimeException("Not implemented yet");
-        // final String output = getOutput();
+        final String output = getOutput();
 
-        // // generate database code --------------------------------------------------------------------------------------
-        // final String databaseOutput = getDatabaseOutput(repository);
-        // templateProcessor.process(
-        //     Map.of(
-        //         "database", repository.getDatabase()
-        //     ),
-        //     "database.ftlh",
-        //     databaseOutput + "/" + repository.getDatabase().getSimpleName() + ".java"
-        // );
+        // generate database code --------------------------------------------------------------------------------------
+        final String databaseOutput = getDatabaseOutput(repository);
+        templateProcessor.process(
+            Map.of(
+                "database", repository.getDatabase()
+            ),
+            "database.ftlh",
+            databaseOutput + "/" + repository.getDatabase().getSimpleName() + ".java"
+        );
 
-        // // generate tables code ----------------------------------------------------------------------------------------
-        // final String tablesOutput = getTablesOutput(repository);
-        // for (final TableCodeModelV1 table : repository.getTables()) {
-        //     templateProcessor.process(
-        //         Map.of(
-        //             "table", table
-        //         ),
-        //         "table.ftlh",
-        //         tablesOutput + "/" + table.getSimpleName() + ".java"
-        //     );
-        // }
+        // generate tables code ----------------------------------------------------------------------------------------
+        final String tablesOutput = getTablesOutput(repository);
+        for (final TableCodeModel table : repository.getTables()) {
+            templateProcessor.process(
+                Map.of(
+                    "table", table
+                ),
+                "table.ftlh",
+                tablesOutput + "/" + table.getSimpleName() + ".java"
+            );
+        }
 
         // // generate records code ---------------------------------------------------------------------------------------
         // final String recordsOutput = getRecordsOutput(repository);
@@ -119,7 +116,7 @@ public class RepositoryCodeGenerator {
 
     @Nonnull
     private String getDatabaseOutput(
-        @Nonnull final RepositoryCodeModelV1 repository
+        @Nonnull final RepositoryCodeModel repository
     ) {
         final String databasePath = repository.getPackageName()
             .replace(".", "/");
@@ -135,7 +132,7 @@ public class RepositoryCodeGenerator {
 
     @Nonnull
     private String getTablesOutput(
-        @Nonnull final RepositoryCodeModelV1 repositoryCodeModel
+        @Nonnull final RepositoryCodeModel repositoryCodeModel
     ) {
         final String tablesPackagePath = repositoryCodeModel.getTablesPackageName()
             .replace(".", "/");

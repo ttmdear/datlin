@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @SuppressWarnings("ClassCanBeRecord")
 @RequiredArgsConstructor
 @Getter
-public class ExecutionCodeModel {
+public class TableExecutionCodeModel {
 
     @Nonnull
     final String simpleName;
@@ -18,15 +18,13 @@ public class ExecutionCodeModel {
     @Nonnull
     final String packageName;
 
-    @Nonnull
-    final String methodName;
-
-    @Nonnull
-    final String resultSetProcessor;
+    // todo clean
+    // @Nonnull
+    // final String methodName;
 
     @Nonnull
     final TableCodeModel table;
 
     @Nonnull
-    final RecordCodeModel record;
+    final String resultSetProcessor;
 }

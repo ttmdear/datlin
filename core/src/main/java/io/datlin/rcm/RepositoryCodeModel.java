@@ -1,18 +1,16 @@
 package io.datlin.rcm;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @RequiredArgsConstructor
-public class RepositoryCodeModel
-{
+public class RepositoryCodeModel {
 
     @Nonnull
     final String packageName;
@@ -24,7 +22,7 @@ public class RepositoryCodeModel
     DatabaseCodeModel database;
 
     @Nonnull
-    final List<TableCodeModelV1> tables = new ArrayList<>();
+    final List<TableCodeModel> tables = new ArrayList<>();
 
     @Nonnull
     public DatabaseCodeModel getDatabase() {

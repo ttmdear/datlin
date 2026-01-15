@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="execution" type="io.datlin.rcm.ExecutionCodeModel" -->
+<#-- @ftlvariable name="execution" type="io.datlin.rcm.TableExecutionCodeModel" -->
 <#assign tableReference = execution.table.simpleName + "." + execution.table.tableReferenceField>
 package ${execution.packageName};
 
