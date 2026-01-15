@@ -5,9 +5,6 @@ import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @RequiredArgsConstructor
 public class RepositoryCodeModel {
@@ -20,9 +17,6 @@ public class RepositoryCodeModel {
 
     @Nullable
     DatabaseCodeModel database;
-
-    @Nonnull
-    final List<TableCodeModel> tables = new ArrayList<>();
 
     @Nonnull
     public DatabaseCodeModel getDatabase() {

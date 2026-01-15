@@ -1,5 +1,4 @@
 <#-- @ftlvariable name="execution" type="io.datlin.rcm.TableExecutionCodeModel" -->
-<#assign tableReference = execution.table.simpleName + "." + execution.table.tableReferenceField>
 package ${execution.packageName};
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import io.datlin.sql.rsp.ResultSetProcessor;
 import jakarta.annotation.Nonnull;
 
 import ${execution.table.canonicalName};
-import ${execution.record.canonicalName};
+import ${execution.table.record.canonicalName};
 
 import static io.datlin.sql.ast.Assignment.set;
 import static io.datlin.sql.ast.ColumnReference.column;
@@ -38,7 +37,7 @@ public class ${execution.simpleName} {
 
     static {
         INSERT_FIELDS = new ArrayList<>();
-        <#list execution.record.fields as field>
+        <#list execution.table.record.fields as field>
         INSERT_FIELDS.add("${field.metadata.name}");
         </#list>
     }
@@ -52,20 +51,20 @@ public class ${execution.simpleName} {
     }
 
     @Nonnull
-    public SelectExecution<${execution.record.simpleName}> select() {
-        final SelectExecution<${execution.record.simpleName}> execution = new SelectExecution<>(
+    public SelectExecution<${execution.table.record.simpleName}> select() {
+        final SelectExecution<${execution.table.record.simpleName}> execution = new SelectExecution<>(
             executionConnection,
             sqlBuilder,
             resultSet -> {
-                return new ${execution.record.simpleName}(
-                <#list execution.record.fields as field>
-                    resultSetProcessor.getValue(resultSet, "${execution.table.metadata.name}", "${field.metadata.name}", ${execution.record.simpleName}.class, "${field.name}", ${field.type}.class)<#if field?has_next>,</#if>
+                return new ${execution.table.record.simpleName}(
+                <#list execution.table.record.fields as field>
+                    resultSetProcessor.getValue(resultSet, "${execution.table.metadata.name}", "${field.metadata.name}", ${execution.table.record.simpleName}.class, "${field.name}", ${field.type}.class)<#if field?has_next>,</#if>
                 </#list>
                 );
             }
         );
 
-        execution.from(${tableReference});
+        execution.from(${execution.table.canonicalName}.__table__);
 
         return execution;
     }
@@ -73,17 +72,17 @@ public class ${execution.simpleName} {
     @Nonnull
     public InsertExecution insert() {
         return new InsertExecution(executionConnection, sqlBuilder)
-            .into(${tableReference});
+            .into(${execution.table.canonicalName}.__table__);
     }
 
     @Nonnull
-    public InsertExecution insert(@Nonnull final ${execution.record.simpleName} record) {
+    public InsertExecution insert(@Nonnull final ${execution.table.record.simpleName} record) {
         final InsertExecution insert = new InsertExecution(executionConnection, sqlBuilder)
-            .into(${tableReference})
+            .into(${execution.table.canonicalName}.__table__)
             .columns(INSERT_FIELDS);
 
         final List<Object> values = new ArrayList<>();
-        <#list execution.record.fields as field>
+        <#list execution.table.record.fields as field>
         values.add(record.${field.name}());
         </#list>
         insert.values(List.of(values));
@@ -94,22 +93,22 @@ public class ${execution.simpleName} {
     @Nonnull
     public UpdateExecution update() {
         return new UpdateExecution(executionConnection, sqlBuilder)
-            .table(${tableReference});
+            .table(${execution.table.canonicalName}.__table__);
     }
 
     @Nonnull
-    public UpdateExecution update(@Nonnull final ${execution.record.simpleName} record) {
+    public UpdateExecution update(@Nonnull final ${execution.table.record.simpleName} record) {
         final UpdateExecution update = new UpdateExecution(executionConnection, sqlBuilder)
-            .table(${tableReference});
+            .table(${execution.table.canonicalName}.__table__);
 
         final List<Assignment> assignments = new ArrayList<>();
-        <#list execution.record.fields as field>
+        <#list execution.table.record.fields as field>
         assignments.add(set(column("${field.metadata.name}"), record.${field.name}()));
         </#list>
         update.sets(assignments);
 
         update.where(
-            <#list execution.record.primaryKeys as field>
+            <#list execution.table.record.primaryKeys as field>
             eq(column("${field.metadata.name}"), record.${field.name}())
             </#list>
         );
@@ -120,15 +119,15 @@ public class ${execution.simpleName} {
     @Nonnull
     public DeleteExecution delete() {
         return new DeleteExecution(executionConnection, sqlBuilder)
-            .from(${tableReference});
+            .from(${execution.table.canonicalName}.__table__);
     }
 
     @Nonnull
-    public DeleteExecution delete(@Nonnull final ${execution.record.simpleName} record) {
+    public DeleteExecution delete(@Nonnull final ${execution.table.record.simpleName} record) {
         return new DeleteExecution(executionConnection, sqlBuilder)
-            .from(${tableReference})
+            .from(${execution.table.canonicalName}.__table__)
             .where(
-            <#list execution.record.primaryKeys as field>
+            <#list execution.table.record.primaryKeys as field>
                 eq("${field.metadata.name}", record.${field.name}())
             </#list>
             );

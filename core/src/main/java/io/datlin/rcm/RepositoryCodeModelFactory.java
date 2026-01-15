@@ -57,12 +57,7 @@ public class RepositoryCodeModelFactory {
                 .findFirst()
                 .orElseThrow(() -> new DatlinGenerateException("Cannot find database table '%s'".formatted(databaseName)));
 
-            final TableCodeModel table = createTable(
-                tableXrc,
-                tablesPackageName,
-                database,
-                tableMetadata
-            );
+            final TableCodeModel table = createTable(tableXrc, tablesPackageName, database, tableMetadata);
 
             database.tables.add(table);
         }
@@ -109,7 +104,7 @@ public class RepositoryCodeModelFactory {
     ) {
         final String tablePackageName = tablesPackageName + "." + toPackageName(tableXrc.getName());
         final String simpleName = toPascalCase(tableXrc.getName()) + "Table";
-        final String canonicalName = tablesPackageName + "." + simpleName;
+        final String canonicalName = tablePackageName + "." + simpleName;
 
         final TableCodeModel table = new TableCodeModel(simpleName, canonicalName, tablePackageName, metadata, database);
 
@@ -144,10 +139,9 @@ public class RepositoryCodeModelFactory {
 
         table.record = createRecord(tablePackageName, table);
         table.execution = createExecution(
-            tablesPackageName,
+            tablePackageName,
             table,
-            resolveTableResultSetProcessor(table.metadata, xrc),
-            table.record
+            resolveTableResultSetProcessor(table.metadata, xrc)
         );
 
         return table;
@@ -183,12 +177,9 @@ public class RepositoryCodeModelFactory {
     private TableExecutionCodeModel createExecution(
         @Nonnull final String tablePackageName,
         @Nonnull final TableCodeModel table,
-        @Nonnull final String resultSetProcessor,
-        @Nonnull final RecordCodeModel record
+        @Nonnull final String resultSetProcessor
     ) {
         final String simpleName = toPascalCase(table.metadata.name()) + "Execution";
-        // todo clean
-        // final String methodName = toCamelCase(table.metadata.name());
         final String canonicalName = tablePackageName + "." + simpleName;
 
         return new TableExecutionCodeModel(

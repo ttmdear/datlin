@@ -1,10 +1,12 @@
 package io.datlin.gec;
 
 import io.datlin.frm.TemplateProcessor;
+import io.datlin.rcm.RecordCodeModel;
 import io.datlin.rcm.RepositoryCodeModel;
 import io.datlin.rcm.RepositoryCodeModelFactory;
 import io.datlin.rcm.RepositoryCodeModelV1;
 import io.datlin.rcm.TableCodeModel;
+import io.datlin.rcm.TableExecutionCodeModel;
 import io.datlin.sql.mtd.DatabaseMetadata;
 import io.datlin.sql.mtd.DatabaseMetadataFactory;
 import io.datlin.xrc.generated.XmlRepositoryConfiguration;
@@ -22,24 +24,24 @@ public class RepositoryCodeGenerator {
     private final String xmlRepositoryConfigurationPath;
 
     @Nonnull
-    private final XmlRepositoryConfiguration xmlRepositoryConfiguration;
+    private final XmlRepositoryConfiguration xrc;
 
     @Nonnull
     private final TemplateProcessor templateProcessor;
 
     public RepositoryCodeGenerator(
         @Nonnull final String xmlRepositoryConfigurationPath,
-        @Nonnull final XmlRepositoryConfiguration xmlRepositoryConfiguration,
+        @Nonnull final XmlRepositoryConfiguration xrc,
         @Nonnull final TemplateProcessor templateProcessor
     ) {
         this.xmlRepositoryConfigurationPath = xmlRepositoryConfigurationPath;
-        this.xmlRepositoryConfiguration = xmlRepositoryConfiguration;
+        this.xrc = xrc;
         this.templateProcessor = templateProcessor;
     }
 
     public void generate() {
         final DatabaseMetadata databaseMetadata = createDatabaseMetadata();
-        final RepositoryCodeModel repository = new RepositoryCodeModelFactory(xmlRepositoryConfiguration,
+        final RepositoryCodeModel repository = new RepositoryCodeModelFactory(xrc,
             databaseMetadata).create();
 
         final String output = getOutput();
@@ -55,48 +57,42 @@ public class RepositoryCodeGenerator {
         );
 
         // generate tables code ----------------------------------------------------------------------------------------
-        final String tablesOutput = getTablesOutput(repository);
-        for (final TableCodeModel table : repository.getTables()) {
+        for (final TableCodeModel table : repository.getDatabase().getTables()) {
             templateProcessor.process(
                 Map.of(
                     "table", table
                 ),
                 "table.ftlh",
-                tablesOutput + "/" + table.getSimpleName() + ".java"
+                getJavaOutput(table.getCanonicalName())
+            );
+
+            final RecordCodeModel record = table.getRecord();
+
+            templateProcessor.process(
+                Map.of(
+                    "record", record
+                ),
+                "record.ftlh",
+                getJavaOutput(record.getCanonicalName())
+            );
+
+            final TableExecutionCodeModel execution = table.getExecution();
+
+            templateProcessor.process(
+                Map.of(
+                    "execution", execution
+                ),
+                "execution.ftlh",
+                getJavaOutput(execution.getCanonicalName())
             );
         }
-
-        // // generate records code ---------------------------------------------------------------------------------------
-        // final String recordsOutput = getRecordsOutput(repository);
-        // for (final RecordCodeModel record : repository.getRecords()) {
-        //     templateProcessor.process(
-        //         Map.of(
-        //             "record", record
-        //         ),
-        //         "record.ftlh",
-        //         recordsOutput + "/" + record.getSimpleName() + ".java"
-        //     );
-        // }
-
-        // // generate executions code ------------------------------------------------------------------------------------
-        // final String executionsOutput = getExecutionsOutput(repository);
-
-        // for (final ExecutionCodeModel execution : repository.getExecutions()) {
-        //     templateProcessor.process(
-        //         Map.of(
-        //             "execution", execution
-        //         ),
-        //         "execution.ftlh",
-        //         executionsOutput + "/" + execution.getSimpleName() + ".java"
-        //     );
-        // }
     }
 
     private @Nonnull DatabaseMetadata createDatabaseMetadata() {
         try (final Connection connection = DriverManager.getConnection(
-            xmlRepositoryConfiguration.getConnection().getUrl(),
-            xmlRepositoryConfiguration.getConnection().getUsername(),
-            xmlRepositoryConfiguration.getConnection().getPassword()
+            xrc.getConnection().getUrl(),
+            xrc.getConnection().getUsername(),
+            xrc.getConnection().getPassword()
         )) {
             return new DatabaseMetadataFactory().create(connection);
         } catch (SQLException e) {
@@ -105,11 +101,11 @@ public class RepositoryCodeGenerator {
     }
 
     private @Nonnull String getOutput() {
-        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
-            return xmlRepositoryConfiguration.getOutput();
+        if (Path.of(xrc.getOutput()).isAbsolute()) {
+            return xrc.getOutput();
         } else {
             return Path.of(xmlRepositoryConfigurationPath).getParent()
-                .resolve(xmlRepositoryConfiguration.getOutput())
+                .resolve(xrc.getOutput())
                 .toAbsolutePath().toString();
         }
     }
@@ -121,28 +117,31 @@ public class RepositoryCodeGenerator {
         final String databasePath = repository.getPackageName()
             .replace(".", "/");
 
-        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
-            return xmlRepositoryConfiguration.getOutput() + "/" + databasePath;
+        if (Path.of(xrc.getOutput()).isAbsolute()) {
+            return xrc.getOutput() + "/" + databasePath;
         } else {
             return Path.of(xmlRepositoryConfigurationPath).getParent()
-                .resolve(xmlRepositoryConfiguration.getOutput())
+                .resolve(xrc.getOutput())
                 .toAbsolutePath() + "/" + databasePath;
         }
     }
 
     @Nonnull
-    private String getTablesOutput(
-        @Nonnull final RepositoryCodeModel repositoryCodeModel
-    ) {
-        final String tablesPackagePath = repositoryCodeModel.getTablesPackageName()
-            .replace(".", "/");
+    private String getJavaOutput(
+        @Nonnull final String canonicalName
 
-        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
-            return xmlRepositoryConfiguration.getOutput() + "/" + tablesPackagePath;
+    ) {
+        final Path outputXrc = Path.of(xrc.getOutput());
+        final Path path = Path.of(canonicalName.replaceAll("\\.", "/"));
+
+        if (outputXrc.isAbsolute()) {
+            return outputXrc.resolve(path)
+                .toString();
         } else {
             return Path.of(xmlRepositoryConfigurationPath).getParent()
-                .resolve(xmlRepositoryConfiguration.getOutput())
-                .toAbsolutePath() + "/" + tablesPackagePath;
+                .resolve(xrc.getOutput())
+                .resolve(path)
+                .toAbsolutePath() + ".java";
         }
     }
 
@@ -153,11 +152,11 @@ public class RepositoryCodeGenerator {
         final String recordsPackagePath = repositoryCodeModel.getRecordsPackageName()
             .replace(".", "/");
 
-        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
-            return xmlRepositoryConfiguration.getOutput() + "/" + recordsPackagePath;
+        if (Path.of(xrc.getOutput()).isAbsolute()) {
+            return xrc.getOutput() + "/" + recordsPackagePath;
         } else {
             return Path.of(xmlRepositoryConfigurationPath).getParent()
-                .resolve(xmlRepositoryConfiguration.getOutput())
+                .resolve(xrc.getOutput())
                 .toAbsolutePath() + "/" + recordsPackagePath;
         }
     }
@@ -169,11 +168,11 @@ public class RepositoryCodeGenerator {
         final String executionsPackagePath = repositoryCodeModel.getExecutionsPackageName()
             .replace(".", "/");
 
-        if (Path.of(xmlRepositoryConfiguration.getOutput()).isAbsolute()) {
-            return xmlRepositoryConfiguration.getOutput() + "/" + executionsPackagePath;
+        if (Path.of(xrc.getOutput()).isAbsolute()) {
+            return xrc.getOutput() + "/" + executionsPackagePath;
         } else {
             return Path.of(xmlRepositoryConfigurationPath).getParent()
-                .resolve(xmlRepositoryConfiguration.getOutput())
+                .resolve(xrc.getOutput())
                 .toAbsolutePath() + "/" + executionsPackagePath;
         }
     }
