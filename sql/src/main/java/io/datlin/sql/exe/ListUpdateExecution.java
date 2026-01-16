@@ -3,11 +3,14 @@ package io.datlin.sql.exe;
 import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Delete;
 import io.datlin.sql.ast.LogicalOperator;
+import io.datlin.sql.ast.SqlFragment;
+import io.datlin.sql.ast.UnaryExpression;
 import io.datlin.sql.ast.Update;
 import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exc.DatlinSqlExecuteException;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,13 +36,44 @@ public class ListUpdateExecution<T> {
     @Nonnull
     private final Preprocess<T> preprocess;
 
+    @Nullable
+    private Criteria deleteOrphanWhere = null;
+
     @Nonnull
-    private final Criteria where = new Criteria(LogicalOperator.AND, List.of(), null);
+    public ListUpdateExecution<T> deleteOrphan(@Nonnull final SqlFragment where) {
+        this.deleteOrphanWhere = new Criteria(
+            LogicalOperator.AND,
+            List.of(where),
+            null
+        );
+
+        return this;
+    }
+
+    @Nonnull
+    public ListUpdateExecution<T> deleteOrphan(@Nonnull final SqlFragment... where) {
+        this.deleteOrphanWhere = new Criteria(
+            LogicalOperator.AND,
+            List.of(where),
+            null
+        );
+
+        return this;
+    }
+
+    @Nonnull
+    public ListUpdateExecution<T> deleteOrphan(@Nonnull final List<SqlFragment> where) {
+        this.deleteOrphanWhere = new Criteria(
+            LogicalOperator.AND,
+            List.copyOf(where),
+            null
+        );
+
+        return this;
+    }
 
     public void execute() {
-        // delete.where(
-        //     not(where())
-        // ).execute();
+        executeDeleteOrphan();
 
         final Update update = preprocess.createUpdate();
         final BuildContext context = new BuildContext();
@@ -63,6 +97,24 @@ public class ListUpdateExecution<T> {
         }
     }
 
+    private void executeDeleteOrphan() {
+        if (deleteOrphanWhere == null) {
+            return;
+        }
+
+        final Delete delete = preprocess.createDelete()
+            .where(Criteria.and(
+                deleteOrphanWhere,
+                UnaryExpression.not(preprocess.createIdentityCriteria(records))
+            ));
+
+        final BuildContext context = new BuildContext();
+        final StringBuilder sql = new StringBuilder();
+        sqlBuilder.build(delete, sql, context);
+
+        System.out.printf("test");
+    }
+
     public interface Preprocess<T> {
 
         @Nonnull
@@ -70,6 +122,11 @@ public class ListUpdateExecution<T> {
 
         @Nonnull
         Delete createDelete();
+
+        @Nonnull
+        default Criteria createIdentityCriteria(@Nonnull final List<T> records) {
+            throw new RuntimeException("Not implemented");
+        }
 
         void setStatementObjects(
             @Nonnull final PreparedStatement statement,
