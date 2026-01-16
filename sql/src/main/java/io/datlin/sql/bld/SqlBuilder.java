@@ -2,6 +2,7 @@ package io.datlin.sql.bld;
 
 import io.datlin.sql.ast.Delete;
 import io.datlin.sql.ast.Insert;
+import io.datlin.sql.ast.PostgresUpsert;
 import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.Update;
 import jakarta.annotation.Nonnull;
@@ -25,6 +26,19 @@ public interface SqlBuilder {
      */
     void build(
         @Nonnull final Insert insert,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    );
+
+    /**
+     * Translates an {@link PostgresUpsert} model into a SQL string.
+     *
+     * @param insert  the structured representation of the INSERT statement in upsert mode.
+     * @param sql     the string builder where the generated SQL will be appended.
+     * @param context the current build context, providing metadata or state (e.g., parameter mapping).
+     */
+    void build(
+        @Nonnull final PostgresUpsert insert,
         @Nonnull final StringBuilder sql,
         @Nonnull final BuildContext context
     );

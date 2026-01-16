@@ -10,6 +10,7 @@ import io.datlin.sql.ast.Delete;
 import io.datlin.sql.ast.FunctionCall;
 import io.datlin.sql.ast.InExpression;
 import io.datlin.sql.ast.Insert;
+import io.datlin.sql.ast.PostgresUpsert;
 import io.datlin.sql.ast.RawValue;
 import io.datlin.sql.ast.Select;
 import io.datlin.sql.ast.SqlFragment;
@@ -85,6 +86,8 @@ public class GenericSqlBuilder implements SqlBuilder {
             build(rawValue, sql, context);
         } else if (fragment instanceof FunctionCall functionCall) {
             build(functionCall, sql, context);
+        } else if (fragment instanceof PostgresUpsert postgresUpsert) {
+            build(postgresUpsert, sql, context);
         } else {
             throw new DatlinSqlPrepareException("Unknown type of sql fragment '%s'".formatted(fragment.getClass().getSimpleName()));
         }
@@ -224,6 +227,146 @@ public class GenericSqlBuilder implements SqlBuilder {
             if (i < insert.values().size() - 1) {
                 sql.append(", ");
             }
+        }
+    }
+
+    @Override
+    public void build(
+        @Nonnull final PostgresUpsert insert,
+        @Nonnull final StringBuilder sql,
+        @Nonnull final BuildContext context
+    ) {
+        sql.append("INSERT INTO ");
+
+        final TableReference into = insert.into();
+
+        if (into == null) {
+            throw new DatlinSqlPrepareException("INTO INSERT is not set", sql.toString());
+        }
+
+        appendInIqc(sql, into.name());
+
+        if (insert.columns().isEmpty()) {
+            throw new DatlinSqlPrepareException(
+                "No columns set for INSERT INTO '%s'".formatted(into.name()),
+                sql.toString()
+            );
+        }
+
+        sql.append(" (");
+        for (int i = 0; i < insert.columns().size(); i++) {
+            appendInIqc(
+                sql,
+                insert.columns().get(i).column()
+            );
+
+            if (i < insert.columns().size() - 1) {
+                sql.append(", ");
+            }
+        }
+        sql.append(")");
+
+        if (insert.values().isEmpty()) {
+            throw new DatlinSqlPrepareException(
+                "No values set for INSERT INTO '%s'".formatted(into.name()),
+                sql.toString()
+            );
+        }
+
+        sql.append(" VALUES");
+
+        for (int i = 0; i < insert.values().size(); i++) {
+            final List<Object> values = insert.values().get(i);
+
+            if (values.size() != insert.columns().size()) {
+                throw new DatlinSqlPrepareException(
+                    "Incorrect number of columns and values for INSERT INTO '%s'".formatted(into.name()),
+                    sql.toString()
+                );
+            }
+
+            sql.append(" (");
+
+            for (int i1 = 0; i1 < values.size(); i1++) {
+                final Object value = values.get(i1);
+
+                if (value instanceof SqlFragment sqlFragment) {
+                    build((sqlFragment), sql, context);
+                } else {
+                    context.addStatementObjects(value);
+                    sql.append("?");
+                }
+
+                if (i1 < values.size() - 1) {
+                    sql.append(", ");
+                }
+            }
+
+            sql.append(")");
+
+            if (i < insert.values().size() - 1) {
+                sql.append(", ");
+            }
+        }
+
+        final List<ColumnReference> onConflictColumns = insert.onConflictColumns();
+        final String onConflictConstraint = insert.onConflictConstraint();
+        final List<Assignment> doUpdate = insert.doUpdate();
+        final Criteria onConflictWhere = insert.onConflictWhere();
+        final Boolean doNothing = insert.doNothing();
+        final Boolean onAnyConflict = onConflictColumns != null || onConflictConstraint != null;
+
+        if (onConflictColumns != null) {
+            sql.append(" ON CONFLICT (");
+
+            for (int i = 0; i < onConflictColumns.size(); i++) {
+                appendInIqc(sql, onConflictColumns.get(i).column());
+
+                if (i < onConflictColumns.size() - 1) {
+                    sql.append(", ");
+                }
+            }
+
+            sql.append(")");
+        } else if (onConflictConstraint != null) {
+            sql.append(" ON CONFLICT ON CONSTRAINT").append(onConflictConstraint);
+        }
+
+        if (onAnyConflict && doUpdate != null) {
+            sql.append(" UPDATE SET ");
+
+            for (int i = 0; i < doUpdate.size(); i++) {
+                final Assignment set = doUpdate.get(i);
+
+                sql.append("\"").append(set.column().column()).append("\"").append(" = ");
+
+                if (set.value() == null) {
+                    sql.append("NULL");
+                } else if (set.value() instanceof SqlFragment sqlFragment) {
+                    sql.append("(");
+                    build((sqlFragment), sql, context);
+                    sql.append(")");
+                } else {
+                    context.addStatementObjects(set.value());
+                    sql.append("?");
+                }
+
+                if (i < doUpdate.size() - 1) {
+                    sql.append(", ");
+                }
+            }
+        }
+
+        // WHERE -------------------------------------------------------------------------------------------------------
+        if (onAnyConflict && onConflictWhere != null) {
+            final StringBuilder whereSql = new StringBuilder();
+            build(onConflictWhere, whereSql, context);
+
+            if (!whereSql.isEmpty()) {
+                sql.append(" WHERE ").append(whereSql);
+            }
+        } else if (onAnyConflict && doNothing != null && doNothing) {
+            sql.append(" DO NOTHING");
         }
     }
 

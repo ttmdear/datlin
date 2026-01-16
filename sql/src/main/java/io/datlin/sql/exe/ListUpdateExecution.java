@@ -2,6 +2,7 @@ package io.datlin.sql.exe;
 
 import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Delete;
+import io.datlin.sql.ast.Insert;
 import io.datlin.sql.ast.LogicalOperator;
 import io.datlin.sql.ast.SqlFragment;
 import io.datlin.sql.ast.UnaryExpression;
@@ -80,6 +81,9 @@ public class ListUpdateExecution<T> {
         final StringBuilder sql = new StringBuilder();
         sqlBuilder.build(update, sql, context);
 
+        // Insert.insert().onConflick(...).doUpdate()
+        /// Insert.insert().onDuplicatedUpdate(...).doUpdate()
+
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
             for (final T record : records) {
                 preprocess.setStatementObjects(statement, record);
@@ -87,7 +91,6 @@ public class ListUpdateExecution<T> {
             }
 
             statement.execute();
-
         } catch (SQLException e) {
             throw logAndReturn(
                 new DatlinSqlExecuteException("Error during executing UPDATE", sql.toString(), e),
@@ -102,17 +105,22 @@ public class ListUpdateExecution<T> {
             return;
         }
 
-        final Delete delete = preprocess.createDelete()
-            .where(Criteria.and(
-                deleteOrphanWhere,
-                UnaryExpression.not(preprocess.createIdentityCriteria(records))
-            ));
-
+        final Delete delete = preprocess.createOrphanDelete(deleteOrphanWhere, records);
         final BuildContext context = new BuildContext();
         final StringBuilder sql = new StringBuilder();
+
         sqlBuilder.build(delete, sql, context);
 
-        System.out.printf("test");
+        try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
+            context.prepareStatement(statement);
+            statement.execute();
+        } catch (SQLException e) {
+            throw logAndReturn(
+                new DatlinSqlExecuteException("Error during executing DELETE", sql.toString(), e),
+                log,
+                sql.toString()
+            );
+        }
     }
 
     public interface Preprocess<T> {
@@ -122,6 +130,14 @@ public class ListUpdateExecution<T> {
 
         @Nonnull
         Delete createDelete();
+
+        @Nonnull
+        default Delete createOrphanDelete(
+            @Nonnull final Criteria deleteOrphanWhere,
+            @Nonnull final List<T> records
+        ) {
+            throw new RuntimeException("Not implemented");
+        }
 
         @Nonnull
         default Criteria createIdentityCriteria(@Nonnull final List<T> records) {
