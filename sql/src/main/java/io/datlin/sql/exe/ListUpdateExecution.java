@@ -2,11 +2,9 @@ package io.datlin.sql.exe;
 
 import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Delete;
-import io.datlin.sql.ast.Insert;
 import io.datlin.sql.ast.LogicalOperator;
+import io.datlin.sql.ast.PostgresUpsert;
 import io.datlin.sql.ast.SqlFragment;
-import io.datlin.sql.ast.UnaryExpression;
-import io.datlin.sql.ast.Update;
 import io.datlin.sql.bld.BuildContext;
 import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exc.DatlinSqlExecuteException;
@@ -34,11 +32,14 @@ public class ListUpdateExecution<T> {
     @Nonnull
     private final List<T> records;
 
-    @Nonnull
-    private final Preprocess<T> preprocess;
-
     @Nullable
     private Criteria deleteOrphanWhere = null;
+
+    @Nonnull
+    private final OrphanDeleteFactory<T> orphanDeleteFactory;
+
+    @Nonnull
+    private final PostgresUpsertFactory<T> postgresUpsertFactory;
 
     @Nonnull
     public ListUpdateExecution<T> deleteOrphan(@Nonnull final SqlFragment where) {
@@ -74,19 +75,17 @@ public class ListUpdateExecution<T> {
     }
 
     public void execute() {
-        executeDeleteOrphan();
+        // executeDeleteOrphan();
 
-        final Update update = preprocess.createUpdate();
+        final PostgresUpsert upsert = postgresUpsertFactory.createUpsert();
         final BuildContext context = new BuildContext();
         final StringBuilder sql = new StringBuilder();
-        sqlBuilder.build(update, sql, context);
 
-        // Insert.insert().onConflick(...).doUpdate()
-        /// Insert.insert().onDuplicatedUpdate(...).doUpdate()
+        sqlBuilder.build(upsert, sql, context);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
             for (final T record : records) {
-                preprocess.setStatementObjects(statement, record);
+                postgresUpsertFactory.setUpsertStatementObjects(statement, record);
                 statement.addBatch();
             }
 
@@ -105,7 +104,7 @@ public class ListUpdateExecution<T> {
             return;
         }
 
-        final Delete delete = preprocess.createOrphanDelete(deleteOrphanWhere, records);
+        final Delete delete = postgresUpsertFactory.createOrphanDelete(deleteOrphanWhere, records);
         final BuildContext context = new BuildContext();
         final StringBuilder sql = new StringBuilder();
 
@@ -123,13 +122,7 @@ public class ListUpdateExecution<T> {
         }
     }
 
-    public interface Preprocess<T> {
-
-        @Nonnull
-        Update createUpdate();
-
-        @Nonnull
-        Delete createDelete();
+    public interface PostgresUpsertFactory<T> {
 
         @Nonnull
         default Delete createOrphanDelete(
@@ -148,5 +141,44 @@ public class ListUpdateExecution<T> {
             @Nonnull final PreparedStatement statement,
             @Nonnull final T record
         ) throws SQLException;
+
+        @Nonnull
+        default PostgresUpsert createUpsert() {
+            throw new RuntimeException("Not implemented");
+        }
+
+        default void setUpsertStatementObjects(@Nonnull final PreparedStatement statement, T record) {
+            throw new RuntimeException("Not implemented");
+        }
+    }
+
+    public interface OrphanDeleteFactory<T> {
+
+        @Nonnull
+        default Delete createOrphanDelete(
+            @Nonnull final Criteria deleteOrphanWhere,
+            @Nonnull final List<T> records
+        ) {
+            throw new RuntimeException("Not implemented");
+        }
+
+        @Nonnull
+        default Criteria createIdentityCriteria(@Nonnull final List<T> records) {
+            throw new RuntimeException("Not implemented");
+        }
+
+        void setStatementObjects(
+            @Nonnull final PreparedStatement statement,
+            @Nonnull final T record
+        ) throws SQLException;
+
+        @Nonnull
+        default PostgresUpsert createPostgresUpsert() {
+            throw new RuntimeException("Not implemented");
+        }
+
+        default void setUpsertStatementObjects(@Nonnull final PreparedStatement statement, T record) {
+            throw new RuntimeException("Not implemented");
+        }
     }
 }
