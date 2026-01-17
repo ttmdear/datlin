@@ -308,7 +308,7 @@ public class RepositoryCodeModelFactory {
         final String normalizedType = type.toLowerCase().split("\\(")[0].trim();
         final Class<?> javaClass = switch (normalizedType) {
             // Numeric Types
-            case "smallint", "int2" -> Short.class;
+            case "smallint", "int2" -> Integer.class;
             case "integer", "int4" -> Integer.class;
             case "bigint", "int8", "serial", "bigserial" -> Long.class;
             case "real", "float4" -> Float.class;
@@ -377,7 +377,7 @@ public class RepositoryCodeModelFactory {
         final String normalizedType = databaseType.toLowerCase().split("\\(")[0].trim();
         return switch (normalizedType) {
             // Numeric Types
-            case "smallint", "int2" -> Short.class.getCanonicalName();
+            case "smallint", "int2" -> Integer.class.getCanonicalName();
             case "integer", "int4" -> Integer.class.getCanonicalName();
             case "bigint", "int8", "serial", "bigserial" -> Long.class.getCanonicalName();
             case "real", "float4" -> Float.class.getCanonicalName();
