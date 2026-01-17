@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.datlin.sql.ast.Assignment;
+import io.datlin.sql.ast.Criteria;
 import io.datlin.sql.ast.Delete;
+import io.datlin.sql.ast.InExpression;
+import io.datlin.sql.ast.PostgresUpsert;
 import io.datlin.sql.ast.RawValue;
 import io.datlin.sql.ast.Update;
 import io.datlin.sql.bld.SqlBuilder;
@@ -125,44 +128,70 @@ public class ${execution.simpleName} {
             executionConnection,
             sqlBuilder,
             records,
-            new ListUpdateExecution.Preprocess<>() {
+            new ListUpdateExecution.OrphanDeleteFactory<>() {
 
                 @Nonnull
                 @Override
-                public Update createUpdate() {
+                public Delete create(
+                    @Nonnull final Criteria deleteOrphanWhere,
+                    @Nonnull final List<${execution.table.record.simpleName}> records
+                ) {
+                    <#assign primaryKeyField = execution.table.record.primaryKeys[0]>
+                    return Delete.delete()
+                        .from(${execution.table.simpleName}.__table__)
+                        .where(Criteria.and(
+                            deleteOrphanWhere,
+                            InExpression.in(
+                                column("${primaryKeyField.metadata.name}"),
+                                records.stream()
+                                    .map(${execution.table.record.simpleName}::${execution.table.record.primaryKeys[0].name})
+                                    .toList()
+                                )
+                    ));
+                }
+            },
+            new ListUpdateExecution.PostgresUpsertFactory<>() {
+
+                @Nonnull
+                @Override
+                public PostgresUpsert create() {
                     final List<Assignment> sets = new ArrayList<>(${execution.table.record.fields?size + execution.table.record.primaryKeys?size});
                     <#list execution.table.record.fields as field>
                     sets.add(set(column("${field.metadata.name}"), RawValue.rawValue("?")));
                     </#list>
 
-                    return Update.update()
-                        .table(${execution.table.simpleName}.__table__)
-                        .sets(sets)
-                        .where(
-                        <#list execution.table.record.primaryKeys as field>
-                            eq(column("${field.metadata.name}"), RawValue.rawValue("?"))
+                    return PostgresUpsert.upsert()
+                        .into(${execution.table.simpleName}.__table__)
+                        .columns(
+                        <#list execution.table.record.fields as field>
+                            column("${field.metadata.name}")<#sep>,</#sep>
                         </#list>
-                        );
-                }
+                        )
+                        .values(List.of(
+                            List.of(
+                                <#list execution.table.record.fields as field>
+                                RawValue.rawValue("?")<#sep>,<#sep>
+                                </#list>
 
-                @Nonnull
-                @Override
-                public Delete createDelete() {
-                    return Delete.delete()
-                        .from(${execution.table.simpleName}.__table__);
+                            )
+                        ))
+                        .onConflict(
+                            column("${execution.table.record.primaryKeys[0].metadata.name}")
+                        )
+                        .doUpdate(sets);
                 }
 
                 @Override
                 public void setStatementObjects(
-                    @Nonnull PreparedStatement preparedStatement,
-                    @Nonnull ${execution.table.record.simpleName} record
+                    @Nonnull final PreparedStatement preparedStatement,
+                    @Nonnull final ${execution.table.record.simpleName} record
                 ) throws SQLException {
                     <#list execution.table.record.fields as field>
-                    preparedStatement.setObject(${field?index + 1}, record.${field.name}());
+                    preparedStatement.setObject(#{field?index + 1}, record.${field.name}());
                     </#list>
-                    <#assign offset = execution.table.record.fields?size>
-                    <#list execution.table.record.primaryKeys as field>
-                    preparedStatement.setObject(${offset + field?index + 1}, record.${field.name}());
+                    <#assign offset = execution.table.record.fields?size/>
+                    <#list execution.table.record.fields as field>
+                    preparedStatement.setObject(#{offset + field?index + 1}, record.${field.name}());
                     </#list>
                 }
             }

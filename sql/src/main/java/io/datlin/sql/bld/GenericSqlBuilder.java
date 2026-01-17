@@ -333,7 +333,7 @@ public class GenericSqlBuilder implements SqlBuilder {
         }
 
         if (onAnyConflict && doUpdate != null) {
-            sql.append(" UPDATE SET ");
+            sql.append(" DO UPDATE SET ");
 
             for (int i = 0; i < doUpdate.size(); i++) {
                 final Assignment set = doUpdate.get(i);
@@ -342,6 +342,8 @@ public class GenericSqlBuilder implements SqlBuilder {
 
                 if (set.value() == null) {
                     sql.append("NULL");
+                } else if (set.value() instanceof RawValue rawValue) {
+                    sql.append(rawValue.value());
                 } else if (set.value() instanceof SqlFragment sqlFragment) {
                     sql.append("(");
                     build((sqlFragment), sql, context);
@@ -403,6 +405,8 @@ public class GenericSqlBuilder implements SqlBuilder {
 
             if (set.value() == null) {
                 sql.append("NULL");
+            } else if (set.value() instanceof RawValue rawValue) {
+                sql.append(rawValue.value());
             } else if (set.value() instanceof SqlFragment sqlFragment) {
                 sql.append("(");
                 build((sqlFragment), sql, context);

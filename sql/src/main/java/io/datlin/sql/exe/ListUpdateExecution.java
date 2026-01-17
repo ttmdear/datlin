@@ -75,9 +75,9 @@ public class ListUpdateExecution<T> {
     }
 
     public void execute() {
-        // executeDeleteOrphan();
+        executeDeleteOrphan();
 
-        final PostgresUpsert upsert = postgresUpsertFactory.createUpsert();
+        final PostgresUpsert upsert = postgresUpsertFactory.create();
         final BuildContext context = new BuildContext();
         final StringBuilder sql = new StringBuilder();
 
@@ -85,7 +85,7 @@ public class ListUpdateExecution<T> {
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
             for (final T record : records) {
-                postgresUpsertFactory.setUpsertStatementObjects(statement, record);
+                postgresUpsertFactory.setStatementObjects(statement, record);
                 statement.addBatch();
             }
 
@@ -104,7 +104,7 @@ public class ListUpdateExecution<T> {
             return;
         }
 
-        final Delete delete = postgresUpsertFactory.createOrphanDelete(deleteOrphanWhere, records);
+        final Delete delete = orphanDeleteFactory.create(deleteOrphanWhere, records);
         final BuildContext context = new BuildContext();
         final StringBuilder sql = new StringBuilder();
 
@@ -125,29 +125,14 @@ public class ListUpdateExecution<T> {
     public interface PostgresUpsertFactory<T> {
 
         @Nonnull
-        default Delete createOrphanDelete(
-            @Nonnull final Criteria deleteOrphanWhere,
-            @Nonnull final List<T> records
-        ) {
+        default PostgresUpsert create() {
             throw new RuntimeException("Not implemented");
         }
 
-        @Nonnull
-        default Criteria createIdentityCriteria(@Nonnull final List<T> records) {
-            throw new RuntimeException("Not implemented");
-        }
-
-        void setStatementObjects(
+        default void setStatementObjects(
             @Nonnull final PreparedStatement statement,
             @Nonnull final T record
-        ) throws SQLException;
-
-        @Nonnull
-        default PostgresUpsert createUpsert() {
-            throw new RuntimeException("Not implemented");
-        }
-
-        default void setUpsertStatementObjects(@Nonnull final PreparedStatement statement, T record) {
+        ) throws SQLException {
             throw new RuntimeException("Not implemented");
         }
     }
@@ -155,29 +140,10 @@ public class ListUpdateExecution<T> {
     public interface OrphanDeleteFactory<T> {
 
         @Nonnull
-        default Delete createOrphanDelete(
+        default Delete create(
             @Nonnull final Criteria deleteOrphanWhere,
             @Nonnull final List<T> records
         ) {
-            throw new RuntimeException("Not implemented");
-        }
-
-        @Nonnull
-        default Criteria createIdentityCriteria(@Nonnull final List<T> records) {
-            throw new RuntimeException("Not implemented");
-        }
-
-        void setStatementObjects(
-            @Nonnull final PreparedStatement statement,
-            @Nonnull final T record
-        ) throws SQLException;
-
-        @Nonnull
-        default PostgresUpsert createPostgresUpsert() {
-            throw new RuntimeException("Not implemented");
-        }
-
-        default void setUpsertStatementObjects(@Nonnull final PreparedStatement statement, T record) {
             throw new RuntimeException("Not implemented");
         }
     }
