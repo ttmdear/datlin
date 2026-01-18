@@ -12,7 +12,7 @@ import io.datlin.sql.ast.Delete;
 import io.datlin.sql.ast.InExpression;
 import io.datlin.sql.ast.PostgresUpsert;
 import io.datlin.sql.ast.RawValue;
-import io.datlin.sql.ast.Update;
+import io.datlin.sql.ast.UnaryExpression;
 import io.datlin.sql.bld.SqlBuilder;
 import io.datlin.sql.exe.DeleteExecution;
 import io.datlin.sql.exe.ExecutionConnection;
@@ -20,7 +20,6 @@ import io.datlin.sql.exe.InsertExecution;
 import io.datlin.sql.exe.ListUpdateExecution;
 import io.datlin.sql.exe.SelectExecution;
 import io.datlin.sql.exe.UpdateExecution;
-import io.datlin.sql.rsp.ResultSetProcessor;
 import jakarta.annotation.Nonnull;
 
 import static io.datlin.sql.ast.Assignment.set;
@@ -141,12 +140,14 @@ public class ${execution.simpleName} {
                         .from(${execution.table.simpleName}.__table__)
                         .where(Criteria.and(
                             deleteOrphanWhere,
-                            InExpression.in(
-                                column("${primaryKeyField.metadata.name}"),
-                                records.stream()
-                                    .map(${execution.table.record.simpleName}::${execution.table.record.primaryKeys[0].name})
-                                    .toList()
+                            UnaryExpression.not(
+                                InExpression.in(
+                                    column("${primaryKeyField.metadata.name}"),
+                                    records.stream()
+                                        .map(${execution.table.record.simpleName}::${execution.table.record.primaryKeys[0].name})
+                                        .toList()
                                 )
+                            )
                     ));
                 }
             },

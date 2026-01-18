@@ -2,7 +2,6 @@ package io.datlin.tools;
 
 import io.datlin.frm.TemplateProcessor;
 import io.datlin.gec.RepositoryCodeGenerator;
-import io.datlin.rcm.RepositoryCodeModelV1;
 import io.datlin.sql.mtd.DatabaseMetadataFactory;
 import io.datlin.util.FilesUtil;
 import io.datlin.util.PathUtil;
@@ -24,7 +23,6 @@ public class Services {
     private @Nullable XmlRepositoryConfiguration xmlRepositoryConfiguration = null;
     private @Nullable DatabaseMetadataFactory databaseMetadataFactory = null;
     private @Nullable RepositoryCodeGenerator repositoryCodeGenerator = null;
-    private @Nullable RepositoryCodeModelV1 repositoryCodeModel = null;
     private @Nullable TemplateProcessor templateProcessor = null;
 
     public Services(
@@ -93,14 +91,6 @@ public class Services {
         }
 
         return xmlRepositoryConfiguration;
-    }
-
-    public synchronized @Nonnull RepositoryCodeModelV1 repositoryCodeModel() {
-        // if (repositoryCodeModel == null) {
-        //     // repositoryCodeModel = new RepositoryCodeModelFactory().c
-        // }
-
-        return repositoryCodeModel;
     }
 
     public synchronized @Nonnull TemplateProcessor templateProcessor() {

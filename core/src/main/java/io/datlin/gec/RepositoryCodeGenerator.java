@@ -4,7 +4,6 @@ import io.datlin.frm.TemplateProcessor;
 import io.datlin.rcm.RecordCodeModel;
 import io.datlin.rcm.RepositoryCodeModel;
 import io.datlin.rcm.RepositoryCodeModelFactory;
-import io.datlin.rcm.RepositoryCodeModelV1;
 import io.datlin.rcm.TableCodeModel;
 import io.datlin.rcm.TableExecutionCodeModel;
 import io.datlin.sql.mtd.DatabaseMetadata;
@@ -142,38 +141,6 @@ public class RepositoryCodeGenerator {
                 .resolve(xrc.getOutput())
                 .resolve(path)
                 .toAbsolutePath() + ".java";
-        }
-    }
-
-    @Nonnull
-    private String getRecordsOutput(
-        @Nonnull final RepositoryCodeModelV1 repositoryCodeModel
-    ) {
-        final String recordsPackagePath = repositoryCodeModel.getRecordsPackageName()
-            .replace(".", "/");
-
-        if (Path.of(xrc.getOutput()).isAbsolute()) {
-            return xrc.getOutput() + "/" + recordsPackagePath;
-        } else {
-            return Path.of(xmlRepositoryConfigurationPath).getParent()
-                .resolve(xrc.getOutput())
-                .toAbsolutePath() + "/" + recordsPackagePath;
-        }
-    }
-
-    @Nonnull
-    private String getExecutionsOutput(
-        @Nonnull final RepositoryCodeModelV1 repositoryCodeModel
-    ) {
-        final String executionsPackagePath = repositoryCodeModel.getExecutionsPackageName()
-            .replace(".", "/");
-
-        if (Path.of(xrc.getOutput()).isAbsolute()) {
-            return xrc.getOutput() + "/" + executionsPackagePath;
-        } else {
-            return Path.of(xmlRepositoryConfigurationPath).getParent()
-                .resolve(xrc.getOutput())
-                .toAbsolutePath() + "/" + executionsPackagePath;
         }
     }
 }
