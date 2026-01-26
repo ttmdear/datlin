@@ -77,6 +77,10 @@ public class ListUpdateExecution<T> {
     public void execute() {
         executeDeleteOrphan();
 
+        if (records.isEmpty()) {
+            return;
+        }
+
         final PostgresUpsert upsert = postgresUpsertFactory.create();
         final BuildContext context = new BuildContext();
         final StringBuilder sql = new StringBuilder();

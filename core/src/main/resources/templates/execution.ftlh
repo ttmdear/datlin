@@ -136,19 +136,27 @@ public class ${execution.simpleName} {
                     @Nonnull final List<${execution.table.record.simpleName}> records
                 ) {
                     <#assign primaryKeyField = execution.table.record.primaryKeys[0]>
-                    return Delete.delete()
-                        .from(${execution.table.simpleName}.__table__)
-                        .where(Criteria.and(
-                            deleteOrphanWhere,
-                            UnaryExpression.not(
-                                InExpression.in(
-                                    column("${primaryKeyField.metadata.name}"),
-                                    records.stream()
-                                        .map(${execution.table.record.simpleName}::${execution.table.record.primaryKeys[0].name})
-                                        .toList()
+                    if (!records.isEmpty()) {
+                        return Delete.delete()
+                            .from(${execution.table.simpleName}.__table__)
+                            .where(Criteria.and(
+                                deleteOrphanWhere,
+                                UnaryExpression.not(
+                                    InExpression.in(
+                                        column("${primaryKeyField.metadata.name}"),
+                                        records.stream()
+                                            .map(${execution.table.record.simpleName}::${execution.table.record.primaryKeys[0].name})
+                                            .toList()
+                                        )
+                                    )
                                 )
-                            )
-                    ));
+                            );
+                    } else {
+                        return Delete.delete()
+                            .from(${execution.table.simpleName}.__table__)
+                            .where(deleteOrphanWhere);
+                    }
+
                 }
             },
             new ListUpdateExecution.PostgresUpsertFactory<>() {
