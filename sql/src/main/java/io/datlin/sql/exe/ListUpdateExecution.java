@@ -93,7 +93,7 @@ public class ListUpdateExecution<T> {
                 statement.addBatch();
             }
 
-            statement.execute();
+            statement.executeBatch();
         } catch (SQLException e) {
             throw logAndReturn(
                 new DatlinSqlExecuteException("Error during executing UPDATE", sql.toString(), e),

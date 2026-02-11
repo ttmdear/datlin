@@ -166,7 +166,7 @@ public class ${execution.simpleName} {
                 public PostgresUpsert create() {
                     final List<Assignment> sets = new ArrayList<>(${execution.table.record.fields?size + execution.table.record.primaryKeys?size});
                     <#list execution.table.record.fields as field>
-                    sets.add(set(column("${field.metadata.name}"), RawValue.rawValue("?")));
+                    sets.add(set(column("${field.metadata.name}"), RawValue.rawValue("EXCLUDED.${field.metadata.name}")));
                     </#list>
 
                     return PostgresUpsert.upsert()
@@ -197,10 +197,6 @@ public class ${execution.simpleName} {
                 ) throws SQLException {
                     <#list execution.table.record.fields as field>
                     preparedStatement.setObject(#{field?index + 1}, record.${field.name}());
-                    </#list>
-                    <#assign offset = execution.table.record.fields?size/>
-                    <#list execution.table.record.fields as field>
-                    preparedStatement.setObject(#{offset + field?index + 1}, record.${field.name}());
                     </#list>
                 }
             }
