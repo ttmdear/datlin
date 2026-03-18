@@ -6,6 +6,7 @@ import jakarta.annotation.Nullable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class DefaultResultSetProcessor implements ResultSetProcessor {
@@ -38,6 +39,8 @@ public class DefaultResultSetProcessor implements ResultSetProcessor {
 
         if (value instanceof java.sql.Timestamp timestamp && fieldType.equals(LocalDateTime.class)) {
             return (T) timestamp.toLocalDateTime();
+        } else if (value instanceof java.sql.Timestamp timestamp && fieldType.equals(Instant.class)) {
+            return (T) timestamp.toInstant();
         }
 
         return (T) value;

@@ -1,5 +1,4 @@
 /**
- * The XmlRepositoryConfiguration.
- * todo end docu
+ * XRC - Xml Repository Configuration
  */
 package io.datlin.xrc;
