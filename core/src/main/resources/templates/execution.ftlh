@@ -70,7 +70,8 @@ public class ${execution.simpleName} {
                     resultSetProcessor.getValue(resultSet, "${execution.table.metadata.name}", "${field.metadata.name}", ${execution.table.record.simpleName}.class, "${field.name}", ${field.type}.class)<#if field?has_next>,</#if>
                 </#list>
                 );
-            }
+            },
+            statementObjectBinder
         );
 
         execution.from(${execution.table.simpleName}.__table__);
@@ -80,13 +81,13 @@ public class ${execution.simpleName} {
 
     @Nonnull
     public InsertExecution insert() {
-        return new InsertExecution(executionConnection, sqlBuilder)
+        return new InsertExecution(executionConnection, sqlBuilder, statementObjectBinder)
             .into(${execution.table.simpleName}.__table__);
     }
 
     @Nonnull
     public InsertExecution insert(@Nonnull final ${execution.table.record.simpleName} record) {
-        final InsertExecution insert = new InsertExecution(executionConnection, sqlBuilder)
+        final InsertExecution insert = new InsertExecution(executionConnection, sqlBuilder, statementObjectBinder)
             .into(${execution.table.simpleName}.__table__)
             .columns(INSERT_FIELDS);
 
@@ -101,13 +102,13 @@ public class ${execution.simpleName} {
 
     @Nonnull
     public UpdateExecution update() {
-        return new UpdateExecution(executionConnection, sqlBuilder)
+        return new UpdateExecution(executionConnection, sqlBuilder, statementObjectBinder)
             .table(${execution.table.simpleName}.__table__);
     }
 
     @Nonnull
     public UpdateExecution update(@Nonnull final ${execution.table.record.simpleName} record) {
-        final UpdateExecution update = new UpdateExecution(executionConnection, sqlBuilder)
+        final UpdateExecution update = new UpdateExecution(executionConnection, sqlBuilder, statementObjectBinder)
             .table(${execution.table.simpleName}.__table__);
 
         final List<Assignment> assignments = new ArrayList<>();
@@ -195,27 +196,29 @@ public class ${execution.simpleName} {
                 }
 
                 @Override
-                public void setStatementObjects(
-                    @Nonnull final PreparedStatement preparedStatement,
-                    @Nonnull final ${execution.table.record.simpleName} record
-                ) throws SQLException {
+                public List<Object> getStatementObjects(
+                    @Nonnull ${execution.table.record.simpleName} record
+                ) {
+                    final List<Object> statementObjects = new ArrayList<>();
                     <#list execution.table.record.fields as field>
-                    preparedStatement.setObject(#{field?index + 1}, record.${field.name}());
+                    statementObjects.add(record.${field.name}());
                     </#list>
+                    return statementObjects;
                 }
-            }
+            },
+            statementObjectBinder
         );
     }
 
     @Nonnull
     public DeleteExecution delete() {
-        return new DeleteExecution(executionConnection, sqlBuilder)
+        return new DeleteExecution(executionConnection, sqlBuilder, statementObjectBinder)
             .from(${execution.table.simpleName}.__table__);
     }
 
     @Nonnull
     public DeleteExecution delete(@Nonnull final ${execution.table.record.simpleName} record) {
-        return new DeleteExecution(executionConnection, sqlBuilder)
+        return new DeleteExecution(executionConnection, sqlBuilder, statementObjectBinder)
             .from(${execution.table.simpleName}.__table__)
             .where(
             <#list execution.table.record.primaryKeys as field>
