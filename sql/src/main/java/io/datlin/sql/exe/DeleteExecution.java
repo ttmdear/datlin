@@ -27,6 +27,9 @@ public class DeleteExecution {
     private final SqlBuilder sqlBuilder;
 
     @Nonnull
+    private final StatementObjectBinder statementObjectBinder;
+
+    @Nonnull
     private Delete delete = Delete.delete();
 
     // delegated delete ------------------------------------------------------------------------------------------------
@@ -63,7 +66,7 @@ public class DeleteExecution {
         sqlBuilder.build(delete, sql, context);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            context.prepareStatement(statement);
+            statementObjectBinder.bind(statement, context.getStatementObjects());
             statement.execute();
         } catch (SQLException e) {
             throw logAndReturn(

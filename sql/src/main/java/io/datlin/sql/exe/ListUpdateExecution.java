@@ -42,6 +42,9 @@ public class ListUpdateExecution<T> {
     private final PostgresUpsertFactory<T> postgresUpsertFactory;
 
     @Nonnull
+    private final StatementObjectBinder statementObjectBinder;
+
+    @Nonnull
     public ListUpdateExecution<T> deleteOrphan(@Nonnull final SqlFragment where) {
         this.deleteOrphanWhere = new Criteria(
             LogicalOperator.AND,
@@ -89,7 +92,7 @@ public class ListUpdateExecution<T> {
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
             for (final T record : records) {
-                postgresUpsertFactory.setStatementObjects(statement, record);
+                statementObjectBinder.bind(statement, postgresUpsertFactory.getStatementObjects(record));
                 statement.addBatch();
             }
 
@@ -115,7 +118,7 @@ public class ListUpdateExecution<T> {
         sqlBuilder.build(delete, sql, context);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            context.prepareStatement(statement);
+            statementObjectBinder.bind(statement, context.getStatementObjects());
             statement.execute();
         } catch (SQLException e) {
             throw logAndReturn(
@@ -133,10 +136,7 @@ public class ListUpdateExecution<T> {
             throw new RuntimeException("Not implemented");
         }
 
-        default void setStatementObjects(
-            @Nonnull final PreparedStatement statement,
-            @Nonnull final T record
-        ) throws SQLException {
+        default List<Object> getStatementObjects(@Nonnull final T record) {
             throw new RuntimeException("Not implemented");
         }
     }

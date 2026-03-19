@@ -25,6 +25,9 @@ public class InsertExecution {
     private final SqlBuilder sqlBuilder;
 
     @Nonnull
+    private final StatementObjectBinder statementObjectBinder;
+
+    @Nonnull
     private Insert insert = Insert.insert();
 
     // delegated from insert -------------------------------------------------------------------------------------------
@@ -55,7 +58,7 @@ public class InsertExecution {
         sqlBuilder.build(insert, sql, context);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            context.prepareStatement(statement);
+            statementObjectBinder.bind(statement, context.getStatementObjects());
             statement.execute();
         } catch (SQLException e) {
             throw DatlinLogger.logAndReturn(

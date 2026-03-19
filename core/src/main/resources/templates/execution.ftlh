@@ -20,6 +20,7 @@ import io.datlin.sql.exe.InsertExecution;
 import io.datlin.sql.exe.ListUpdateExecution;
 import io.datlin.sql.exe.SelectExecution;
 import io.datlin.sql.exe.UpdateExecution;
+import io.datlin.sql.exe.StatementObjectBinder;
 import jakarta.annotation.Nonnull;
 
 import static io.datlin.sql.ast.Assignment.set;
@@ -33,6 +34,9 @@ public class ${execution.simpleName} {
 
     @Nonnull
     private final ${execution.resultSetProcessor} resultSetProcessor = new ${execution.resultSetProcessor}();
+
+    @Nonnull
+    private final StatementObjectBinder statementObjectBinder = new StatementObjectBinder();
 
     @Nonnull
     private final ExecutionConnection executionConnection;

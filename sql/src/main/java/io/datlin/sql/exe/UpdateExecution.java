@@ -28,6 +28,9 @@ public class UpdateExecution {
     private final SqlBuilder sqlBuilder;
 
     @Nonnull
+    private final StatementObjectBinder statementObjectBinder;
+
+    @Nonnull
     private Update update = Update.update();
 
     // delegated update ------------------------------------------------------------------------------------------------
@@ -70,7 +73,7 @@ public class UpdateExecution {
         sqlBuilder.build(update, sql, context);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            context.prepareStatement(statement);
+            statementObjectBinder.bind(statement, context.getStatementObjects());
             statement.execute();
         } catch (SQLException e) {
             throw logAndReturn(

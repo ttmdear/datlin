@@ -39,6 +39,9 @@ public class SelectExecution<T> {
     @Nonnull
     private final Function<ResultSet, T> resultMapper;
 
+    @Nonnull
+    private final StatementObjectBinder statementObjectBinder;
+
     // select ----------------------------------------------------------------------------------------------------------
 
     @Nonnull
@@ -100,7 +103,7 @@ public class SelectExecution<T> {
         builder.build(select, sql, buildContext);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            buildContext.prepareStatement(statement);
+            statementObjectBinder.bind(statement, buildContext.getStatementObjects());
 
             final ResultSet resultSet = statement.executeQuery();
 
@@ -178,7 +181,7 @@ public class SelectExecution<T> {
         builder.build(selectCount, sql, buildContext);
 
         try (final PreparedStatement statement = executionConnection.getConnection().prepareStatement(sql.toString())) {
-            buildContext.prepareStatement(statement);
+            statementObjectBinder.bind(statement, buildContext.getStatementObjects());
 
             try (final ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
